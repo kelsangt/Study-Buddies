@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import './MainContent.css';
 import { useEffect } from 'react';
 import { fetchAllEventsForDay } from '../../store/events';
+import GMap from '../GMap/GMap';
+import {Wrapper} from "@googlemaps/react-wrapper";
 
 const MainContent = () => {
     const dispatch = useDispatch();
@@ -11,11 +13,13 @@ const MainContent = () => {
     const testDate = '2023-04-20'
     useEffect(() => {
         dispatch(fetchAllEventsForDay(testDate))
-    }, [])
+    }, [dispatch])
     console.log(todayEvents)
     return (
         <>
-
+            <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY}>
+                <GMap />
+            </Wrapper>
         </>
     )
 }

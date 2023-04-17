@@ -83,7 +83,7 @@ function SignupForm () {
           <div className="errors">{errors?.email}</div>
           <label class="signupLabel">
             <span id="emailSpan">Email</span>
-            <input type="text"
+            <input className="inputField" type="text"
               value={email}
               onChange={update('email')}
               placeholder="Email"
@@ -92,7 +92,7 @@ function SignupForm () {
           <div className="errors">{errors?.username}</div>
           <label class="signupLabel">
             <span id="usernameSpan">Username</span>
-            <input type="text"
+            <input className="inputField" type="text"
               value={username}
               onChange={update('username')}
               placeholder="Username"
@@ -102,7 +102,7 @@ function SignupForm () {
           <div className="errors">{errors?.firstName}</div>
           <label class="signupLabel">
             <span id="firstNameSpan">First Name</span>
-            <input type="text"
+            <input className="inputField" type="text"
               value={firstName}
               onChange={update('firstName')}
               placeholder="First Name"
@@ -112,7 +112,7 @@ function SignupForm () {
           <div className="errors">{errors?.lastName}</div>
           <label class="signupLabel">
             <span id="lastNameSpan">Last Name</span>
-            <input type="text"
+            <input className="inputField" type="text"
               value={lastName}
               onChange={update('lastName')}
               placeholder="Last Name"
@@ -123,7 +123,7 @@ function SignupForm () {
           <div className="errors">{errors?.school}</div>
           <label class="signupLabel">
             <span id="schoolSpan">School</span>
-            <input type="text"
+            <input className="inputField" type="text"
               value={school}
               onChange={update('school')}
               placeholder="School"
@@ -133,7 +133,7 @@ function SignupForm () {
           <div className="errors">{errors?.password}</div>
           <label class="signupLabel">
             <span id="passwordSpan">Password</span>
-            <input type="password"
+            <input className="inputField" type="password"
               value={password}
               onChange={update('password')}
               placeholder="Password"
@@ -144,17 +144,19 @@ function SignupForm () {
           </div>
           <label class="signupLabel">
             <span id="confirmPasswordSpan">Confirm Password</span>
-            <input type="password"
+            <input className="inputField" type="password"
               value={password2}
               onChange={update('password2')}
               placeholder="Confirm Password"
             />
           </label>
-          <input
-            type="submit"
-            value="Sign Up"
-            disabled={!email || !username || !password || password !== password2}
-          />
+          <label class="submitButton">
+            <input className="submitInput"
+              type="submit"
+              value="Sign Up"
+              disabled={!email || !username || !password || password !== password2}
+            />
+          </label>
         </form>
       </div>
     </div>

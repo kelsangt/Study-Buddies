@@ -6,6 +6,7 @@ import { receiveAllEventsForDay } from '../../store/events';
 import { receiveAllLocations } from '../../store/locations';
 import { useSelector } from 'react-redux';
 import InfoBoxInternal from './marker/InfoBoxInternal';
+import NavBar from '../NavBar/NavBar';
 
 
 const GMap = ({center, zoom}) => {
@@ -67,6 +68,7 @@ const GMap = ({center, zoom}) => {
 
 	return (
 		<>
+			<NavBar />
 			<div id="map_container">
 				<div id="map_wrapper">
 					<div ref={ref} id="map" />
