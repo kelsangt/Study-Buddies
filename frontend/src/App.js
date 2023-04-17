@@ -7,7 +7,7 @@ import NavBar from './components/NavBar/NavBar';
 import GMap from './components/GMap/GMap';
 import {Wrapper} from "@googlemaps/react-wrapper"
 
-import MainPage from './components/MainPage/MainPage';
+import SplashPage from './components/SplashPage/SplashPage';
 import LoginForm from './components/SessionForms/LoginForm';
 import SignupForm from './components/SessionForms/SignupForm';
 
@@ -25,8 +25,8 @@ function App() {
     <>
       <Switch>
         
-        <AuthRoute exact path="/" component={MainPage} />
-        <ProtectedRoute exact path='/events' component={MainContent}/>
+        <AuthRoute exact path="/" component={SplashPage} />
+        <ProtectedRoute exact path='/home' component={MainContent}/>
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
       </Switch>

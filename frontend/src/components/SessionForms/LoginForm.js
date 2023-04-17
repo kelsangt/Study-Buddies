@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './LoginForm.css';
+import image1 from '../../images/image1.png';
+import image2 from '../../images/image2.png';
+import image3 from '../../images/image3.png';
+import image4 from '../../images/image4.png';
 
 import { login, clearSessionErrors } from '../../store/session';
 
@@ -28,32 +32,43 @@ function LoginForm () {
 
   return (
     <div id="mainLoginDiv">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Log In Form</h2>
-        <div className="errors">{errors?.email}</div>
-        <label>
-          <span>Email</span>
-          <input type="text"
-            value={email}
-            onChange={update('email')}
-            placeholder="Email"
-          />
-        </label>
-        <div className="errors">{errors?.password}</div>
-        <label>
-          <span>Password</span>
-          <input type="password"
-            value={password}
-            onChange={update('password')}
-            placeholder="Password"
-          />
-        </label>
-        <input
-          type="submit"
-          value="Log In"
-          disabled={!email || !password}
-        />
-      </form>
+      <img src={image1} alt="image1" id="image1"/> 
+      <img src={image2} alt="image2" id="image2"/> 
+      <img src={image3} alt="image3" id="image3"/> 
+      <img src={image4} alt="image4" id="image4"/> 
+      <div id="loginFormDiv">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2 id="loginH2">Log In</h2>
+          <div className="errors">{errors?.email}</div>
+          <label className="loginLabel">
+            <span id="emailSpan">Email</span>
+            <input type="email" className="inputField"
+              value={email}
+              onChange={update('email')}
+              placeholder="Email"
+            />
+          </label>
+          <div className="errors">{errors?.password}</div>
+          <label className="loginLabel">
+            <span id="passwordSpan">Password</span>
+            <input type="password" className="inputField"
+              value={password}
+              onChange={update('password')}
+              placeholder="Password"
+            />
+          </label>
+          <label className="submitButton2">
+            <input className="submitInput2"
+              type="submit"
+              value="Log In"
+              disabled={!email || !password}
+            />
+          </label>
+        </form>
+        <a id="signupAnchor" href="/signup">
+            New to Study Buddies? Sign up here
+        </a>
+      </div>
     </div>
   );
 }
