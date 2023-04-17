@@ -1,4 +1,59 @@
 #mainLoginDiv {
     display: flex;
     justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+}
+
+#loginFormDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 600px;
+    height: 800px;
+    background-color: rgb(30, 84, 171);
+    font-family: Jost;
+    font-weight: 400;
+    font-size: 20px;
+    color: white;
+    z-index: 10;
+    box-shadow: 12px 12px 12px gray;
+}
+
+.login-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#loginH2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.loginLabel {
+    display: flex;
+    flex-direction: column;
+}
+
+#emailSpan, #passwordSpan {
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.submitButton2 {
+    margin-top: 10px;
+}
+
+.submitInput2 {
+    width: 336px;
+    height: 50px;
+    font-family: var(--font);
+    font-weight: var(--font-bold);
+    font-size: 20px;
 }
