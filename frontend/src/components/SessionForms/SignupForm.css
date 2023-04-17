@@ -42,31 +42,31 @@
 }
 
 #image1 {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 50px;
     left: 50px;
 }
 
 #image2 {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 50px;
-    left: 1000px;
+    left: 1100px;
 }
 
 #image3 {
-    position: absolute;
+    position: fixed;
     z-index: 1;
-    top: 450px;
-    left: 100px;
+    top: 500px;
+    left: 50px;
 }
 
 #image4 {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 500px;
-    left: 1200px;
+    left: 1300px;
 }
 
 .signup-form {
