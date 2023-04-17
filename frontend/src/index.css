@@ -1,5 +1,12 @@
 /* TODO Add site wide styles */
 
+:root {
+    --font: Jost;
+    --font-light: 300;
+    --font-regular: 400;
+    --font-bold: 500;
+}
+
 body {
     width: 100vw;
     height: 100vh;

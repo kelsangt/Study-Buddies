@@ -16,6 +16,7 @@
     height: 800px;
     background-color: rgb(30, 84, 171);
     font-family: Jost;
+    font-weight: 400;
     font-size: 20px;
     color: white;
     z-index: 10;
@@ -26,12 +27,12 @@
 #signupH2 {
     font-size: 36px;
     margin-bottom: 30px;
+    font-weight: 500;
 }
 
 .signupLabel {
     display: flex;
     flex-direction: column;
-    /* margin-bottom: 10px; */
 }
 
 #emailSpan, #usernameSpan, #firstNameSpan, #lastNameSpan, #schoolSpan, #passwordSpan, #confirmPasswordSpan {
@@ -41,37 +42,38 @@
 }
 
 #image1 {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 50px;
     left: 50px;
 }
 
 #image2 {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 50px;
-    left: 1000px;
+    left: 1100px;
 }
 
 #image3 {
-    position: absolute;
+    position: fixed;
     z-index: 1;
-    top: 450px;
-    left: 100px;
+    top: 500px;
+    left: 50px;
 }
 
 #image4 {
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 500px;
-    left: 1200px;
+    left: 1300px;
 }
 
 .signup-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .inputField {
@@ -87,6 +89,7 @@
 .submitInput {
     width: 336px;
     height: 50px;
-    font-family: Jost;
+    font-family: var(--font);
+    font-weight: var(--font-bold);
     font-size: 20px;
 }

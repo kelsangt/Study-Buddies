@@ -81,16 +81,16 @@ function SignupForm () {
         <h2 id="signupH2">Sign Up</h2>
         <form className="signup-form" onSubmit={handleSubmit}>
           <div className="errors">{errors?.email}</div>
-          <label class="signupLabel">
+          <label className="signupLabel">
             <span id="emailSpan">Email</span>
-            <input className="inputField" type="text"
+            <input className="inputField" type="email"
               value={email}
               onChange={update('email')}
               placeholder="Email"
             />
           </label>
           <div className="errors">{errors?.username}</div>
-          <label class="signupLabel">
+          <label className="signupLabel">
             <span id="usernameSpan">Username</span>
             <input className="inputField" type="text"
               value={username}
@@ -100,7 +100,7 @@ function SignupForm () {
           </label>
 
           <div className="errors">{errors?.firstName}</div>
-          <label class="signupLabel">
+          <label className="signupLabel">
             <span id="firstNameSpan">First Name</span>
             <input className="inputField" type="text"
               value={firstName}
@@ -110,7 +110,7 @@ function SignupForm () {
           </label>
 
           <div className="errors">{errors?.lastName}</div>
-          <label class="signupLabel">
+          <label className="signupLabel">
             <span id="lastNameSpan">Last Name</span>
             <input className="inputField" type="text"
               value={lastName}
