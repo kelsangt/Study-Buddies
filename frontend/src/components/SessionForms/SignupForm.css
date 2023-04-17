@@ -12,10 +12,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 500px;
-    height: 650px;
-    background-color: rgb(27, 79, 162);
-    font-family: Varela Round;
+    width: 600px;
+    height: 800px;
+    background-color: rgb(30, 84, 171);
+    font-family: Jost;
     font-size: 20px;
     color: white;
     z-index: 10;
@@ -31,7 +31,7 @@
 .signupLabel {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
 #emailSpan, #usernameSpan, #firstNameSpan, #lastNameSpan, #schoolSpan, #passwordSpan, #confirmPasswordSpan {
@@ -72,4 +72,21 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.inputField {
+    height: 30px;
+    width: 336px;
+    margin-bottom: 10px;
+}
+
+.submitButton {
+    margin-top: 10px;
+}
+
+.submitInput {
+    width: 336px;
+    height: 50px;
+    font-family: Jost;
+    font-size: 20px;
 }
