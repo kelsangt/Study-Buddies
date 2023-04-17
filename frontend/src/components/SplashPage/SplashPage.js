@@ -1,6 +1,6 @@
 import NavBar from "../NavBar/NavBar";
 
-function MainPage() {
+function SplashPage() {
     return (
       <>
         <NavBar />
@@ -12,4 +12,4 @@ function MainPage() {
     );
 }
   
-export default MainPage;
+export default SplashPage;
