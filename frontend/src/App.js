@@ -26,7 +26,7 @@ function App() {
       <Switch>
         
         <AuthRoute exact path="/" component={SplashPage} />
-        <ProtectedRoute exact path='/events' component={MainContent}/>
+        <ProtectedRoute exact path='/home' component={MainContent}/>
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
       </Switch>
