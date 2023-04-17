@@ -1,0 +1,75 @@
+#mainSignupDiv {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    /* background-color: orange; */
+}
+
+#signupFormDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+    height: 650px;
+    background-color: rgb(27, 79, 162);
+    font-family: Varela Round;
+    font-size: 20px;
+    color: white;
+    z-index: 10;
+    box-shadow: 12px 12px 12px gray;
+    
+}
+
+#signupH2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.signupLabel {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+#emailSpan, #usernameSpan, #firstNameSpan, #lastNameSpan, #schoolSpan, #passwordSpan, #confirmPasswordSpan {
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+#image1 {
+    position: absolute;
+    z-index: 1;
+    top: 50px;
+    left: 50px;
+}
+
+#image2 {
+    position: absolute;
+    z-index: 1;
+    top: 50px;
+    left: 1000px;
+}
+
+#image3 {
+    position: absolute;
+    z-index: 1;
+    top: 450px;
+    left: 100px;
+}
+
+#image4 {
+    position: absolute;
+    z-index: 1;
+    top: 500px;
+    left: 1200px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

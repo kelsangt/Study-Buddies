@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import './SessionForm.css';
+import './SignupForm.css';
 import { signup, clearSessionErrors } from '../../store/session';
+import image1 from '../../images/image1.png';
+import image2 from '../../images/image2.png';
+import image3 from '../../images/image3.png';
+import image4 from '../../images/image4.png';
 
 function SignupForm () {
   const [email, setEmail] = useState('');
@@ -68,84 +72,92 @@ function SignupForm () {
   }
 
   return (
-    <form className="session-form" onSubmit={handleSubmit}>
-      <h2>Sign Up Form</h2>
-      <div className="errors">{errors?.email}</div>
-      <label>
-        <span>Email</span>
-        <input type="text"
-          value={email}
-          onChange={update('email')}
-          placeholder="Email"
-        />
-      </label>
-      <div className="errors">{errors?.username}</div>
-      <label>
-        <span>Username</span>
-        <input type="text"
-          value={username}
-          onChange={update('username')}
-          placeholder="Username"
-        />
-      </label>
+    <div id="mainSignupDiv">
+      <img src={image1} alt="image1" id="image1"/> 
+      <img src={image2} alt="image2" id="image2"/> 
+      <img src={image3} alt="image3" id="image3"/> 
+      <img src={image4} alt="image4" id="image4"/> 
+      <div id="signupFormDiv">
+        <h2 id="signupH2">Sign Up</h2>
+        <form className="signup-form" onSubmit={handleSubmit}>
+          <div className="errors">{errors?.email}</div>
+          <label class="signupLabel">
+            <span id="emailSpan">Email</span>
+            <input type="text"
+              value={email}
+              onChange={update('email')}
+              placeholder="Email"
+            />
+          </label>
+          <div className="errors">{errors?.username}</div>
+          <label class="signupLabel">
+            <span id="usernameSpan">Username</span>
+            <input type="text"
+              value={username}
+              onChange={update('username')}
+              placeholder="Username"
+            />
+          </label>
 
-      <div className="errors">{errors?.firstName}</div>
-      <label>
-        <span>First Name</span>
-        <input type="text"
-          value={firstName}
-          onChange={update('firstName')}
-          placeholder="First Name"
-        />
-      </label>
+          <div className="errors">{errors?.firstName}</div>
+          <label class="signupLabel">
+            <span id="firstNameSpan">First Name</span>
+            <input type="text"
+              value={firstName}
+              onChange={update('firstName')}
+              placeholder="First Name"
+            />
+          </label>
 
-      <div className="errors">{errors?.lastName}</div>
-      <label>
-        <span>Last Name</span>
-        <input type="text"
-          value={lastName}
-          onChange={update('lastName')}
-          placeholder="Last Name"
-        />
-      </label>
+          <div className="errors">{errors?.lastName}</div>
+          <label class="signupLabel">
+            <span id="lastNameSpan">Last Name</span>
+            <input type="text"
+              value={lastName}
+              onChange={update('lastName')}
+              placeholder="Last Name"
+            />
+          </label>
 
 
-      <div className="errors">{errors?.school}</div>
-      <label>
-        <span>School</span>
-        <input type="text"
-          value={school}
-          onChange={update('school')}
-          placeholder="School"
-        />
-      </label>
+          <div className="errors">{errors?.school}</div>
+          <label class="signupLabel">
+            <span id="schoolSpan">School</span>
+            <input type="text"
+              value={school}
+              onChange={update('school')}
+              placeholder="School"
+            />
+          </label>
 
-      <div className="errors">{errors?.password}</div>
-      <label>
-        <span>Password</span>
-        <input type="password"
-          value={password}
-          onChange={update('password')}
-          placeholder="Password"
-        />
-      </label>
-      <div className="errors">
-        {password !== password2 && 'Confirm Password field must match'}
+          <div className="errors">{errors?.password}</div>
+          <label class="signupLabel">
+            <span id="passwordSpan">Password</span>
+            <input type="password"
+              value={password}
+              onChange={update('password')}
+              placeholder="Password"
+            />
+          </label>
+          <div className="errors">
+            {password !== password2 && 'Confirm Password field must match'}
+          </div>
+          <label class="signupLabel">
+            <span id="confirmPasswordSpan">Confirm Password</span>
+            <input type="password"
+              value={password2}
+              onChange={update('password2')}
+              placeholder="Confirm Password"
+            />
+          </label>
+          <input
+            type="submit"
+            value="Sign Up"
+            disabled={!email || !username || !password || password !== password2}
+          />
+        </form>
       </div>
-      <label>
-        <span>Confirm Password</span>
-        <input type="password"
-          value={password2}
-          onChange={update('password2')}
-          placeholder="Confirm Password"
-        />
-      </label>
-      <input
-        type="submit"
-        value="Sign Up"
-        disabled={!email || !username || !password || password !== password2}
-      />
-    </form>
+    </div>
   );
 }
 
