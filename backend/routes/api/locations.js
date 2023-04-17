@@ -14,4 +14,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const location = await Location.findById(req.params.id);
+    return res.json(location);
+  } catch(err) {
+    const error = new Error('Location not found');
+    error.statusCode = 404;
+    error.errors = { message: "No location found with that id" };
+    return next(error);
+  }
+})
+
 module.exports = router;

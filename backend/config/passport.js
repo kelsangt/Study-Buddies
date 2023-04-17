@@ -22,7 +22,7 @@ passport.use(new LocalStrategy({
                             populate: [
                               {
                                 path: "location",
-                                select: "_id name latitude longitude"
+                                select: "_id name latitude longitude imageUrl"
                               },
                               {
                                 path: "requesters",
@@ -44,7 +44,7 @@ passport.use(new LocalStrategy({
                               },
                               {
                                 path: "location",
-                                select: "_id name latitude longitude"
+                                select: "_id name latitude longitude imageUrl"
                               },
                               {
                                 path: "attendees",
@@ -62,7 +62,7 @@ passport.use(new LocalStrategy({
                               },
                               {
                                 path: "location",
-                                select: "_id name latitude longitude"
+                                select: "_id name latitude longitude imageUrl"
                               },
                               {
                                 path: "attendees",
