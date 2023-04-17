@@ -4,8 +4,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Location = mongoose.model('Location');
 
-const { requireUser } = require('../../config/passport');
-
 // GET all locations
 router.get('/', async (req, res) => {
   try {
