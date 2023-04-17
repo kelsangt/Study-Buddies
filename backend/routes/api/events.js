@@ -167,6 +167,16 @@ router.post('/requests/:id', requireUser, async (req, res, next) => {
       error.statusCode = 422;
       error.errors = { message: "Already made a request" };
       return next(error);
+    } else if (event.attendees.includes(req.user._id)) {
+      const error = new Error('Unprocessable Entity');
+      error.statusCode = 422;
+      error.errors = { message: "Already joined this event" };
+      return next(error);
+    } else if (event.creator.toString() === req.user._id.toString()) {
+      const error = new Error('Unprocessable Entity');
+      error.statusCode = 422;
+      error.errors = { message: "Can't request to join an event the user created" };
+      return next(error);
     }
     
     event.requesters.push(req.user._id);
