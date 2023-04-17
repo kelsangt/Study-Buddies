@@ -12,9 +12,9 @@ const NUM_SEED_EVENTS = 30;
 // Create users
 const users = [];
 const schools = [
-  "App Academy",
   "NYU",
-  "Columbia"
+  "Columbia",
+  "Stonybrook"
 ]
 const majors = [
   "Comp Sci",
