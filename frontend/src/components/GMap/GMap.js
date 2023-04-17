@@ -1,7 +1,12 @@
 import {useState, useRef, useEffect} from 'react';
 import './GMap.css';
-import Marker from './marker/Marker';
+import Marker from './marker/InfoBoxInternal';
 import {renderToString} from 'react-dom/server'
+import { receiveAllEventsForDay } from '../../store/events';
+import { receiveAllLocations } from '../../store/locations';
+import { useSelector } from 'react-redux';
+import InfoBoxInternal from './marker/InfoBoxInternal';
+
 
 const GMap = ({center, zoom}) => {
 	const [map, setMap] = useState();
@@ -46,12 +51,12 @@ const GMap = ({center, zoom}) => {
 		})
 
 		infoTitles.current = new window.google.maps.InfoWindow({
-			ariaLabel: "Testing",
-			content: ""
+			content: "",
+
 		})
 
 		markers.current.addListener("mouseover", () => {
-			const content = renderToString(<Marker />)
+			const content = renderToString(<InfoBoxInternal />)
 			infoTitles.current.open({
 				anchor: markers.current,
 				map
