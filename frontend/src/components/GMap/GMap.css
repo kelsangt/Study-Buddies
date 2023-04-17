@@ -4,8 +4,6 @@
 	position: relative; 
 	display: flex;
 	justify-content: end;
-
-	left: 8px;
 }
 
 #map_wrapper {
