@@ -13,13 +13,17 @@ const validateLoginInput = require('../../validations/login');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.json({
-    message: "GET /api/users"
-  });
+// GET users listing
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.find();
+    return res.json(users);
+  } catch(err) {
+    return res.json([]);
+  }
 });
 
+// POST new account
 router.post('/register', validateRegisterInput, async (req, res, next) => {
   const user = await User.findOne({
     $or: [{ email: req.body.email }, { username: req.body.username }]
@@ -65,6 +69,7 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
   });
 });
 
+// POST login
 router.post('/login', validateLoginInput, async (req, res, next) => {
   passport.authenticate('local', async function(err, user) {
     if (err) return next(err);
@@ -78,6 +83,7 @@ router.post('/login', validateLoginInput, async (req, res, next) => {
   })(req, res, next);
 });
 
+// GET current user info
 router.get('/current', restoreUser, (req, res) => {
   if (!isProduction) {
     const csrfToken = req.csrfToken();
@@ -87,7 +93,17 @@ router.get('/current', restoreUser, (req, res) => {
   res.json({
     _id: req.user._id,
     username: req.user.username,
-    email: req.user.email
+    email: req.user.email,
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    school: req.user.school,
+    major: req.user.major,
+    profileImageUrl: req.user.profileImageUrl,
+    linkedInUrl: req.user.linkedInUrl,
+    phone: req.user.phone,
+    createdEvents: req.user.createdEvents,
+    joinedEvents: req.user.joinedEvents,
+    requestedEvents: req.user.requestedEvents
   });
 });
 
