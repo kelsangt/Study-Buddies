@@ -8,6 +8,7 @@ const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Event = mongoose.model('Event');
 
 passport.use(new LocalStrategy({
   session: false,
@@ -43,7 +44,17 @@ exports.loginUser = async function(user) {
   const userInfo = {
     _id: user._id,
     username: user.username,
-    email: user.email
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    school: user.school,
+    major: user.major,
+    profileImageUrl: user.profileImageUrl,
+    linkedInUrl: user.linkedInUrl,
+    phone: user.phone,
+    createdEvents: user.createdEvents,
+    joinedEvents: user.joinedEvents,
+    requestedEvents: user.requestedEvents
   };
   const token = await jwt.sign(
     userInfo,

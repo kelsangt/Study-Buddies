@@ -12,9 +12,9 @@ const NUM_SEED_EVENTS = 30;
 // Create users
 const users = [];
 const schools = [
-  "App Academy",
   "NYU",
-  "Columbia"
+  "Columbia",
+  "Stonybrook"
 ]
 const majors = [
   "Comp Sci",
@@ -27,13 +27,13 @@ const majors = [
 // demo user
 users.push(
   new User ({
-    username: 'demo-user',
-    email: 'demo-user@appacademy.io',
-    hashedPassword: bcrypt.hashSync('starwars', 10),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    school: schools[Math.floor(Math.random()*schools.length)],
-    major: majors[Math.floor(Math.random()*majors.length)]
+    username: '1337 C0d3r',
+    email: 'Clarence@dipietro.edu',
+    hashedPassword: bcrypt.hashSync('password', 10),
+    firstName: 'Amiter',
+    lastName: 'Babakim',
+    school: "App Academy",
+    major: "Kahoot"
   })
 )
 
@@ -41,14 +41,15 @@ users.push(
 for (let i = 1; i < NUM_SEED_USERS; i++) {
   const firstName = faker.name.firstName();
   const lastName = faker.name.lastName();
+  const school = schools[Math.floor(Math.random()*schools.length)];
   users.push(
     new User ({
       username: faker.internet.userName(firstName, lastName),
-      email: faker.internet.email(firstName, lastName),
+      email: faker.internet.email(firstName, lastName, `${school}.edu`),
       hashedPassword: bcrypt.hashSync(faker.internet.password(), 10),
       firstName: firstName,
       lastName: lastName,
-      school: schools[Math.floor(Math.random()*schools.length)],
+      school: school,
       major: majors[Math.floor(Math.random()*majors.length)]
     })
   )
