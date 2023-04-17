@@ -32,6 +32,18 @@ router.get('/', async (req, res) => {
   }
 });
 
-
+router.get('/:id', async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id)
+                            .populate("creator", "_id username profileImageUrl")
+                            .populate("attendees", "_id username profileImageUrl");
+    return res.json(event);
+  } catch(err) {
+    const error = new Error('Event not found');
+    error.statusCode = 404;
+    error.errors = { message: "No event found with that id" };
+    return next(error);
+  }
+})
 
 module.exports = router;
