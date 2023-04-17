@@ -6,9 +6,16 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import configureStore from './store/store';
+import * as eventActions from './store/events';
+import * as locationActions from './store/locations';
 
 let store = configureStore({});
 
+if (process.env.NODE_ENV !== 'production') {
+  window.store = store;
+  window.eventActions = eventActions;
+  window.locationActions = locationActions;
+}
 function Root() {
   return (
     <Provider store={store}>
