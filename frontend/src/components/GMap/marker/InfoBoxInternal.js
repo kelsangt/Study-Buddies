@@ -32,6 +32,7 @@ const InfoBoxInternal = ({event}) => {
 			<div id="infobox_internal_bottom_row_wrapper">
 				<div id="infobox_internal_join_session_wrapper">
 					<div id="infobox_internal_join_session">Join Session</div>
+					<div id="infobox_internal_session_details">Details</div>
 				</div>
 				<div id="infobox_internal_image">
 					<div id="infobox_internal_image_text">{event.creator.username[0]}</div>
