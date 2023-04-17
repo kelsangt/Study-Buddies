@@ -4,11 +4,13 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   hashedPassword: {
     type: String,
@@ -26,6 +28,10 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  major: {
+    type: String,
+    required: true
+  },
   profileImageUrl: {
     type: String,
     required: false
@@ -33,7 +39,23 @@ const userSchema = new Schema({
   linkedInUrl: {
     type: String,
     required: false
-  }
+  },
+  phone: {
+    type: String,
+    required: false
+  },
+  createdEvents: [{ 
+    type: Schema.Types.ObjectId,
+    ref: 'Event'
+  }],
+  joinedEvents: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Event'
+  }],
+  requestedEvents: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Event'
+  }]
 }, {
   timestamps: true
 });
