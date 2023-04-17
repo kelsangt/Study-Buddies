@@ -1,11 +1,13 @@
+
 #infobox_internal_wrapper {
-	display: flex;
 	flex-direction: column;
+	border-radius: 12px;
+	padding-top: 2px;
 }
 
 #infobox_internal_wrapper {
-	height: 110px;
-	width: 240px;
+	height: 100%;
+	width: 100%;
 	background-color: white;
 	font-weight: 800;
 }
@@ -13,7 +15,7 @@
 #infobox_internal_title_wrapper {
 	display: flex;
 	justify-content: center;
-	padding-bottom: 4px;
+	padding-bottom: 8px;
 }
 
 #infobox_internal_title {
@@ -31,7 +33,7 @@
 
 #infobox_internal_image {
 	height: 40px; 
-	background-color: red;
+	background-color: grey;
 	width: 40px; 
 	border-radius: 50%;
 	display: flex;

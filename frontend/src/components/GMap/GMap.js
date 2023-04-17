@@ -56,7 +56,8 @@ const GMap = ({center, zoom}) => {
 		})
 
 		markers.current.addListener("mouseover", () => {
-				const content = renderToString(<InfoBoxInternal event={events[0]} />)
+				const content = renderToString(
+				<div id="InfoBoxInternal_wrapper"><InfoBoxInternal event={events[0]} /> </div>)
 				infoTitles.current.open({
 					anchor: markers.current,
 					map
