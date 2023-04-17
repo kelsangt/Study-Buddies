@@ -1,8 +1,36 @@
-#test_marker {
-	height: 100px;
-	width: 100px;
-	background-color: white;
-	color: blue;
-	font-weight: 800;
-	border: 1px solid black;
+/*.gm-style .gm-style-iw-d::-webkit-scrollbar-track, 
+.gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece,
+.gm-style .gm-style-iw-c,
+.gm-style .gm-style-iw-t::after { 
 }
+
+.gm-style .gm-style-iw-c {
+}
+
+.gm-style-iw-d {
+}*/
+
+.gm-style .gm-style-iw-t::after { 
+  background-color: red;
+}
+
+#test_marker_wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+#test_marker {
+	height: 100%;
+	width: 100%;
+	background-color: white;
+	font-weight: 800;
+}
+
+/*#test_profile_image {
+	height: 40px; 
+	background-color: red;
+	width: 40px; 
+	border-radius: 50%;
+	position: relative; 
+	top: 20px;
+}*/

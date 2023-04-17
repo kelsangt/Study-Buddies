@@ -1,10 +1,12 @@
 import {useState, useRef, useEffect} from 'react';
 import './GMap.css';
+import Marker from './marker/Marker';
+import {renderToString} from 'react-dom/server'
 
 const GMap = ({center, zoom}) => {
 	const [map, setMap] = useState();
 	const centerCoords = { lat: 40.73630, lng: -73.99379 };
-  const zoomAmount = 18;
+  const zoomAmount = 16;
 	const ref = useRef();
 	const markers = useRef({});
 	const infoTitles = useRef({});
@@ -30,7 +32,6 @@ const GMap = ({center, zoom}) => {
 				styles: stylesArray
 			})
 		)
-
 	}, []);
 
 	useEffect(() => {
@@ -45,23 +46,18 @@ const GMap = ({center, zoom}) => {
 		})
 
 		infoTitles.current = new window.google.maps.InfoWindow({
-			content: content, 
-			ariaLabel: "Testing"
+			ariaLabel: "Testing",
+			content: ""
 		})
 
 		markers.current.addListener("mouseover", () => {
+			const content = renderToString(<Marker />)
 			infoTitles.current.open({
 				anchor: markers.current,
 				map
 			})
+			infoTitles.current.setContent(content);
 		})
-
-		//markers.current.addListener("mouseout", () => {
-		//	infoTitles.current.close({
-		//		anchor: markers.current,
-		//		map
-		//	})
-		//})
 	}, [map])
 
 	return (
