@@ -1,0 +1,36 @@
+/* logged out */
+.nav-bar{
+    background-color: pink;
+    display: flex;
+    justify-content: center;
+    height: 65px;
+    align-items: center;
+}
+
+.study-buddies{
+    display: flex;
+    justify-content: end;
+    flex-basis: 50%;
+    margin-left: 234px;
+}
+.nav-bar h1{
+    font-size: 40px;
+}
+
+.links-auth{
+    display: flex;
+    justify-content: end;
+    flex-basis: 50%;
+    gap: 15px;
+}
+
+
+.signup-login{
+    color: black;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px;
+    width: 120px;
+    text-align: center;
+    margin-right: 35px;
+}

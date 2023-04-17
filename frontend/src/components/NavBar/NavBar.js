@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// import './NavBar.css';
+import './NavBar.css';
 import { logout } from '../../store/session';
 
 function NavBar () {
@@ -15,18 +15,29 @@ function NavBar () {
   const getLinks = () => {
     if (loggedIn) {
       return (
-        <div className="links-nav">
-          <Link to={'/events'}>All Events</Link>
-          <Link to={'/profile'}>Profile</Link>
-          <Link to={'/events/new'}>Write a Event</Link>
-          <button onClick={logoutUser}>Logout</button>
+        <div className="links-auth">
+          <Link style={{ textDecoration: 'none' }} to={'/events'}>All Events</Link>
+          <Link style={{ textDecoration: 'none' }} to={'/profile'}>Profile</Link>
+          <Link style={{ textDecoration: 'none' }} to={'/events/new'}>Create an Event</Link>
+          <div onClick={logoutUser}>Logout</div>
         </div>
       );
     } else {
       return (
         <div className="links-auth">
-          <Link to={'/signup'}>Signup</Link>
-          <Link to={'/login'}>Login</Link>
+
+          <Link style={{ textDecoration: 'none' }} to={'/login'}>
+            <div className='signup-login'>
+              Login
+            </div>
+          </Link>
+
+          <Link style={{ textDecoration: 'none' }} to={'/signup'}>
+            <div className='signup-login'>
+              Signup
+            </div>
+          </Link>
+
         </div>
       );
     }
@@ -34,8 +45,12 @@ function NavBar () {
 
   return (
     <>
-      <h1>Study Buddies</h1>
-      { getLinks() }
+      <div className='nav-bar'>
+        <div className='study-buddies'>
+          <h1>Study Buddies</h1>
+        </div>
+        { getLinks() }
+      </div>
     </>
   );
 }
