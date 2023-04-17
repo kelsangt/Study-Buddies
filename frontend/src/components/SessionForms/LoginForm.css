@@ -51,9 +51,22 @@
 }
 
 .submitInput2 {
-    width: 336px;
-    height: 50px;
+    width: 200px;
+    height: 40px;
     font-family: var(--font);
     font-weight: var(--font-bold);
     font-size: 20px;
 }
+
+#signupAnchor {
+    text-decoration: none;
+    font-weight: var(--font-bold);
+    font-size: 20px;
+    color: white;
+    margin-top: 25px;
+}
+
+#signupAnchor:hover {
+    color: orange;
+}
+
