@@ -1,12 +1,10 @@
 import {useState, useRef, useEffect} from 'react';
 import './GMap.css';
-import Marker from './marker/InfoBoxInternal';
 import {renderToString} from 'react-dom/server'
-import { receiveAllEventsForDay } from '../../store/events';
-import { receiveAllLocations } from '../../store/locations';
-import { useSelector } from 'react-redux';
 import InfoBoxInternal from './marker/InfoBoxInternal';
 import NavBar from '../NavBar/NavBar';
+import { getEvents } from '../../store/events';
+import { useSelector } from 'react-redux';
 
 
 const GMap = ({center, zoom}) => {
@@ -16,6 +14,7 @@ const GMap = ({center, zoom}) => {
 	const ref = useRef();
 	const markers = useRef({});
 	const infoTitles = useRef({});
+	const events = useSelector(getEvents);
 	
 	const image = "../icon.png";
 	const content = "This is a Test";
@@ -57,14 +56,15 @@ const GMap = ({center, zoom}) => {
 		})
 
 		markers.current.addListener("mouseover", () => {
-			const content = renderToString(<InfoBoxInternal />)
-			infoTitles.current.open({
-				anchor: markers.current,
-				map
+				const content = renderToString(
+				<div id="InfoBoxInternal_wrapper"><InfoBoxInternal event={events[0]} /> </div>)
+				infoTitles.current.open({
+					anchor: markers.current,
+					map
+				})
+				infoTitles.current.setContent(content);
 			})
-			infoTitles.current.setContent(content);
-		})
-	}, [map])
+	}, [map, events])
 
 	return (
 		<>

@@ -15,6 +15,7 @@ export const receiveSpecificLocation = (location) => ({
 
 export const fetchAllLocations = () => async dispatch => {
     const res = await jwtFetch('/api/locations');
+		debugger
     const data = await res.json();
     return dispatch(receiveAllLocations(data))
 }
