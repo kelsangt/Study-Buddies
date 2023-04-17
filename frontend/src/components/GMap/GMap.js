@@ -1,6 +1,7 @@
 import {useState, useRef, useEffect} from 'react';
 import './GMap.css';
 import benches from './bench_data';
+import Marker from './marker/Marker';
  
 
 const GMap = ({center, zoom}) => {
@@ -26,6 +27,7 @@ const GMap = ({center, zoom}) => {
 			position: {lat: 40.73630, lng: -73.99379},
 			map: map, 
 			title: "App Academy",
+			icon: <Marker />,
 			label: "App Academy"
 		})
 	}, [map])
