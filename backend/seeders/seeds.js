@@ -28,10 +28,10 @@ const majors = [
 users.push(
   new User ({
     username: '1337 C0d3r',
-    email: 'Clarence@dipietro.edu',
+    email: 'mongobara@appacademy.edu',
     hashedPassword: bcrypt.hashSync('password', 10),
     firstName: 'Amiter',
-    lastName: 'Babakim',
+    lastName: 'DiSmietho',
     school: "App Academy",
     major: "Kahoot"
   })
@@ -59,24 +59,6 @@ for (let i = 1; i < NUM_SEED_USERS; i++) {
 const locations = [];
 const locationData = [
   {
-    name: "Andrew Heiskell Braille and Talking Book Library",
-    imageUrl: "https://lh5.googleusercontent.com/p/AF1QipNIvkPF5UwRweK1garG9eQiKvNvncY7pmsCA8Vf=w408-h306-k-no",
-    latitude: 40.741778380340875, 
-    longitude: -73.9930608400538
-  },
-  {
-    name: "Epiphany Library",
-    imageUrl: "https://lh5.googleusercontent.com/p/AF1QipOsJ2-LZz1S-ajWg3tN5Sm9dWk-MqCNyfXGLOku=w408-h306-k-no",
-    latitude: 40.738982015961504, 
-    longitude: -73.98216034289288
-  },
-  {
-    name: "Ottendorfer Library",
-    imageUrl: "https://lh5.googleusercontent.com/p/AF1QipM19EPD2Bx9CLZ0YkWQLUEYDf4drxMkXDp8-GKy=w408-h270-k-no",
-    latitude: 40.729226336363915, 
-    longitude: -73.98782516802406
-  },
-  {
     name: "Seward Park Library",
     imageUrl: "https://lh5.googleusercontent.com/p/AF1QipMO5emKizopnNp2N_KGQlCqvuYwjgEVi4XsBmQ3=w408-h544-k-no",
     latitude: 40.71465519155157, 
@@ -88,6 +70,55 @@ const locationData = [
     latitude: 40.71413473453696, 
     longitude: -73.99666572894645
   },
+  {
+    name: "Kips Bay Library",
+    latitude: 40.745042011615695,
+    longitude: -73.97992193841986
+  },
+  {
+    name: "Battery Park City Library",
+    latitude: 40.7165388289107,
+    longitude: -74.01559101609772
+  },
+  {
+    name: "Tompkins Square Library",
+    latitude: 40.72734177701872,
+    longitude: -73.98039817443512
+  },
+  {
+    name: "Hamilton Fish Park Library",
+    latitude: 40.72045921941025,
+    longitude: -73.9794761693269
+  }, 
+  {
+    name: "Andrew Heiskell Braille and Talking Book Library",
+    latitude: 40.74099110899836,
+    longitude: -73.99043085753692
+  },
+  {
+    name: "Epiphany Library",
+    latitude: 40.73882452808173,
+    longitude: -73.98195297003078
+  },
+  {
+    name: "Mulberry Street Library",
+    latitude: 40.724684064312044,
+    longitude: -73.99396141770526
+  },
+  {
+    name: "Jefferson Market Library",
+    latitude: 40.73545263981523,
+    longitude: -73.99895900866127
+  },
+  {
+    name: "Hudson Park Library",
+    latitude: 40.7307185544648,
+    longitude: -74.00531001605788
+  }, {
+    name: "Ottendorfer Library",
+    latitude: 40.729649750454314,
+    longitude: -73.98764198537313
+  }
 ]
 
 locationData.forEach(loc => locations.push(new Location(loc)));
@@ -96,7 +127,7 @@ locationData.forEach(loc => locations.push(new Location(loc)));
 const events = [];
 const timeSlotMinutes = [30, 45, 60, 90, 120];
 for (let i = 0; i < NUM_SEED_EVENTS; i++) {
-  const startTime = faker.date.between('2023-05-01T00:00:00.000Z', '2023-05-31T00:00:00.000Z')
+  const startTime = faker.date.between('2023-05-01T00:00:00.000Z', '2023-05-10T00:00:00.000Z')
   const endTime = new Date(startTime.getTime() + (timeSlotMinutes[Math.floor(Math.random() * timeSlotMinutes.length)])*60000)
   const usersCopy = [...users];
   const creator = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
