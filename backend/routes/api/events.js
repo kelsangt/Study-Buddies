@@ -122,7 +122,6 @@ router.delete('/:id', requireUser, async (req, res, next) => {
 
     return res.json(null);
   } catch(err) {
-    console.error(err)
     const error = new Error('Event not found');
     error.statusCode = 404;
     error.errors = { message: "No event found with that id" };
@@ -131,22 +130,56 @@ router.delete('/:id', requireUser, async (req, res, next) => {
 })
 
 // UPDATE event
-// router.patch('/:id', requireUser, async (req, res, next) => {
-//   try {
-//     const event = await Event.findById(req.params.id);
-//     return res.json(null);
-//   } catch(err) {
-//     console.error(err)
-//     const error = new Error('Event not found');
-//     error.statusCode = 404;
-//     error.errors = { message: "No event found with that id" };
-//     return next(error);
-//   }
-// })
+router.patch('/:id', requireUser, async (req, res, next) => {
+  try {
+    let event = await Event.findById(req.params.id);
+    if (event.creator.toString() !== req.user._id.toString()) {
+      const error = new Error('Unauthorized');
+      error.statusCode = 401;
+      error.errors = { message: "Must be creator to update this event" };
+      return next(error);
+    }
+
+    event.name = req.body.name,
+    event.description = req.body.description,
+    event.location = req.body.location,
+    event.startTime = req.body.startTime,
+    event.endTime = req.body.endTime 
+    await event.save();
+
+    return res.json(event);
+  } catch(err) {
+    const error = new Error('Event not found');
+    error.statusCode = 404;
+    error.errors = { message: "No event found with that id" };
+    return next(error);
+  }
+})
 
 // event requests
 // POST new request
-// router.post()
+router.post('/requests/:id', requireUser, async (req, res, next) => {
+  try {
+    const event = await Event.findById(req.params.id);
+
+    if (event.requesters.includes(req.user._id)) {
+      const error = new Error('Unprocessable Entity');
+      error.statusCode = 422;
+      error.errors = { message: "Already made a request" };
+      return next(error);
+    }
+    
+    event.requesters.push(req.user._id);
+    await event.save();
+
+    return res.json(event);
+  } catch(err) {
+    const error = new Error('Event not found');
+    error.statusCode = 404;
+    error.errors = { message: "No event found with that id" };
+    return next(error);
+  }
+})
 
 // DELETE request
 // router.delete()
