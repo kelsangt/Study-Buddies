@@ -5,6 +5,7 @@ const validateLoginInput = [
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
+    .matches(/(.edu)$/)
     .withMessage('Email is invalid'),
   check('password')
     .exists({ checkFalsy: true })
