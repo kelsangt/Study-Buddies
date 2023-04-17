@@ -126,8 +126,13 @@ locationData.forEach(loc => locations.push(new Location(loc)));
 // Create events
 const events = [];
 const timeSlotMinutes = [30, 45, 60, 90, 120];
+const today = new Date();
+const endDay = new Date();
+endDay.setDate(endDay.getDate() + 10);
+
 for (let i = 0; i < NUM_SEED_EVENTS; i++) {
-  const startTime = faker.date.between('2023-05-01T00:00:00.000Z', '2023-05-10T00:00:00.000Z')
+  // const startTime = faker.date.between('2023-05-01T00:00:00.000Z', '2023-05-10T00:00:00.000Z')
+  const startTime = faker.date.between(today, endDay);
   const endTime = new Date(startTime.getTime() + (timeSlotMinutes[Math.floor(Math.random() * timeSlotMinutes.length)])*60000)
   const usersCopy = [...users];
   const creator = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
