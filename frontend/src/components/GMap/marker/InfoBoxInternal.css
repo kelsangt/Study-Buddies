@@ -1,0 +1,50 @@
+#infobox_internal_wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+#infobox_internal_wrapper {
+	height: 110px;
+	width: 240px;
+	background-color: white;
+	font-weight: 800;
+}
+
+#infobox_internal_title_wrapper {
+	display: flex;
+	justify-content: center;
+	padding-bottom: 4px;
+}
+
+#infobox_internal_title {
+	text-decoration: underline;
+}
+
+#infobox_internal_text {
+}
+
+#infobox_internal_join_session {
+	color: blue;
+	text-decoration: underline;
+}
+
+#infobox_internal_join_session:hover {
+	cursor: pointer;
+}
+
+#infobox_internal_image {
+	height: 40px; 
+	background-color: red;
+	width: 40px; 
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#infobox_internal_bottom_row_wrapper {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: end;
+}

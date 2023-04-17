@@ -20,7 +20,7 @@ function Root() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+				<App />
       </BrowserRouter>
     </Provider>
   );
