@@ -4,6 +4,8 @@ import { Switch } from 'react-router-dom';
 
 import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 import NavBar from './components/NavBar/NavBar';
+import GMap from './components/GMap/GMap';
+import {Wrapper} from "@googlemaps/react-wrapper"
 
 import MainPage from './components/MainPage/MainPage';
 import LoginForm from './components/SessionForms/LoginForm';
@@ -21,6 +23,9 @@ function App() {
   return loaded && (
     <>
       <NavBar />
+			<Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY}>
+				<GMap />
+			</Wrapper>
       <Switch>
         <AuthRoute exact path="/" component={MainPage} />
         <AuthRoute exact path="/login" component={LoginForm} />
