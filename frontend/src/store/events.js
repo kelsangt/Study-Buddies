@@ -1,10 +1,11 @@
 import jwtFetch from "./jwt";
 
+
 export const RECEIVE_ALL_EVENTS_FOR_DAY = "events/RECEIVE_ALL_EVENTS_FOR_DAY";
 export const RECEIVE_SPECIFIC_EVENT = 'events/RECEIVE_SPECIFIC_EVENT';
 export const POST_EVENT = 'events/POST_EVENT';
 
-
+// Actions
 export const receiveAllEventsForDay = allEventsForDay => ({
     type: RECEIVE_ALL_EVENTS_FOR_DAY,
     allEventsForDay
@@ -20,7 +21,12 @@ export const postEvent = event => ({
     event
 })
 
+// Events Selectors 
+export const getEvents = (state) => {
+	return state.events ? Object.values(state.events) : [];
+}
 
+// Thunk Action Creators 
 // year-month-day
 // date format: "2023-04-17"
 export const fetchAllEventsForDay = (date) => async dispatch => {

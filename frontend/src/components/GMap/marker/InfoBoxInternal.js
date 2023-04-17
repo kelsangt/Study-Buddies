@@ -1,8 +1,8 @@
 import './InfoBoxInternal.css'
 
-const InfoBoxInternal = () => {
+const InfoBoxInternal = ({event}) => {
 
-	const subject = "Comp-Sci"
+	const subject = event.name;
 	const host = "Justin"
 	const date = "April 23, 2023"
 	return (
@@ -10,7 +10,7 @@ const InfoBoxInternal = () => {
 			<div id="infobox_internal_title_wrapper">
 				<div id="infobox_internal_title">{subject} Study Session</div>
 			</div>
-			<div id="infobox_internal_text">Hosted By: {host}</div>
+			<div id="infobox_internal_text">Hosted By: {event.creator.username}</div>
 			<div id="infobox_internal_start_date">Occurs on: {date}</div>
 			<div id="infobox_internal_membersjoined">3/4 Buddies</div>
 			<div id="infobox_internal_bottom_row_wrapper">
