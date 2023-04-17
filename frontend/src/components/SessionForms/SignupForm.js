@@ -6,6 +6,7 @@ import image1 from '../../images/image1.png';
 import image2 from '../../images/image2.png';
 import image3 from '../../images/image3.png';
 import image4 from '../../images/image4.png';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 function SignupForm () {
   const [email, setEmail] = useState('');
@@ -158,6 +159,11 @@ function SignupForm () {
             />
           </label>
         </form>
+          
+        <a id="loginAnchor" href="/login">
+            Have an account? Log in instead
+        </a>
+          
       </div>
     </div>
   );

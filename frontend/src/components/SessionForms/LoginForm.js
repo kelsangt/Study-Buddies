@@ -65,6 +65,9 @@ function LoginForm () {
             />
           </label>
         </form>
+        <a id="signupAnchor" href="/signup">
+            New to Study Buddies? Sign up here
+        </a>
       </div>
     </div>
   );
