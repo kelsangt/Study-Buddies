@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import './SessionForm.css';
+import './LoginForm.css';
 
 import { login, clearSessionErrors } from '../../store/session';
 
@@ -27,32 +27,34 @@ function LoginForm () {
   }
 
   return (
-    <form className="session-form" onSubmit={handleSubmit}>
-      <h2>Log In Form</h2>
-      <div className="errors">{errors?.email}</div>
-      <label>
-        <span>Email</span>
-        <input type="text"
-          value={email}
-          onChange={update('email')}
-          placeholder="Email"
+    <div id="mainLoginDiv">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Log In Form</h2>
+        <div className="errors">{errors?.email}</div>
+        <label>
+          <span>Email</span>
+          <input type="text"
+            value={email}
+            onChange={update('email')}
+            placeholder="Email"
+          />
+        </label>
+        <div className="errors">{errors?.password}</div>
+        <label>
+          <span>Password</span>
+          <input type="password"
+            value={password}
+            onChange={update('password')}
+            placeholder="Password"
+          />
+        </label>
+        <input
+          type="submit"
+          value="Log In"
+          disabled={!email || !password}
         />
-      </label>
-      <div className="errors">{errors?.password}</div>
-      <label>
-        <span>Password</span>
-        <input type="password"
-          value={password}
-          onChange={update('password')}
-          placeholder="Password"
-        />
-      </label>
-      <input
-        type="submit"
-        value="Log In"
-        disabled={!email || !password}
-      />
-    </form>
+      </form>
+    </div>
   );
 }
 

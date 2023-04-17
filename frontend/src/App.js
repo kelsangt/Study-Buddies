@@ -12,6 +12,7 @@ import LoginForm from './components/SessionForms/LoginForm';
 import SignupForm from './components/SessionForms/SignupForm';
 
 import { getCurrentUser } from './store/session';
+import MainContent from './components/MainContent/MainContent';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -22,12 +23,16 @@ function App() {
 
   return loaded && (
     <>
+<<<<<<< HEAD
       <NavBar />
 			<Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY}>
 				<GMap />
 			</Wrapper>
+=======
+>>>>>>> dfa3955364ad7142623ff159c6259dec1520c2a4
       <Switch>
         <AuthRoute exact path="/" component={MainPage} />
+        <ProtectedRoute exact path='/events' component={MainContent}/>
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
       </Switch>
