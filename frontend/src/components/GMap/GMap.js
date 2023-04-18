@@ -19,6 +19,7 @@ const GMap = ({center, zoom}) => {
 	const events = useSelector(getEvents);
 	const image = "../icon.png";
 	const blueIcon = "../bluemarker.png"	
+	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 
 	// Geolocation Button
 	const infoWindow = new window.google.maps.InfoWindow(); 
@@ -47,31 +48,35 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 const findGeoLocation = () => {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				const userLocation = {
-					lat: position.coords.latitude, 
-					lng: position.coords.longitude
-				};
-				userLocationCoords.current = userLocation; 
-				// Setting the map to the new location. 
-				const newMap = new window.google.maps.Map(ref.current, {
-					center: { lat: userLocation.lat, lng: userLocation.lng},
-					zoom: zoomAmount,
-					styles: stylesArray
-				})
-				newMap.setCenter(userLocation);
-				newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-				setMap(newMap);
-			},
-			() => {
-				handleLocationError(true, infoWindow, map.getCenter());
-			}
-		);
-	} else {
-		// Browser doesn't support Geolocation
-		handleLocationError(false, infoWindow, map.getCenter());
+	setGeoLocationClicked(false);
+	
+	if (!geoLocationClicked) {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const userLocation = {
+						lat: position.coords.latitude, 
+						lng: position.coords.longitude
+					};
+					userLocationCoords.current = userLocation; 
+					// Setting the map to the new location. 
+					const newMap = new window.google.maps.Map(ref.current, {
+						center: { lat: userLocation.lat, lng: userLocation.lng},
+						zoom: zoomAmount,
+						styles: stylesArray
+					})
+					newMap.setCenter(userLocation);
+					newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+					setMap(newMap);
+				},
+				() => {
+					handleLocationError(true, infoWindow, map.getCenter());
+				}
+			);
+		} else {
+			// Browser doesn't support Geolocation
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
 	}
 }
 
@@ -84,7 +89,6 @@ const findGeoLocation = () => {
 
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 		locationButton.addEventListener("click", findGeoLocation);
-
 		setMap(initialMap)
 	}, []);
 
@@ -130,33 +134,35 @@ const findGeoLocation = () => {
 			})
 		}
 
-		if (userLocationCoords) {
-			const locationMarker = new window.google.maps.Marker({
-				position: {lat: userLocationCoords.current.lat, lng: userLocationCoords.current.lng},
-				map: map, 
-				icon: {
-					url: blueIcon, 
-					scaledSize: new window.google.maps.Size(64, 64)
-				},
-				animation: window.google.maps.Animation.DROP
-			});
-			
-			infoWindow.setPosition(userLocationCoords.current);
-			infoWindow.setContent("Your Approximate Location.")
-			infoWindow.open({
-				anchor: locationMarker,
-				map: map 
-			})
-			const circle = new window.google.maps.Circle({
-				map: map, 
-				radius: 36,
-				strokeColor: "#c4c4c4",
-				strokeOpacity: 0.35,
-				fillColor: '#4a80f5'
-			})
-			circle.bindTo('center', locationMarker, 'position');
+		if (!geoLocationClicked) {
+			setGeoLocationClicked(true);
+			if (userLocationCoords) {
+				const locationMarker = new window.google.maps.Marker({
+					position: {lat: userLocationCoords.current.lat, lng: userLocationCoords.current.lng},
+					map: map, 
+					icon: {
+						url: blueIcon, 
+						scaledSize: new window.google.maps.Size(64, 64)
+					},
+					animation: window.google.maps.Animation.DROP
+				});
+				
+				infoWindow.setPosition(userLocationCoords.current);
+				infoWindow.setContent("Your Approximate Location.")
+				infoWindow.open({
+					anchor: locationMarker,
+					map: map 
+				})
+				const circle = new window.google.maps.Circle({
+					map: map, 
+					radius: 36,
+					strokeColor: "#c4c4c4",
+					strokeOpacity: 0.35,
+					fillColor: '#4a80f5'
+				})
+				circle.bindTo('center', locationMarker, 'position');
+			}
 		}
-
 	}, [map, events])
 
 	return (
