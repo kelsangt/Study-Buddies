@@ -74,7 +74,7 @@ const GMap = ({center, zoom}) => {
 		
 		// Adding the listener to show the InfoTile on mouseover. 
 		for (let i = 0; i < markers.current.length; i++) {
-			markers.current[i].addListener("mouseover", () => {
+			markers.current[i].addListener("click", () => {
 				infoTiles.current[i].open({
 					anchor: markers.current[i],
 					map
