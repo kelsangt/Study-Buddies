@@ -18,7 +18,7 @@ const uiReducer = (state = initialState, action) => {
     let nextState = { ...state }
     switch (action.type) {
         case RECEIVE_MODAL_TOGGLE:
-            nextState[action.modalStatus] = action.modalStatus.boolean
+            nextState.modalStatus = action.modalStatus
             // debugger
             return nextState
         default:

@@ -1,6 +1,12 @@
 import './ProfileModal.css'
+import { logout } from '../../store/session';
+import { useDispatch } from 'react-redux';
 const ProfileModal = () => {
-
+    const dispatch = useDispatch();
+    const logoutUser = e => {
+        e.preventDefault();
+        dispatch(logout());
+      }
     return (
         <div id='profile-modal-container'> 
             <div id='big-event-container'>
@@ -17,7 +23,7 @@ const ProfileModal = () => {
 
             <div id='profile-modal-footer'>Div 3
                 <div id='settings-button'>Settings</div>
-                <div id='logout-button'>Logout</div>
+                <div id='logout-button' onClick={logoutUser}>Logout</div>
             </div>
         </div>
     )
