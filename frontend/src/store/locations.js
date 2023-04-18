@@ -8,10 +8,15 @@ export const receiveAllLocations = allLocations => ({
     allLocations
 });
 
+export const getLocations = (state) => {
+	return state.locations ? Object.values(state.locations) : [];
+}
 export const receiveSpecificLocation = (location) => ({
     type: RECEIVE_SPECIFIC_LOCATION,
     location
 });
+
+
 
 export const fetchAllLocations = () => async dispatch => {
     const res = await jwtFetch('/api/locations');
