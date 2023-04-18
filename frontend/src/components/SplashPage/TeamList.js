@@ -60,7 +60,7 @@ const TeamList = () => {
                 className='team-pics' 
                 src={require('./assets/default.jpeg')}
                 alt=''
-                // onClick={handleMemeToggle('keleo')}
+                onClick={handleMemeToggle('keleo')}
               />
             </div>
             <div id='team-member-name'>Kelsang Tsering</div>
