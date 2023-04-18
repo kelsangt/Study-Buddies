@@ -16,8 +16,6 @@ const GMap = ({center, zoom}) => {
 	const markers = useRef([]);
 	const infoTiles = useRef([]);
 	const events = useSelector(getEvents);
-	const locations = useSelector(getLocations);
-	
 	const image = "../icon.png";
 
 	const stylesArray = [
@@ -93,7 +91,6 @@ const GMap = ({center, zoom}) => {
 			</div>
 		</>
 	)
-
 }
 
 export default GMap;
