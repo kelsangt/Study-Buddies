@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import configureStore from './store/store';
 import * as eventActions from './store/events';
 import * as locationActions from './store/locations';
+import { ModalProvider } from './context/Modal';
 
 let store = configureStore({});
 
@@ -18,11 +19,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 function Root() {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-				<App />
-      </BrowserRouter>
-    </Provider>
+    <ModalProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </ModalProvider>
   );
 }
 
