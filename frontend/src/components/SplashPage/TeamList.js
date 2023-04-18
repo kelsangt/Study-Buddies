@@ -60,7 +60,7 @@ const TeamList = () => {
                 className='team-pics' 
                 src={require('./assets/default.jpeg')}
                 alt=''
-                // onClick={handleMemeToggle('keleo')}
+                onClick={handleMemeToggle('keleo')}
               />
             </div>
             <div id='team-member-name'>Kelsang Tsering</div>
@@ -89,7 +89,7 @@ const TeamList = () => {
                 onClick={handleMemeToggle('capy')}
               />
             </div>
-            <div id='team-member-name'>Fahim Capybara Khan</div>
+            <div id='team-member-name'>Fahim Khan</div>
         </div>
       
         <div className='individual-team-component'>
