@@ -5,6 +5,8 @@ import InfoBoxInternal from './marker/InfoBoxInternal';
 import NavBar from '../NavBar/NavBar';
 import { getEvents } from '../../store/events';
 import { useSelector } from 'react-redux';
+import { getLocations } from '../../store/locations';
+import EventSideBar from '../EventsSidebar';
 
 const GMap = ({center, zoom}) => {
 	const [map, setMap] = useState();
@@ -161,6 +163,7 @@ const findGeoLocation = () => {
 		<>
 			<NavBar />
 			<div id="map_container">
+				<EventSideBar />
 				<div id="map_wrapper">
 					<div ref={ref} id="map" />
 				</div>

@@ -24,7 +24,6 @@ const MainContent = () => {
     console.log(todayEvents)
     return (
         <>
-            <EventSideBar />
             <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY}>
                 <GMap />
             </Wrapper>

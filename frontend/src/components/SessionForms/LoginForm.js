@@ -7,6 +7,7 @@ import image3 from '../../images/image3.png';
 import image4 from '../../images/image4.png';
 
 import { login, clearSessionErrors } from '../../store/session';
+import { setModalStatus } from '../../store/ui';
 
 function LoginForm () {
   const [email, setEmail] = useState('');
@@ -28,11 +29,13 @@ function LoginForm () {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ email, password })); 
+    dispatch(setModalStatus(false))
   }
 
   const demoLogin = (e) => {
     e.preventDefault();
     dispatch(login({email: "mongobara@appacademy.edu", password: "password"}));
+    dispatch(setModalStatus(false))
   }
 
   return (
