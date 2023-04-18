@@ -38,3 +38,18 @@ export function NameToolTip({ top, left, onClose, children }) {
     modalNode
   );
 }
+
+export function CenterModal({ onClose, children }) {
+  const modalNode = useContext(ModalContext);
+  if (!modalNode) return null;
+
+  return ReactDOM.createPortal(
+    <div id="modal-center">
+      <div id="modal-center-background" onClick={onClose} />
+      <div id="modal-center-content">
+        {children}
+      </div>
+    </div>,
+    modalNode
+  );
+}

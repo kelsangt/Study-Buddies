@@ -1,0 +1,17 @@
+.event-show {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.event-show .event-name {
+  font-size: 30px;
+}
+
+.event-show .event-location {
+  font-size: 22px;
+}
+
+.event-show .event-description {
+  font-size: 18px;
+}
