@@ -1,6 +1,5 @@
 .name-tooltip {
-  position: fixed;
-  left: 80px;
+  position: absolute;
   z-index: 5;
 
   height: fit-content;
@@ -8,13 +7,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  white-space: pre-line;
+  word-break: break-all;
+  overflow: auto;
 
   font-weight: bold;
-  color: #dbdee1;
   text-align: center;
-  background-color: black;
+  background-color: white;
+  color: black;
   border-radius: 6px;
-  padding: 10px 10px;
+  padding: 1px 2px;
+  font-size: 4px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
-  animation: tooltip .2s ease-in;
+  animation: tooltip .4s ease-in;
+
+  font-size: 14px;
 }
