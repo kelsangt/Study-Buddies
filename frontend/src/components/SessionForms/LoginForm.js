@@ -30,6 +30,11 @@ function LoginForm () {
     dispatch(login({ email, password })); 
   }
 
+  const demoLogin = (e) => {
+    e.preventDefault();
+    dispatch(login({email: "mongobara@appacademy.edu", password: "password"}));
+  }
+
   return (
     <div id="mainLoginDiv">
       <img src={image1} alt="image1" id="image1"/> 
@@ -65,6 +70,9 @@ function LoginForm () {
             />
           </label>
         </form>
+        <label className="submitButton2">
+            <button id="demoButton" onClick={demoLogin}>Demo Login</button>
+        </label>
         <a id="signupAnchor" href="/signup">
             New to Study Buddies? Sign up here
         </a>
