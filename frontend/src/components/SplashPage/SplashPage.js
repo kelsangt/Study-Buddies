@@ -7,22 +7,22 @@ function SplashPage() {
       <>
         <NavBar />
         <div id='splashpage'>
-            <div id='tagline'>
+            {/* <div id='tagline'>
               TAGLINE
-            </div>
+            </div> */}
             <div id='big-cover-photo'>
               <div id='info-words'>
-                Struggling with school?<br/> Sign up today and meet up with other students with the same problems.
+                {/* Struggling with school?<br/> Sign up today and meet up with other students with the same problems. */}
               </div>
-              <Link to='/signup'>Sign Up</Link>
+              {/* <Link to='/signup'>Sign Up</Link> */}
             </div>
 
             <div id='team-div'>
-              <div id='meet-team'>Meet the Team:</div>
+              <div id='meet-team'>Meet our Team</div>
 
               <div className='team-holder'>
                 <div className='individual-team-component'>
-                    <div id='position'>Team Lead</div>
+                    <div className='teamPosition'>Team Lead</div>
                     <div className='team-pics-holder'>
                       <img className='team-pics' src={require('./assets/default.jpeg')}/>
                     </div>
@@ -31,7 +31,7 @@ function SplashPage() {
               
               
                 <div className='individual-team-component'>
-                    <div id='position'>Frontend Lead</div>
+                    <div className='teamPosition'>Frontend Lead</div>
                     <div className='team-pics-holder'>
                       <img className='team-pics' src={require('./assets/ying.jpeg')}/>
                     </div>
@@ -41,7 +41,7 @@ function SplashPage() {
 
               
                 <div className='individual-team-component'>
-                    <div id='position'>Backend Lead</div>
+                    <div className='teamPosition'>Backend Lead</div>
                     <div className='team-pics-holder'>
                       <img className='team-pics' src={require('./assets/fahim.jpeg')}/>
                     </div>
@@ -51,7 +51,7 @@ function SplashPage() {
 
               
                 <div className='individual-team-component'>
-                    <div id='position'>Flex Engineer</div>
+                    <div className='teamPosition'>Flex Engineer</div>
                     <div className='team-pics-holder'>
                       <img className='team-pics' src={require('./assets/diner.jpeg')}/>
                     </div>
@@ -64,7 +64,7 @@ function SplashPage() {
 
         </div>
 
-        <footer>
+        <footer id="footer">
           Copyright &copy; 2023 theres no copyright
         </footer>
       </>

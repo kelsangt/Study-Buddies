@@ -14,12 +14,13 @@
     width: 600px;
     height: 500px;
     background-color: rgb(30, 84, 171);
-    font-family: Jost;
-    font-weight: 400;
+    font-family: var(--font);
+    font-weight: var(--font-regular);
     font-size: 20px;
     color: white;
     z-index: 10;
     box-shadow: 12px 12px 12px gray;
+    border-radius: 40px;
 }
 
 .login-form {
@@ -56,6 +57,7 @@
     font-family: var(--font);
     font-weight: var(--font-bold);
     font-size: 20px;
+    color: rgb(51, 51, 51);
 }
 
 #signupAnchor {

@@ -1,6 +1,7 @@
 #splashpage{
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 #tagline{
@@ -9,60 +10,77 @@
 }
 
 #info-words{
+    display: flex;
+    justify-content: center;
+    align-content: center;
     color: gray;
     font-size: 30px;
 }
 #big-cover-photo{
     align-self: center;
     width: 100vw;
-    height: 30vh;
-    border: 1px solid green;
-    /* background-image: url('./assets/background.jpeg'); */
-    background-color: rgb(250, 233, 213);
+    height: 40vh;
+    background-color: rgb(30, 84, 171);
     display: flex;
     flex-direction: column;
-    box-shadow: 2px 5px 5px black;
-
 }
 
 /* team stuff */
 #meet-team{
     font-size: 40px;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 #team-div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: var(--font);
+    font-weight: var(--font-regular);
 }
 .team-holder{
     display: flex;
-    border: 3px solid black;
+    /* border: 3px solid black; */
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 .individual-team-component {
     display: flex;
     flex-direction: column;
     align-items:center;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .team-pics-holder {
     width: 300px;
     height: 300px;
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     overflow: hidden;
 }
 
 .team-pics {
     width: 300px;
     height: 300px;
+    border-radius: 800px;
 }
-#position{
+.teamPosition{
     font-size: 30px;
+    margin-bottom: 30px;
 }
 
 #team-member-name{
     font-size: 20px;
 }
 
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 10vh;
+    background-color: rgb(30, 84, 171);
+    color: white;
+    font-family: var(--font);
+    font-weight: var(--font-regular);
+}
