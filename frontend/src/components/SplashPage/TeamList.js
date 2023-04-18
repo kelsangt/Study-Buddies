@@ -7,37 +7,40 @@ const TeamList = () => {
   const memeState = useSelector(getMemes);
   const dispatch = useDispatch()
 
+  const capySound = document.createElement("audio");
+  capySound.src = require('./assets/powerup.wav');
+  capySound.preload = true;
+  
   useEffect(() => {
     dispatch(resetMemes());
     return () => dispatch(resetMemes());
   }, [])
 
-  const handleMemeToggle = (selected) => (e) => {
+  const handleMemeToggle = (selected) => async (e) => {
     switch (selected) {
       case 'keleo':
         if (!memeState.keleo) {
           dispatch(setLeo(true));
-          e.currentTarget.src = require('./assets/keltigre_alt.png')
-        } else {
-          e.currentTarget.src = require('./assets/keltigre.jpg')
+          e.currentTarget.src = require('./assets/keleo.png');
         }
         break;
       case 'giiirrrl':
         if (!memeState.giiirrrl) {
           dispatch(setGiiirrrl(true));
-          e.currentTarget.src = require('./assets/giiirrrl.jpg')
+          e.currentTarget.src = require('./assets/giiirrrl.jpg');
         }
         break;
       case 'capy':
         if (!memeState.capy) {
+          capySound.play();
           dispatch(setCapy(true));
-          e.currentTarget.src = require('./assets/ssj_capy.png')
+          e.currentTarget.src = require('./assets/ssj_capy.png');
         }
         break;
       case 'mongoose':
         if (!memeState.mongoose) {
           dispatch(setMongoose(true));
-          e.currentTarget.src = require('./assets/mongoose.jpg')
+          e.currentTarget.src = require('./assets/mongoose.jpg');
         }
         break;
       default:
@@ -57,7 +60,7 @@ const TeamList = () => {
                 className='team-pics' 
                 src={require('./assets/default.jpeg')}
                 alt=''
-                onClick={handleMemeToggle('keleo')}
+                // onClick={handleMemeToggle('keleo')}
               />
             </div>
             <div id='team-member-name'>Kelsang Tsering</div>
