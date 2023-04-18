@@ -27,6 +27,10 @@ const MyCreatedEvents = ({event}) => {
             <div className="myattendee-count">
                 # of Attendees: {count}
             </div>
+            
+            <div className='myevent-edit-holder'>
+                <div id='myevent-edit-button'>Edit Event</div>
+            </div>
         </div>
     )
 }
