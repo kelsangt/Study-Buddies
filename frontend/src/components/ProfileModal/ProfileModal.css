@@ -3,6 +3,11 @@
     100% {right: 0px;}
 }
 
+@keyframes reversemodal {
+    0% {right: 0px;}
+    100% {right: -25vw;}
+}
+
 #profile-modal-container{
     position: absolute;
     right: 0px;
@@ -21,8 +26,9 @@
     animation-name: modal;
     animation-duration: 0.5s;
 }
-.slideout{
-    animation:alternate-reverse
+#profile-modal-container.slideout{
+    animation-name: reversemodal;
+    animation-duration: 0.5s;
 }
 
 #big-event-container{
