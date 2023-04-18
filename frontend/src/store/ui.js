@@ -23,7 +23,8 @@ export const selectedEventId = (state) => {
 }
 
 const initialState = {
-    modalStatus: false
+    modalStatus: false,
+    selectedEventId: null
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -33,9 +34,9 @@ const uiReducer = (state = initialState, action) => {
             nextState.modalStatus = action.modalStatus
             // debugger
             return nextState
-				case RECEIVE_EVENT_CLICKED: 
-					nextState.selectedEventId = action.eventId;
-					return nextState;
+        case RECEIVE_EVENT_CLICKED: 
+            nextState.selectedEventId = action.eventId;
+            return nextState;
         default:
             return state;
     }

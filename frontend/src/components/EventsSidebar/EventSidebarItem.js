@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import './EventSidebar.css';
-import { NameToolTip } from '../../context/Modal';
+import { CenterModal, NameToolTip } from '../../context/Modal';
+import EventShow from '../EventShow';
 
 const EventSidebarItem = ({event}) => {
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
+  const [showEventInfoModal, setShowEventInfoModal] = useState(false);
 
   const showHandler = (id) => (e) => {
     e.preventDefault();
@@ -30,14 +32,13 @@ const EventSidebarItem = ({event}) => {
   }
 
   return (
-    <div className="event-sidebar-item">
+    <div 
+      className="event-sidebar-item"
+      onClick={() => setShowEventInfoModal(!showEventInfoModal)}
+    >
       <span className="event-name">
         {event.name}
       </span>
-      
-      {/* <span className="event-description">
-        {event.description || ''}
-      </span> */}
 
       <span className="event-location">
         {event.location.name}
@@ -47,7 +48,7 @@ const EventSidebarItem = ({event}) => {
         {
           event.attendees.map(attendee => {
             return (
-              <>
+              <div key={`${attendee._id} ${event._id}`}>
                 <img
                   className='user-image attendee'
                   src={
@@ -66,7 +67,7 @@ const EventSidebarItem = ({event}) => {
                     </span>
                   </NameToolTip>
                 )}
-              </>
+              </div>
             )
           })
         }
@@ -85,6 +86,12 @@ const EventSidebarItem = ({event}) => {
           alt=''
         />
       </div>
+
+      {showEventInfoModal && (
+        <CenterModal onClose={() => setShowEventInfoModal(!showEventInfoModal)}>
+          <EventShow event={event} />
+        </CenterModal>
+      )}
     </div>
   )
 }
