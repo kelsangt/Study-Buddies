@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import './SplashPage.css';
+import TeamList from "./TeamList";
 
 function SplashPage() {
     return (
@@ -17,7 +18,8 @@ function SplashPage() {
               {/* <Link to='/signup'>Sign Up</Link> */}
             </div>
 
-            <div id='team-div'>
+            <TeamList />
+            {/* <div id='team-div'>
               <div id='meet-team'>Meet our Team</div>
 
               <div className='team-holder'>
@@ -60,7 +62,7 @@ function SplashPage() {
               
               </div>
 
-            </div>
+            </div> */}
 
         </div>
 

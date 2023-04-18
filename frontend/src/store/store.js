@@ -4,11 +4,13 @@ import errors from './errors';
 import sessionReducer from './session';
 import eventsReducer from './events';
 import locationReducer from './locations';
+import memesReducer from './memes';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   events: eventsReducer,
   locations: locationReducer,
+  memes: memesReducer,
   errors
 });
 
