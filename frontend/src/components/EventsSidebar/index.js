@@ -13,24 +13,6 @@ const EventSideBar = () => {
           return <EventSidebarItem event={event} key={event._id}/>
         })
       }
-
-{
-        events.map(event => {
-          return <EventSidebarItem event={event} key={event._id}/>
-        })
-      }
-
-{
-        events.map(event => {
-          return <EventSidebarItem event={event} key={event._id}/>
-        })
-      }
-
-{
-        events.map(event => {
-          return <EventSidebarItem event={event} key={event._id}/>
-        })
-      }
     </div>
   )
 }

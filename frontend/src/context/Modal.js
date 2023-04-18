@@ -23,7 +23,7 @@ export function ModalProvider({ children }) {
   );
 }
 
-export function NameToolTip({ top, onClose, children }) {
+export function NameToolTip({ top, left, onClose, children }) {
   const modalNode = useContext(ModalContext);
   if (!modalNode) return null;
 
@@ -31,7 +31,7 @@ export function NameToolTip({ top, onClose, children }) {
     <div 
       className="name-tooltip" 
       onMouseEnter={onClose}
-      style={{top: top}}
+      style={{top: top, left: left}}
     >
       {children}
     </div>,

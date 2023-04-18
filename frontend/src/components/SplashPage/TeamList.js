@@ -10,6 +10,10 @@ const TeamList = () => {
   const capySound = document.createElement("audio");
   capySound.src = require('./assets/powerup.wav');
   capySound.preload = true;
+
+  const leoSound = document.createElement("audio");
+  leoSound.src = require('./assets/keleo.mp3');
+  leoSound.preload = true;
   
   useEffect(() => {
     dispatch(resetMemes());
@@ -22,6 +26,7 @@ const TeamList = () => {
         if (!memeState.keleo) {
           dispatch(setLeo(true));
           e.currentTarget.src = require('./assets/keleo.png');
+          leoSound.play();
         }
         break;
       case 'giiirrrl':
