@@ -1,0 +1,63 @@
+.event-sidebar {
+  padding-top: 10px;
+  flex-basis: 25%;
+  height: calc(100% - 55px);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow: hidden scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.event-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.event-sidebar-item {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 91%;
+}
+
+.event-sidebar-item:hover {
+  background-color: aqua;
+  cursor: pointer;
+}
+
+.event-name {
+  text-align: center;
+  font-size: 18px;
+}
+
+.event-location {
+  text-align: center;
+  font-size: 14px;
+}
+
+.event-creator {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  align-content: center;
+}
+
+.user-image {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  margin: 0 5px;
+}
+
+.attendee-photos {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.user-image.attendee {
+  margin: 0 1px;
+}
