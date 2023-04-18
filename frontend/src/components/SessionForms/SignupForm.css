@@ -15,8 +15,8 @@
     width: 600px;
     height: 850px;
     background-color: rgb(30, 84, 171);
-    font-family: Jost;
-    font-weight: 400;
+    font-family: var(--font);
+    font-weight: var(--font-regular);
     font-size: 20px;
     color: white;
     z-index: 10;
