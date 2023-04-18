@@ -51,6 +51,7 @@
     border-radius: 40px;
     border: 3px solid rgb(121, 186, 199);
     overflow: hidden;
+    cursor: pointer;
 }
 #user-profile-img{
     height: inherit;
