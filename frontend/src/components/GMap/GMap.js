@@ -135,7 +135,8 @@ const findGeoLocation = () => {
 				icon: {
 					url: blueIcon, 
 					scaledSize: new window.google.maps.Size(64, 64)
-				}
+				},
+				animation: window.google.maps.Animation.DROP
 			});
 			
 			infoWindow.setPosition(userLocationCoords.current);
@@ -144,6 +145,14 @@ const findGeoLocation = () => {
 				anchor: locationMarker,
 				map: map 
 			})
+			const circle = new window.google.maps.Circle({
+				map: map, 
+				radius: 36,
+				strokeColor: "#c4c4c4",
+				strokeOpacity: 0.35,
+				fillColor: '#4a80f5'
+			})
+			circle.bindTo('center', locationMarker, 'position');
 		}
 
 	}, [map, events])
