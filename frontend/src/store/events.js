@@ -26,6 +26,10 @@ export const getEvents = (state) => {
 	return state.events ? Object.values(state.events) : [];
 }
 
+export const getMyCreatedEvents = (state) => {
+    return state.session.user.createdEvents
+}
+
 // Thunk Action Creators 
 // year-month-day
 // date format: "2023-04-17"

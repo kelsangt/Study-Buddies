@@ -1,9 +1,13 @@
 import './ProfileModal.css'
 import { logout } from '../../store/session';
 import { useDispatch } from 'react-redux';
-
+import { useSelector } from 'react-redux';
+import { getMyCreatedEvents } from '../../store/events';
+import MyCreatedEvents from '../MyCreatedEvents/MyCreatedEvents';
 const ProfileModal = () => {
     const dispatch = useDispatch();
+    const events = useSelector(getMyCreatedEvents);
+
     const logoutUser = e => {
         e.preventDefault();
         dispatch(logout());
@@ -13,17 +17,18 @@ const ProfileModal = () => {
             <div id='big-event-container'>
                 <div id='myevents-create-container'>
                     <div id='myevents-header'>My Events</div>
-                    <div id='create-event-button'>Create Events button</div>
+                    <div id='create-event-button'>
+                        <i className="fa-solid fa-plus" id='plus-icon'></i>
+                        Create Event</div>
                     <div id='divider'></div>
                 </div>
 
                 <div id='events-holder'>
-                    <div className='individual-event-holder'>Event 1 example</div>
-                    <div className='individual-event-holder'>Event 2 example</div>
-                    <div className='individual-event-holder'>Event 3 example</div>
-                    <div className='individual-event-holder'>Event 4 example</div>
-                    <div className='individual-event-holder'>Event 5 example</div>
-                    <div className='individual-event-holder'>Event 6 example</div>
+                    {
+                        events.map(event => {
+                            return <MyCreatedEvents event={event} key={event._id}/>
+                        })
+                    }
                 </div>
             </div>
 
