@@ -16,7 +16,8 @@
     border: 1px solid rgb(0, 0, 0);
     border-radius: 8px;
     width: 25vw;
-    height: 58vh;
+    /* height: 58vh; */
+    height: fit-content;
     background-color: rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
@@ -49,14 +50,22 @@
     margin-bottom: 5px;
 }
 
+#plus-icon {
+    margin-right: 5px;
+}
 #create-event-button {
     border: 1px solid black;
     padding: 5px;
     margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#create-event-button:hover {
+    transform: scale(1.05);
 }
 #divider {
     width: 22vw;
-    border: 1px solid rgb(107, 107, 107);
+    border: 1px solid #1E54AB;
 }
 
 #events-holder{
@@ -72,6 +81,7 @@
     overflow: hidden scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    margin-bottom: 10px;
 }
 
 #events-holder::-webkit-scrollbar{
@@ -81,10 +91,11 @@
     margin-top:10px;
     margin-left:10px;
     margin-right:10px;
-    border: 1px solid pink;
-    background-color: rgb(161, 184, 225);
-    min-height: 80px;
-    border-radius:8px;
+    border: 1px solid #1E54AB;
+    /* background-color: rgb(161, 184, 225); */
+    min-height: fit-content;
+    border-radius:6px;
+    text-align: center;
 }
 
 #profile-modal-footer{
@@ -104,6 +115,10 @@
     border-radius:8px;
     cursor: pointer;
 }
+#settings-button:hover {
+    transform: scale(1.05);
+}
+
 #logout-button {
     width:10vw;
     text-align: center;
@@ -114,4 +129,7 @@
     border-radius:8px;
     margin-bottom: 5px;
     cursor: pointer;
+}
+#logout-button:hover {
+    transform: scale(1.05);
 }

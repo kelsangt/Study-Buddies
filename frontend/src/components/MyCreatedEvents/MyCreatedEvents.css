@@ -1,0 +1,20 @@
+.myevent-name{
+    background-color: rgb(255, 191, 0);
+    
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 21px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-bottom: 4px;
+    color: white;
+}
+.myevent-location {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+.myattendee-count{
+    font-size: 15px;
+    padding-bottom: 10px;
+}
+
