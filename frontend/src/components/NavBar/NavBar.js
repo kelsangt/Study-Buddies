@@ -13,7 +13,16 @@ function NavBar () {
   const modalState = useSelector(state => state.ui.modalStatus);
   
   const handleModalToggle = () => {
-    dispatch(setModalStatus(!modalState))
+    if (modalState) {
+      const modal = document.getElementById('profile-modal-container')
+      modal.classList.add('slideout')
+      console.log(modal)
+      setTimeout(()=>{
+        dispatch(setModalStatus(!modalState))
+      }, 500)
+    } else {
+      dispatch(setModalStatus(!modalState))
+    }
   }
 
   const getLinks = () => {
