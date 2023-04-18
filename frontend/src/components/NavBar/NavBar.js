@@ -9,14 +9,9 @@ import { setModalStatus } from '../../store/ui';
 function NavBar () {
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
-  const modalState = useSelector(state => 
-    (!!state.session.user && state.ui && state.ui.modalStatus) ? state.ui.modalStatus : null);
 
-  console.log(modalState)
-  const logoutUser = e => {
-      e.preventDefault();
-      dispatch(logout());
-  }
+  const modalState = useSelector(state => state.ui.modalStatus);
+  
   const handleModalToggle = () => {
     dispatch(setModalStatus(!modalState))
   }
