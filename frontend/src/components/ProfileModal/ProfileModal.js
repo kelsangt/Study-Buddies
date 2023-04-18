@@ -1,6 +1,7 @@
 import './ProfileModal.css'
 import { logout } from '../../store/session';
 import { useDispatch } from 'react-redux';
+
 const ProfileModal = () => {
     const dispatch = useDispatch();
     const logoutUser = e => {
