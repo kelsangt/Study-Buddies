@@ -1,3 +1,7 @@
+@keyframes modal {
+    0% {right: -25vw;}
+    100% {right: 0px;}
+}
 
 #profile-modal-container{
     position: absolute;
@@ -12,6 +16,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+
+    animation-name: modal;
+    animation-duration: 0.5s;
+}
+.slideout{
+    animation:alternate-reverse
 }
 
 #big-event-container{
@@ -85,6 +96,7 @@
     padding-right: 15px;
     padding-left: 15px;
     border-radius:8px;
+    cursor: pointer;
 }
 #logout-button {
     width:10vw;
@@ -95,4 +107,5 @@
     padding-left: 15px;
     border-radius:8px;
     margin-bottom: 5px;
+    cursor: pointer;
 }
