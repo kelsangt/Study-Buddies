@@ -6,6 +6,7 @@ import NavBar from '../NavBar/NavBar';
 import { getEvents } from '../../store/events';
 import { useSelector } from 'react-redux';
 import { getLocations } from '../../store/locations';
+import EventSideBar from '../EventsSidebar';
 
 
 const GMap = ({center, zoom}) => {
@@ -87,6 +88,7 @@ const GMap = ({center, zoom}) => {
 		<>
 			<NavBar />
 			<div id="map_container">
+				<EventSideBar />
 				<div id="map_wrapper">
 					<div ref={ref} id="map" />
 				</div>
