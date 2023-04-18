@@ -192,12 +192,97 @@ router.post('/requests/:id', requireUser, async (req, res, next) => {
 })
 
 // DELETE request
-// router.delete()
+router.delete('/requests/:id', requireUser, async (req, res, next) => {
+  try {
+    const event = await Event.findById(req.params.id);
+
+    if (!event.requesters.includes(req.user._id)) {
+      const error = new Error('Request not found');
+      error.statusCode = 404;
+      error.errors = { message: "No request found" };
+      return next(error);
+    }
+
+    const idx = event.requesters.indexOf(req.user._id)
+    event.requesters.splice(idx, 1);
+    await event.save();
+
+    return res.json(event);
+  } catch(err) {
+    const error = new Error('Event not found');
+    error.statusCode = 404;
+    error.errors = { message: "No event found with that id" };
+    return next(error);
+  }
+})
 
 // UPDATE request status
-// router.patch()
+router.patch('/requests/:id/:userId', requireUser, async (req, res, next) => {
+  try {
+    const event = await Event.findById(req.params.id);
+
+    if (event.creator.toString() !== req.user._id.toString()) {
+      const error = new Error('Unauthorized');
+      error.statusCode = 401;
+      error.errors = { message: "Must be creator to update this request" };
+      return next(error);
+    }
+
+    const user = await User.findById(req.params.userId);
+
+    let idx = event.requesters.indexOf(user._id)
+    event.requesters.splice(idx, 1);
+
+    idx = user.requestedEvents.indexOf(event._id)
+    user.requestedEvents.splice(idx, 1);
+
+    if (req.body.choice === "accept") {
+      event.attendees.push(user._id);
+      user.joinedEvents.push(event._id);
+    }
+
+    await user.save();
+    await event.save();
+
+    return res.json(event);
+  } catch(err) {
+    const error = new Error('Event or user not found');
+    error.statusCode = 404;
+    error.errors = { message: "No event or user found with that id" };
+    return next(error);
+  }
+})
 
 // PATCH remove attendee
-// router.patch()
+router.patch('/attendees/:id/:userId', requireUser, async (req, res, next) => {
+  try {
+    const event = await Event.findById(req.params.id);
+
+    if (event.creator.toString() !== req.user._id.toString()) {
+      const error = new Error('Unauthorized');
+      error.statusCode = 401;
+      error.errors = { message: "Must be creator to update this event" };
+      return next(error);
+    }
+
+    const user = await User.findById(req.params.userId)
+
+    let idx = event.attendees.indexOf(user._id)
+    event.attendees.splice(idx, 1);
+
+    idx = user.joinedEvents.indexOf(event._id)
+    user.joinedEvents.splice(idx, 1);
+
+    await user.save();
+    await event.save();
+
+    return res.json(event);
+  } catch(err) {
+    const error = new Error('Event or user not found');
+    error.statusCode = 404;
+    error.errors = { message: "No event or user found with that id" };
+    return next(error);
+  }
+})
 
 module.exports = router;

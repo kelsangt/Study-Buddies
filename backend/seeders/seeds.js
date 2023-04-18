@@ -141,7 +141,7 @@ for (let i = 0; i < NUM_SEED_EVENTS; i++) {
     creator: creator._id,
     name: faker.git.commitMessage(),
     description: faker.lorem.sentence(),
-    location: locations[Math.floor(Math.random() * locations.length)]._id,
+    location: locations[Math.floor(Math.random()*locations.length)]._id,
     startTime: startTime,
     endTime: endTime
   })

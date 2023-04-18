@@ -16,7 +16,8 @@ const eventSchema = new Schema({
   },
   location: {
     type: Schema.Types.ObjectId,
-    ref: 'Location'
+    ref: 'Location',
+    required: true
   },
   startTime: {
     type: Date,
