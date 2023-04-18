@@ -5,6 +5,7 @@ import { fetchAllEventsForDay } from '../../store/events';
 import { fetchAllLocations } from '../../store/locations';
 import GMap from '../GMap/GMap';
 import { Wrapper } from "@googlemaps/react-wrapper";
+import EventSideBar from '../EventsSidebar';
 
 const MainContent = () => {
     const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const MainContent = () => {
     console.log(todayEvents)
     return (
         <>
+            <EventSideBar />
             <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY}>
                 <GMap />
             </Wrapper>
