@@ -2,11 +2,11 @@
 #profile-modal-container{
     position: absolute;
     right: 0px;
-    top: 65px;
+    top: 116px;
     z-index: 100;
     border: 5px solid red;
     width: 25vw;
-    height: 100vh;
+    height: 58vh;
     background-color: rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
