@@ -4,11 +4,13 @@ import {renderToString} from 'react-dom/server'
 import InfoBoxInternal from './marker/InfoBoxInternal';
 import NavBar from '../NavBar/NavBar';
 import { getEvents } from '../../store/events';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getLocations } from '../../store/locations';
 import EventSideBar from '../EventsSidebar';
+import { receiveEventClicked } from '../../store/ui';
 
 const GMap = ({center, zoom}) => {
+	const dispatch = useDispatch();
 	const [map, setMap] = useState();
 	const centerCoords = { lat: 40.73630, lng: -73.99379 };
   const zoomAmount = 16;
@@ -127,6 +129,7 @@ const findGeoLocation = () => {
 		// Adding the listener to show the InfoTile on mouseover. 
 		for (let i = 0; i < markers.current.length; i++) {
 			markers.current[i].addListener("click", () => {
+				dispatch(receiveEventClicked(events[i]._id))
 				infoTiles.current[i].open({
 					anchor: markers.current[i],
 					map
