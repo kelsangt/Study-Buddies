@@ -51,7 +51,7 @@ function SplashPage() {
 
               
                 <div className='individual-team-component'>
-                    <div className='teamPosition'>Flex Engineer</div>
+                    <div className='teamPosition'>Flex</div>
                     <div className='team-pics-holder'>
                       <img className='team-pics' src={require('./assets/diner.jpeg')}/>
                     </div>

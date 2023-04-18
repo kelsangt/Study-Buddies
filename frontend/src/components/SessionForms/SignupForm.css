@@ -10,6 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: auto;
     flex-direction: column;
     width: 600px;
     height: 850px;
@@ -80,6 +81,8 @@
     height: 30px;
     width: 336px;
     margin-bottom: 10px;
+    font-family: var(--font);
+    font-weight: var(--font-light);
 }   
 
 .submitButton {
@@ -108,5 +111,7 @@
 }
 
 .inputField:focus {
-    outline-color: orange;
+    outline: none;
+    border: 2px solid orange;
+    border-radius: 4px;
 }

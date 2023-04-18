@@ -49,6 +49,8 @@
     display: flex;
     flex-direction: column;
     align-items:center;
+    margin-right: 10px;
+    margin-left: 10px;
     /* border: 1px solid red; */
 }
 
@@ -71,6 +73,7 @@
 
 #team-member-name{
     font-size: 20px;
+    margin-top: 30px;
 }
 
 #footer {
