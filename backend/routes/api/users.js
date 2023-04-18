@@ -84,27 +84,69 @@ router.post('/login', validateLoginInput, async (req, res, next) => {
 });
 
 // GET current user info
-router.get('/current', restoreUser, (req, res) => {
+router.get('/current', restoreUser, async (req, res) => {
   if (!isProduction) {
     const csrfToken = req.csrfToken();
     res.cookie("CSRF-TOKEN", csrfToken);
   }
   if (!req.user) return res.json(null);
-  res.json({
-    _id: req.user._id,
-    username: req.user.username,
-    email: req.user.email,
-    firstName: req.user.firstName,
-    lastName: req.user.lastName,
-    school: req.user.school,
-    major: req.user.major,
-    profileImageUrl: req.user.profileImageUrl,
-    linkedInUrl: req.user.linkedInUrl,
-    phone: req.user.phone,
-    createdEvents: req.user.createdEvents,
-    joinedEvents: req.user.joinedEvents,
-    requestedEvents: req.user.requestedEvents
-  });
+
+  const user = await User.findById(req.user._id)
+                          .populate({
+                            path: "createdEvents", 
+                            select: "_id name location startTime endTime",
+                            populate: [
+                              {
+                                path: "location",
+                                select: "_id name latitude longitude imageUrl"
+                              },
+                              {
+                                path: "requesters",
+                                select: "_id username profileImageUrl"
+                              },
+                              {
+                                path: "attendees",
+                                select: "_id username profileImageUrl"
+                              }
+                            ],
+                          })
+                          .populate({
+                            path: "joinedEvents", 
+                            select: "_id name location startTime endTime",
+                            populate: [
+                              {
+                                path: "creator",
+                                select: "_id username profileImageUrl"
+                              },
+                              {
+                                path: "location",
+                                select: "_id name latitude longitude imageUrl"
+                              },
+                              {
+                                path: "attendees",
+                                select: "_id username profileImageUrl"
+                              }
+                            ]
+                          })
+                          .populate({
+                            path: "requestedEvents", 
+                            select: "_id name location startTime endTime",
+                            populate: [
+                              {
+                                path: "creator",
+                                select: "_id username profileImageUrl"
+                              },
+                              {
+                                path: "location",
+                                select: "_id name latitude longitude imageUrl"
+                              },
+                              {
+                                path: "attendees",
+                                select: "_id username profileImageUrl"
+                              }
+                            ]
+                          })
+  res.json(user);
 });
 
 module.exports = router;
