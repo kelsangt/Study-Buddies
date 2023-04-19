@@ -8,11 +8,13 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import EventSideBar from '../EventsSidebar';
 import ProfileModal from '../ProfileModal/ProfileModal';
 import Loading from '../GMap/Loading/Loading';
+import { receiveEventClicked, selectedEventId } from '../../store/ui';
 
 const MainContent = () => {
     const dispatch = useDispatch();
     const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
     const modalToggle = useSelector(state => state.ui.modalStatus)
+    const selectedId = useSelector(selectedEventId);
     // const todaysDate = new Date().toISOString().split("T")[0];
 
     const testDate = '2023-04-23'
@@ -22,14 +24,22 @@ const MainContent = () => {
 
     }, [dispatch])
 
-		const render = (status) => {
-			switch (status) {
-				case Status.LOADING:
-					return <Loading />; 
-				case Status.SUCCESS: 
-					return <GMap />;
-			}
-		}
+    useEffect(() => {
+        const closeButton = document.querySelectorAll('button.gm-ui-hover-effect');
+        console.log("close", closeButton);
+        closeButton.forEach(button => button.addEventListener('click', () => dispatch(receiveEventClicked(null))))
+    }, [selectedId])
+
+    const render = (status) => {
+        switch (status) {
+            case Status.LOADING:
+                return <Loading />; 
+            case Status.SUCCESS: 
+                return <GMap />;
+            default:
+                return null;
+        }
+    }
 
     return (
         <>
