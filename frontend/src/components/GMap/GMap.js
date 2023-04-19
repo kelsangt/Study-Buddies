@@ -51,7 +51,6 @@ const GMap = () => {
 	}
 
 	const findGeoLocation = () => {
-	
 		setGeoLocationClicked(false);
 		setRequestedLibraries(false);
 
@@ -195,19 +194,19 @@ const GMap = () => {
 			}
 		}
 
-		if (map && !requestedLibraries) {
-			let locationLng = map.center.lng();
-			let locationLat = map.center.lat();
-			let request = {
-				location: new window.google.maps.LatLng({lat: locationLat, lng: locationLng}), 
-				radius: '400',
-				type: ['library']
-			};
+		//if (map && !requestedLibraries) {
+		//	let locationLng = map.center.lng();
+		//	let locationLat = map.center.lat();
+		//	let request = {
+		//		location: new window.google.maps.LatLng({lat: locationLat, lng: locationLng}), 
+		//		radius: '400',
+		//		type: ['library']
+		//	};
 	
-			let service = new window.google.maps.places.PlacesService(map);
-			service.nearbySearch(request, placeLibraries);
-			setRequestedLibraries(true);
-		}
+		//	let service = new window.google.maps.places.PlacesService(map);
+		//	service.nearbySearch(request, placeLibraries);
+		//	setRequestedLibraries(true);
+		//}
 	}, [map, events])
 
 	return (
