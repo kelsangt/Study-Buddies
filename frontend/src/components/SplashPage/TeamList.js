@@ -1,4 +1,8 @@
 import { useEffect } from 'react';
+import capy from './assets/powerup.wav';
+import leo from './assets/keleo.mp3';
+import mongo from './assets/mongoose.mp3';
+import kitty from './assets/kitty3.mp3';
 
 const { useSelector, useDispatch } = require('react-redux')
 const { getMemes, setLeo, setGiiirrrl, setCapy, setMongoose, resetMemes } = require('../../store/memes')
@@ -6,14 +10,13 @@ const { getMemes, setLeo, setGiiirrrl, setCapy, setMongoose, resetMemes } = requ
 const TeamList = () => {
   const memeState = useSelector(getMemes);
   const dispatch = useDispatch()
-
-  const capySound = document.createElement("audio");
-  capySound.src = require('./assets/powerup.wav');
-  capySound.preload = true;
-
-  const leoSound = document.createElement("audio");
-  leoSound.src = require('./assets/keleo.mp3');
-  leoSound.preload = true;
+  
+  const capySound = new Audio(capy);
+  capySound.volume = 0.6;
+  const leoSound = new Audio(leo);
+  const mongoSound = new Audio(mongo);
+  const kittySound = new Audio(kitty);
+  kittySound.volume = 0.6;
   
   useEffect(() => {
     dispatch(resetMemes());
@@ -24,26 +27,47 @@ const TeamList = () => {
     switch (selected) {
       case 'keleo':
         if (!memeState.keleo) {
+          leoSound.play();
+          setTimeout(() => {
+            leoSound.pause();
+          }, 4000);
+
           dispatch(setLeo(true));
           e.currentTarget.src = require('./assets/keleo.png');
-          leoSound.play();
         }
         break;
       case 'giiirrrl':
         if (!memeState.giiirrrl) {
+          kittySound.play();
+          setTimeout(() => {
+            kittySound.pause();
+          }, 4000);
+
           dispatch(setGiiirrrl(true));
           e.currentTarget.src = require('./assets/giiirrrl.jpg');
         }
         break;
       case 'capy':
-        if (!memeState.capy) {
+        if (!memeState.ssjCapy) {
           capySound.play();
+          setTimeout(() => {
+            capySound.pause();
+          }, 4000);
+
           dispatch(setCapy(true));
           e.currentTarget.src = require('./assets/ssj_capy.png');
+
+          const positionText = document.getElementById("meme-lead");
+          positionText.innerHTML = "Backend lead, frontend lead, flex lead, meme lead, lead lead, the whole stack lead tbh";
+
+          const positionClass = document.querySelectorAll(".teamPosition");
+          console.log(positionClass)
+          positionClass.forEach(item => item.style.minHeight = `${positionText.offsetHeight}px`);
         }
         break;
       case 'mongoose':
         if (!memeState.mongoose) {
+          mongoSound.play();
           dispatch(setMongoose(true));
           e.currentTarget.src = require('./assets/mongoose.jpg');
         }
@@ -85,7 +109,7 @@ const TeamList = () => {
         </div>
       
         <div className='individual-team-component'>
-            <div className='teamPosition'>Backend Lead</div>
+            <div id="meme-lead" className='teamPosition'>Backend Lead</div>
             <div className='team-pics-holder'>
               <img 
                 className='team-pics' 
