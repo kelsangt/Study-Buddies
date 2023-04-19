@@ -7,6 +7,7 @@ import { getEvents } from '../../store/events';
 import { useDispatch, useSelector } from 'react-redux';
 import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked } from '../../store/ui';
+import { receiveAllLocations } from '../../store/locations';
 
 const GMap = () => {
 	const dispatch = useDispatch();
@@ -85,8 +86,21 @@ const GMap = () => {
 
 	function placeLibraries(results, status) {
 		if (status == window.google.maps.places.PlacesServiceStatus.OK) {
-			console.log(results);
+			let holder = [];
+
 			results.forEach(result => {
+				let photoUrl = "https://upload.wikimedia.org/wikipedia/commons/6/60/Statsbiblioteket_l%C3%A6sesalen-2.jpg";
+				
+				if (result.photos) {
+					photoUrl = result.photos[0].getUrl()
+				}
+				holder.push({
+					name: result.name,
+					latitude: result.geometry.location.lat(),
+					longitude: result.geometry.location.lng(),
+					imageUrl: photoUrl
+				})
+
 				let resultLat = result.geometry.location.lat();
 				let resultLng = result.geometry.location.lng();
 				new window.google.maps.Marker({
@@ -100,6 +114,7 @@ const GMap = () => {
 					animation: window.google.maps.Animation.DROP
 				});
 			})
+			dispatch(receiveAllLocations(holder));
 		}
 	}
 
@@ -194,19 +209,19 @@ const GMap = () => {
 			}
 		}
 
-		//if (map && !requestedLibraries) {
-		//	let locationLng = map.center.lng();
-		//	let locationLat = map.center.lat();
-		//	let request = {
-		//		location: new window.google.maps.LatLng({lat: locationLat, lng: locationLng}), 
-		//		radius: '400',
-		//		type: ['library']
-		//	};
+		if (map && !requestedLibraries) {
+			let locationLng = map.center.lng();
+			let locationLat = map.center.lat();
+			let request = {
+				location: new window.google.maps.LatLng({lat: locationLat, lng: locationLng}), 
+				radius: '400',
+				type: ['library']
+			};
 	
-		//	let service = new window.google.maps.places.PlacesService(map);
-		//	service.nearbySearch(request, placeLibraries);
-		//	setRequestedLibraries(true);
-		//}
+			let service = new window.google.maps.places.PlacesService(map);
+			service.nearbySearch(request, placeLibraries);
+			setRequestedLibraries(true);
+		}
 	}, [map, events])
 
 	return (

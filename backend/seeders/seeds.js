@@ -141,7 +141,8 @@ for (let i = 0; i < NUM_SEED_EVENTS; i++) {
     creator: creator._id,
     name: faker.git.commitMessage(),
     description: faker.lorem.sentence(),
-    location: locations[Math.floor(Math.random()*locations.length)]._id,
+    // location: locations[Math.floor(Math.random()*locations.length)]._id,
+    location: locations[Math.floor(Math.random()*locations.length)],
     startTime: startTime,
     endTime: endTime
   })
@@ -185,7 +186,7 @@ const insertSeeds = () => {
                   .then(() => Location.collection.drop())
                   .then(() => Event.collection.drop())
                   .then(() => User.insertMany(users))
-                  .then(() => Location.insertMany(locations))
+                  // .then(() => Location.insertMany(locations))
                   .then(() => Event.insertMany(events))
                   .then(() => {
                     console.log("Done!");

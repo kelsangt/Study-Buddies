@@ -37,7 +37,7 @@ const locationReducer = (state={}, action) => {
     switch (action.type) {
         case RECEIVE_ALL_LOCATIONS:
             const locations = {};
-            action.allLocations.forEach(location => locations[location._id] = location)
+            action.allLocations.forEach((location, index) => locations[index] = location)
             return locations
         case RECEIVE_SPECIFIC_LOCATION:
             nextState[action.location._id] = action.location
