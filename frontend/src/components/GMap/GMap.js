@@ -98,7 +98,8 @@ const GMap = () => {
 					name: result.name,
 					latitude: result.geometry.location.lat(),
 					longitude: result.geometry.location.lng(),
-					imageUrl: photoUrl
+					imageUrl: photoUrl,
+					address: result.vicinity
 				})
 
 				let resultLat = result.geometry.location.lat();
