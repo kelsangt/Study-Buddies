@@ -57,11 +57,21 @@ const ProfileModal = () => {
         sideModal.style.display = 'flex';
     }
 
+    const closeModal = () => {
+        const modal = document.getElementById('profile-modal-container')
+        modal.classList.add('slideout')
+        console.log(modal)
+        setTimeout(()=>{
+        dispatch(setModalStatus(false))
+      }, 500)
+    }
+
     return (
         <div id='profile-modal-container'> 
             <div id='big-event-container'>
                 <div id='myevents-create-container'>
                     <div id='events-tab'>
+                        <div id='close-caret' onClick={closeModal}><i className="fa-solid fa-caret-right"></i></div>
                         <div className={`myevents-header ${currentTab === "My Events" ? 'selected' : ''}`} onClick={selectMyEvents}>My Events</div>
                         <div className={`myevents-header ${currentTab === "Joined Events" ? 'selected' : ''}`} onClick={selectJoinedEvents}>Joined Events</div>
                         <div className={`myevents-header ${currentTab === "Requested Events" ? 'selected' : ''}`} onClick={selectRequestEvents}>Requested Events</div>

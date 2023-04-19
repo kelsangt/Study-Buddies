@@ -1,11 +1,11 @@
 @keyframes modal {
-    0% {right: -25vw;}
+    0% {right: -27vw;}
     100% {right: 0px;}
 }
 
 @keyframes reversemodal {
     0% {right: 0px;}
-    100% {right: -25vw;}
+    100% {right: -27vw;}
 }
 
 #profile-modal-container{
@@ -50,8 +50,18 @@
     flex-direction: row;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 25vw;
+    width: 27vw;
     justify-content: center;
+}
+#close-caret{
+    font-size: 23px;
+    margin-top: 15px;
+    margin-right: 7px;
+    color: #1e54abcc;
+    cursor: pointer;
+}
+#close-caret i:hover{
+    color: rgb(255, 191, 0);
 }
 .myevents-header {
     padding: 7px 10px;
@@ -66,8 +76,9 @@
     vertical-align: center;
     cursor: pointer;
 }
+
 .myevents-header.selected {
-    color: orange;
+    color: rgb(255, 191, 0);
 }
 .myevents-header:active{
     color: rgb(255, 191, 0);
