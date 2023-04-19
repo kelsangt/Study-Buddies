@@ -41,24 +41,24 @@ function EventCreateForm () {
         default:
           throw Error('Unknown field in Event Create Form');
       }
-  
+
       return e => setState(e.currentTarget.value);
     }
 
     const handleEventCreate = e => {
         e.preventDefault();
 
-        const startTime = date + startTimeInitial;
-        const endTime = date + endTimeInitial;
+        const startTime = date + "T" + startTimeInitial + ".00.000+00:00";
+        const endTime = date + "T" + endTimeInitial + ".00.000+00:00";
 
         const event = {
             name,
             description,
             location,
-            startTime,
-            endTime,
-            date
+            startTime: startTime,
+            endTime: endTime
         };
+        console.log(event);
         dispatch(createEvent(event));
     }
   
@@ -90,16 +90,12 @@ function EventCreateForm () {
             {/* <div className="errors">{errors?.firstName}</div> */}
             <label className="signupLabel">
               <span id="firstNameSpan">Location</span>
-              <input className="inputField" type="text"
-                value={location}
-                onChange={update('Location')}
-                placeholder="Location"
-              />
-
-              <select id="selectLocation">
+             
+              <select className="inputField" id="selectLocation" onChange={update('Location')}>
+                <option disabled selected value>Select a location</option>
                 {locations.map((location)=>{
                     return (
-                        <option key={location.id} value={location}>
+                        <option key={location.id} value={location._id}>
                             {location.name}
                         </option>
                     )
@@ -107,7 +103,7 @@ function EventCreateForm () {
               </select>
 
             </label>
-            <label class="signupLabel">
+            <label className="signupLabel">
               <span id="passwordSpan">Date</span>
               <input className="inputField" type="date"
                 value={date}
@@ -127,7 +123,7 @@ function EventCreateForm () {
   
   
             {/* <div className="errors">{errors?.school}</div> */}
-            <label class="signupLabel">
+            <label className="signupLabel">
               <span id="schoolSpan">End Time</span>
               <input className="inputField" type="time"
                 value={endTimeInitial}
@@ -140,11 +136,11 @@ function EventCreateForm () {
             {/* <div className="errors">
               {password !== password2 && 'Confirm Password field must match'}
             </div> */}
-            <label class="submitButton">
+            <label className="submitButton">
               <input className="submitInput"
                 type="submit"
                 value="Create Session"
-                disabled={!name || !description || !location || !startTimeInitial || !endTimeInitial}
+                // disabled={!name || !description || !location }
               />
             </label>
           </form>
