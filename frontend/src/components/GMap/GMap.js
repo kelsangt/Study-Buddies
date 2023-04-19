@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked } from '../../store/ui';
 
-const GMap = ({center, zoom}) => {
+const GMap = () => {
 	const dispatch = useDispatch();
 	const [map, setMap] = useState();
 	const centerCoords = { lat: 40.73630, lng: -73.99379 };
@@ -49,8 +49,9 @@ const GMap = ({center, zoom}) => {
 	}
 
 	const findGeoLocation = () => {
-		setGeoLocationClicked(false);
 	
+		setGeoLocationClicked(false);
+
 		if (!geoLocationClicked) {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(
@@ -66,7 +67,6 @@ const GMap = ({center, zoom}) => {
 							zoom: zoomAmount,
 							styles: stylesArray
 						})
-						newMap.setCenter(userLocation);
 						newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 						setMap(newMap);
 					},
@@ -87,7 +87,6 @@ const GMap = ({center, zoom}) => {
 		}
 	}
 
-
 	// Initialize Map
 	useEffect(() => {
 		const initialMap = new window.google.maps.Map(ref.current, {
@@ -97,11 +96,10 @@ const GMap = ({center, zoom}) => {
 		})
 
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-		locationButton.addEventListener("click", findGeoLocation);
+		locationButton.addEventListener("click", findGeoLocation, {passive: true});
 		setMap(initialMap)
-		console.log(initialMap);
 
-		let location = new window.google.maps.LatLng(40.7363, -73.99379)
+		//let location = new window.google.maps.LatLng(40.7363, -73.99379)
 		//let request = {
 		//	location: location, 
 		//	radius: '400',
@@ -121,6 +119,7 @@ const GMap = ({center, zoom}) => {
 	useEffect(() => {
 		// Creating all Event Markers and placing them on the map. 
 		let eventMarkers = [];
+
 		events.forEach(event => {
 			eventMarkers.push(new window.google.maps.Marker({
 				position: {lat: event.location.latitude, lng: event.location.longitude},
@@ -132,10 +131,10 @@ const GMap = ({center, zoom}) => {
 				}
 			}));
 		});
-		
+
 		// Setting the markers Ref to the eventMarkers Array
 		markers.current = eventMarkers;
-		
+	
 		// Setting the infoTiles Ref to an array of empty InfoWindows the same length as the eventMarkers Array.
 		infoTiles.current = eventMarkers.map(() => new window.google.maps.InfoWindow({ content: ""}));
 
@@ -149,23 +148,26 @@ const GMap = ({center, zoom}) => {
 		for (let i = 0; i < infoTiles.current.length; i++) {
 			infoTiles.current[i].setContent(infoTileAttachments[i]); 
 		}
-		
-		// Adding the listener to show the InfoTile on mouseover. 
+
+		// Adding the listener to the Marker to show the InfoTile on mouseover. 
 		for (let i = 0; i < markers.current.length; i++) {
 			markers.current[i].addListener("click", () => {
+				let newMap = map;
+				newMap.setCenter(new window.google.maps.LatLng(Number(events[i].location.latitude), Number(events[i].location.longitude)));
+				setMap(newMap)
+
 				dispatch(receiveEventClicked(events[i]._id))
 				infoTiles.current[i].open({
 					anchor: markers.current[i],
-					map
+					map: map
 				})
-			})
+			}, {passive: true})
 		}
 
 		if (!geoLocationClicked) {
-			setGeoLocationClicked(true);
-			if (userLocationCoords) {
+			if (userLocationCoords.current) {
 				const locationMarker = new window.google.maps.Marker({
-					position: {lat: userLocationCoords.current.lat, lng: userLocationCoords.current.lng},
+					position: {lat: Number(userLocationCoords.current.lat), lng: Number(userLocationCoords.current.lng)},
 					map: map, 
 					icon: {
 						url: blueIcon, 
@@ -173,13 +175,14 @@ const GMap = ({center, zoom}) => {
 					},
 					animation: window.google.maps.Animation.DROP
 				});
-				
-				infoWindow.setPosition(userLocationCoords.current);
+				let userLatLng = new window.google.maps.LatLng(userLocationCoords.current)
+				infoWindow.setPosition(userLatLng);
 				infoWindow.setContent("Your Approximate Location.")
 				infoWindow.open({
 					anchor: locationMarker,
 					map: map 
 				})
+
 				const circle = new window.google.maps.Circle({
 					map: map, 
 					radius: 36,
@@ -188,6 +191,7 @@ const GMap = ({center, zoom}) => {
 					fillColor: '#4a80f5'
 				})
 				circle.bindTo('center', locationMarker, 'position');
+				setGeoLocationClicked(true);
 			}
 		}
 	}, [map, events])
