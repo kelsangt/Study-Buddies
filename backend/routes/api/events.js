@@ -68,8 +68,16 @@ router.post('/', requireUser, async (req, res, next) => {
     });
 
     let event = await newEvent.save();
-    event = await event.populate("location", "_id name latitude longitude");
-    return res.json(event);
+
+    req.user.createdEvents.push(event._id)
+    await req.user.save();
+
+    const createdEvent = await Event.findById(event._id)
+                                    .populate("creator", "_id username profileImageUrl")
+                                    .populate("attendees", "_id username profileImageUrl")
+                                    .populate("requesters", "_id username profileImageUrl")
+                                    .populate("location", "_id name latitude longitude imageUrl")
+    return res.json(createdEvent);
   } catch(err) {
     next(err);
   }
@@ -154,7 +162,13 @@ router.patch('/:id', requireUser, async (req, res, next) => {
     event.endTime = req.body.endTime 
     await event.save();
 
-    return res.json(event);
+    const updatedEvent = Event.findById(event._id)
+                              .populate("creator", "_id username profileImageUrl")
+                              .populate("attendees", "_id username profileImageUrl")
+                              .populate("requesters", "_id username profileImageUrl")
+                              .populate("location", "_id name latitude longitude imageUrl")
+
+    return res.json(updatedEvent);
   } catch(err) {
     const error = new Error('Event not found');
     error.statusCode = 404;
@@ -189,7 +203,13 @@ router.post('/requests/:id', requireUser, async (req, res, next) => {
     event.requesters.push(req.user._id);
     await event.save();
 
-    return res.json(event);
+    const updatedEvent = await Event.findById(event._id)
+                                    .populate("creator", "_id username profileImageUrl")
+                                    .populate("attendees", "_id username profileImageUrl")
+                                    .populate("requesters", "_id username profileImageUrl")
+                                    .populate("location", "_id name latitude longitude imageUrl")
+
+    return res.json(updatedEvent);
   } catch(err) {
     const error = new Error('Event not found');
     error.statusCode = 404;
