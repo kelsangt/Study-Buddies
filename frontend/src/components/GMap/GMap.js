@@ -81,6 +81,13 @@ const GMap = ({center, zoom}) => {
 		}
 	}
 
+	function callback(results, status) {
+		debugger
+		if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+			console.log(results);
+		}
+	}
+
 
 	// Initialize Map
 	useEffect(() => {
@@ -94,22 +101,16 @@ const GMap = ({center, zoom}) => {
 		locationButton.addEventListener("click", findGeoLocation);
 		setMap(initialMap)
 
-		let location = new window.google.maps.LatLng(initialMap.center.lat, initialMap.center.lng)
-
+		let location = new window.google.maps.LatLng(40.7363, -73.99379)
+		debugger
 		let request = {
 			location: location,
-			radius: '500',
+			radius: '400',
 			type: ['library']
 		};
-
+		
 		let service = new window.google.maps.places.PlacesService(map);
-		service.nearbySearch(request, callback)
-
-		function callback(results, status) {
-			if (status == window.google.maps.places.PlacesServiceStatus.OK) {
-				console.log(results);
-			}
-		}
+		service.nearbySearch(request, callback);
 
 		//service.findPlaceFromQuery(request, function(results, status) {
 		//	if (status === window.google.maps.places.PlacesServiceStatus.OK) {
