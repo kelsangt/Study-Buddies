@@ -14,6 +14,7 @@ import SignupForm from './components/SessionForms/SignupForm';
 import { getCurrentUser } from './store/session';
 import MainContent from './components/MainContent/MainContent';
 import EventCreateForm from './components/EventCreateForm/EventCreateForm';
+import UserSettings from './components/UserSettings/UserSettings';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -27,7 +28,8 @@ function App() {
       <Switch>
         
         <AuthRoute exact path="/" component={SplashPage} />
-        <ProtectedRoute exact path='/home' component={MainContent}/>
+        <ProtectedRoute path='/home' component={MainContent}/>
+        <ProtectedRoute path='/settings' component={UserSettings}/>
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
 

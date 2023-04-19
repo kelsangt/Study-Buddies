@@ -5,23 +5,27 @@ import { logout } from '../../store/session';
 import { useState } from 'react';
 import ProfileModal from '../ProfileModal/ProfileModal';
 import { setModalStatus } from '../../store/ui';
+import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 function NavBar () {
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  
   const modalState = useSelector(state => state.ui.modalStatus);
   
   const handleModalToggle = () => {
-    if (modalState) {
-      const modal = document.getElementById('profile-modal-container')
-      modal.classList.add('slideout')
-      console.log(modal)
-      setTimeout(()=>{
+    if (location === '/home') {
+      if (modalState) {
+        const modal = document.getElementById('profile-modal-container')
+        modal.classList.add('slideout')
+        console.log(modal)
+        setTimeout(()=>{
+          dispatch(setModalStatus(!modalState))
+        }, 500)
+      } else {
         dispatch(setModalStatus(!modalState))
-      }, 500)
-    } else {
-      dispatch(setModalStatus(!modalState))
+      }
     }
   }
 
