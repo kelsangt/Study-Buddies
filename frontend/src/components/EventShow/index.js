@@ -11,7 +11,7 @@ const EventShow = ({event}) => {
     dispatch(createEventRequest(event._id))
   }
 
-  console.log(event)
+  // console.log(event)
 
   return (
     <div className="event-show">

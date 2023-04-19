@@ -69,7 +69,6 @@ export const createEventRequest = (eventId) => async dispatch => {
     });
 
     const data = await res.json();
-    console.log(data);
     dispatch(receiveSpecificEvent(data));
     dispatch(getCurrentUser());
 }
@@ -78,7 +77,9 @@ const eventsReducer = (state={}, action) => {
     let nextState = {...state}
     switch (action.type) {
         case RECEIVE_ALL_EVENTS_FOR_DAY:
-            return {...action.allEventsForDay}
+            const events = {};
+            action.allEventsForDay.forEach(event => events[event._id] = event)
+            return events
         case RECEIVE_SPECIFIC_EVENT:
             nextState[action.event._id] = action.event;
             return nextState;
