@@ -63,7 +63,12 @@ export const createEvent = (eventInfo) => async dispatch => {
     });
 
     const data = await res.json();
-    dispatch(receiveSpecificEvent(data));
+    // dispatch(receiveSpecificEvent(data));
+    
+    // refactor this later when adding date filter
+    const todaysDate = new Date().toISOString().split("T")[0];
+    dispatch(fetchAllEventsForDay(todaysDate));
+
     dispatch(getCurrentUser());
 }
 
