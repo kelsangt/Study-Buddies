@@ -143,6 +143,7 @@
 }
 
 #settings-button {
+    color: black;
     width:10vw;
     text-align: center;
     border: 1px solid black;
