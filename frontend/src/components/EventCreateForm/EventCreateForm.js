@@ -6,7 +6,7 @@ import { getLocations } from '../../store/locations';
 function EventCreateForm () {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [location, setLocation] = useState('');
+    const [locationIndex, setLocationIndex] = useState('');
     const [startTimeInitial, setStartTimeInitial] = useState('');
     const [endTimeInitial, setEndTimeInitial] = useState('');
     const [date, setDate] = useState('');
@@ -30,7 +30,7 @@ function EventCreateForm () {
           setState = setDescription;
           break;
         case 'Location':
-          setState = setLocation;
+          setState = setLocationIndex;
           break;
         case 'Start Time':
           setState = setStartTimeInitial;
@@ -54,6 +54,8 @@ function EventCreateForm () {
         const [endHour, endMin] = endTimeInitial.split(':');
         const startTime = new Date(year, month, day, startHour, startMin);
         const endTime = new Date(year, month, day, endHour, endMin);
+
+        const location = locations[locationIndex];
 
         const event = {
             name,
@@ -96,9 +98,9 @@ function EventCreateForm () {
              
               <select className="inputField" id="selectLocation" onChange={update('Location')}>
                 <option disabled selected value>Select a location</option>
-                {locations.map((location)=>{
+                {locations.map((location, index)=>{
                     return (
-                        <option key={location.id} value={location._id}>
+                        <option key={index} value={index}>
                             {location.name}
                         </option>
                     )
