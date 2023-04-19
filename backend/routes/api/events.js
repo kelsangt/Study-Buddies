@@ -4,7 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Event = mongoose.model('Event');
-const Location = mongoose.model('Location');
+// const Location = mongoose.model('Location');
 
 const { requireUser } = require('../../config/passport');
 

@@ -9,14 +9,14 @@ const { isProduction } = require('./config/keys');
 
 require('./models/User');
 require('./models/Event');
-require('./models/Location');
+// require('./models/Location');
 
 require('./config/passport');
 const passport = require('passport');
 
 const usersRouter = require('./routes/api/users');
 const eventsRouter = require('./routes/api/events');
-const locationsRouter = require('./routes/api/locations');
+// const locationsRouter = require('./routes/api/locations');
 const csrfRouter = require('./routes/api/csrf');
 
 const app = express();
@@ -44,7 +44,7 @@ app.use(
 
 app.use('/api/users', usersRouter);
 app.use('/api/events', eventsRouter);
-app.use('/api/locations', locationsRouter);
+// app.use('/api/locations', locationsRouter);
 app.use('/api/csrf', csrfRouter);
 
 if (isProduction) {
