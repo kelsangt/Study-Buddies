@@ -15,7 +15,7 @@ function NavBar () {
   const modalState = useSelector(state => state.ui.modalStatus);
   
   const handleModalToggle = () => {
-    if (location === '/home') {
+    if (location.pathname === '/home') {
       if (modalState) {
         const modal = document.getElementById('profile-modal-container')
         modal.classList.add('slideout')
@@ -69,7 +69,9 @@ function NavBar () {
     <>
       <div className='nav-bar'>
         <div className='study-buddies'>
-          <h1>Study Buddies</h1>
+          <Link style={{ textDecoration: 'none' }} to={'/home'}>
+            <h1>Study Buddies</h1>
+          </Link>
         </div>
         { getLinks() }
       </div>

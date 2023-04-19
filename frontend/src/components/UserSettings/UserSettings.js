@@ -11,7 +11,7 @@ const UserSettings = () => {
 
 
     const editSettings = () => {
-        let get = document.querySelectorAll('.edit-profile-input')
+        let get = document.querySelectorAll('user-profile-edit-container')
         get.disabled = false
     }
 

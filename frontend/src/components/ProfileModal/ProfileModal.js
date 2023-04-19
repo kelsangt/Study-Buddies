@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { selectedTab, setModalStatus, setTabStatus } from '../../store/ui';
 import { CenterModal } from '../../context/Modal';
 import EventCreateForm from '../EventCreateForm/EventCreateForm';
+import { Link } from 'react-router-dom';
 const ProfileModal = () => {
     const dispatch = useDispatch();
     const createdEvents = useSelector(getMyCreatedEvents);
@@ -115,7 +116,11 @@ const ProfileModal = () => {
 
             <div id='profile-modal-footer'>
                 <div id='divider'></div>
-                <div id='settings-button'>Profile Settings</div>
+                
+                <Link style={{ textDecoration: 'none' }} to={'/settings'}>
+                    <div id='settings-button'>Profile Settings</div>
+                </Link>
+
                 <div id='logout-button' onClick={logoutUser}>Logout</div>
             </div>
         </div>
