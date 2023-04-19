@@ -3,6 +3,7 @@ import capy from './assets/powerup.wav';
 import leo from './assets/keleo.mp3';
 import mongo from './assets/mongoose.mp3';
 import kitty from './assets/kitty4.mp3';
+import kittyAlert from "./assets/kitty_red_alert.mp3";
 
 const { useSelector, useDispatch } = require('react-redux')
 const { getMemes, setLeo, setGiiirrrl, setCapy, setMongoose, resetMemes } = require('../../store/memes')
@@ -16,7 +17,8 @@ const TeamList = () => {
   const leoSound = new Audio(leo);
   const mongoSound = new Audio(mongo);
   const kittySound = new Audio(kitty);
-  // kittySound.volume = 0.6;
+  kittySound.volume = 0.6;
+  const kittyAlertSound = new Audio(kittyAlert);
   
   useEffect(() => {
     dispatch(resetMemes());
@@ -39,9 +41,11 @@ const TeamList = () => {
       case 'giiirrrl':
         if (!memeState.giiirrrl) {
           kittySound.play();
+          kittyAlertSound.play();
           setTimeout(() => {
             kittySound.pause();
-          }, 4000);
+            kittyAlertSound.pause();
+          }, 4200);
 
           dispatch(setGiiirrrl(true));
           e.currentTarget.src = require('./assets/giiirrrl.jpg');
@@ -96,6 +100,8 @@ const TeamList = () => {
         return
     }
   }
+
+  // const handleMemeToggle = () => {}
 
   return (
     <div id='team-div'>
