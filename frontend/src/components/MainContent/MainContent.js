@@ -24,7 +24,7 @@ const MainContent = () => {
     console.log(todayEvents)
     return (
         <>
-            <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY}>
+            <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} libraries={["places"]}>
                 <GMap />
             </Wrapper>
             {modalToggle && <ProfileModal/>}

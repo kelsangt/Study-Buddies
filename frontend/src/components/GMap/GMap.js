@@ -5,7 +5,6 @@ import InfoBoxInternal from './marker/InfoBoxInternal';
 import NavBar from '../NavBar/NavBar';
 import { getEvents } from '../../store/events';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLocations } from '../../store/locations';
 import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked } from '../../store/ui';
 
@@ -30,58 +29,60 @@ const GMap = ({center, zoom}) => {
 	locationButton.classList.add("custom-map-control-button")
 
 	const stylesArray = [
-    {
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [
-          { visibility: "off" }
-        ]
-    }
-];
+		{
+				featureType: "poi",
+				elementType: "labels",
+				stylers: [
+					{ visibility: "off" }
+				]
+		}
+	];
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-	infoWindow.setPosition(pos);
-	infoWindow.setContent(
-		browserHasGeolocation 
-			? "Error: The Geolocation service failed."
-			: "Error: Your browser doesn't support geolocation."
-	);
-	infoWindow.open(map);
-}
+	function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+		infoWindow.setPosition(pos);
+		infoWindow.setContent(
+			browserHasGeolocation 
+				? "Error: The Geolocation service failed."
+				: "Error: Your browser doesn't support geolocation."
+		);
+		infoWindow.open(map);
+	}
 
-const findGeoLocation = () => {
-	setGeoLocationClicked(false);
+	const findGeoLocation = () => {
+		setGeoLocationClicked(false);
 	
-	if (!geoLocationClicked) {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					const userLocation = {
-						lat: position.coords.latitude, 
-						lng: position.coords.longitude
-					};
-					userLocationCoords.current = userLocation; 
-					// Setting the map to the new location. 
-					const newMap = new window.google.maps.Map(ref.current, {
-						center: { lat: userLocation.lat, lng: userLocation.lng},
-						zoom: zoomAmount,
-						styles: stylesArray
-					})
-					newMap.setCenter(userLocation);
-					newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-					setMap(newMap);
-				},
-				() => {
-					handleLocationError(true, infoWindow, map.getCenter());
-				}
-			);
-		} else {
-			// Browser doesn't support Geolocation
-			handleLocationError(false, infoWindow, map.getCenter());
+		if (!geoLocationClicked) {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					(position) => {
+						const userLocation = {
+							lat: position.coords.latitude, 
+							lng: position.coords.longitude
+						};
+						userLocationCoords.current = userLocation; 
+						// Setting the map to the new location. 
+						const newMap = new window.google.maps.Map(ref.current, {
+							center: { lat: userLocation.lat, lng: userLocation.lng},
+							zoom: zoomAmount,
+							styles: stylesArray
+						})
+						newMap.setCenter(userLocation);
+						newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+						setMap(newMap);
+					},
+					() => {
+						handleLocationError(true, infoWindow, map.getCenter());
+					}
+				);
+			} else {
+				// Browser doesn't support Geolocation
+				handleLocationError(false, infoWindow, map.getCenter());
+			}
 		}
 	}
-}
 
+
+	// Initialize Map
 	useEffect(() => {
 		const initialMap = new window.google.maps.Map(ref.current, {
 			center: { lat: centerCoords.lat, lng: centerCoords.lng},
@@ -92,6 +93,29 @@ const findGeoLocation = () => {
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 		locationButton.addEventListener("click", findGeoLocation);
 		setMap(initialMap)
+
+		let location = new window.google.maps.LatLng(initialMap.center.lat, initialMap.center.lng)
+
+		let request = {
+			location: location,
+			radius: '500',
+			type: ['library']
+		};
+
+		let service = new window.google.maps.places.PlacesService(map);
+		service.nearbySearch(request, callback)
+
+		function callback(results, status) {
+			if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+				console.log(results);
+			}
+		}
+
+		//service.findPlaceFromQuery(request, function(results, status) {
+		//	if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+		//		console.log(results);
+		//	}
+		//})
 	}, []);
 
 	useEffect(() => {
