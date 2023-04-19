@@ -67,7 +67,9 @@ router.post('/', requireUser, async (req, res, next) => {
       endTime: req.body.endTime
     });
 
+    console.log(newEvent);
     let event = await newEvent.save();
+    console.log(event);
 
     req.user.createdEvents.push(event._id)
     await req.user.save();

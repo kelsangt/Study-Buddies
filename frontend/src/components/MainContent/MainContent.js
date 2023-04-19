@@ -15,12 +15,11 @@ const MainContent = () => {
     const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
     const modalToggle = useSelector(state => state.ui.modalStatus)
     const selectedId = useSelector(selectedEventId);
-    // const todaysDate = new Date().toISOString().split("T")[0];
-
-    const testDate = '2023-04-23'
+    const todaysDate = new Date().toISOString().split("T")[0];
+    
     useEffect(() => {
-        dispatch(fetchAllEventsForDay(testDate));
-				dispatch(fetchAllLocations());
+        dispatch(fetchAllEventsForDay(todaysDate));
+        // dispatch(fetchAllLocations());
 
     }, [dispatch])
 
