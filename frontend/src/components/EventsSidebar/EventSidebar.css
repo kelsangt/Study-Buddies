@@ -24,6 +24,10 @@
   width: 91%;
 }
 
+.event-sidebar-item.selected {
+  background-color: pink;
+}
+
 .event-sidebar-item:hover {
   background-color: aqua;
   cursor: pointer;

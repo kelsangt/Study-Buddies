@@ -26,11 +26,15 @@ export const getEvents = (state) => {
 	return state.events ? Object.values(state.events) : [];
 }
 
+export const getMyCreatedEvents = (state) => {
+    return state.session.user.createdEvents
+}
+
 // Thunk Action Creators 
 // year-month-day
 // date format: "2023-04-17"
 export const fetchAllEventsForDay = (date) => async dispatch => {
-    const res = await jwtFetch(`/api/events/?date=${date}`);
+    const res = await jwtFetch(`/api/events/?startDate=${date}`);
     const data = await res.json();
     return dispatch(receiveAllEventsForDay(data));
 }

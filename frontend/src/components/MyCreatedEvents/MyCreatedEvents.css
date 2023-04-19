@@ -1,0 +1,39 @@
+.myevent-name{
+    background-color: rgb(255, 191, 0);
+    
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 21px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-bottom: 4px;
+    color: white;
+}
+.myevent-location {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+.myattendee-count{
+    font-size: 15px;
+    padding-bottom: 10px;
+}
+
+.myevent-edit-holder{
+    padding-bottom: 10px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: end;
+}
+#myevent-edit-button {
+    border: 1px solid orange;
+    border-radius: 5px;
+    padding:4px;
+    text-align: end;
+    width: fit-content;
+}
+#myevent-edit-button:hover {
+    cursor: pointer;
+    color: orange;
+    transform: scale(1.05);
+}
+
