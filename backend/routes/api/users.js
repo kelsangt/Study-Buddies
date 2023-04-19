@@ -4,7 +4,7 @@ const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 
-const { loginUser, restoreUser } = require('../../config/passport');
+const { loginUser, restoreUser, requireUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
 
 const validateRegisterInput = require('../../validations/register');
@@ -82,6 +82,28 @@ router.post('/login', validateLoginInput, async (req, res, next) => {
     return res.json(await loginUser(user));
   })(req, res, next);
 });
+
+// UPDATE event
+router.patch('/', requireUser, async (req, res, next) => {
+  try {
+    req.user.username = req.body.username;
+    req.user.firstName = req.body.firstName;
+    req.user.lastName = req.body.lastName;
+    req.user.school = req.body.school;
+    req.user.major = req.body.major;
+    req.user.linkedInUrl = req.body.linkedInUrl;
+    req.user.phone = req.body.phone;
+    req.user.profileImageUrl = req.body.profileImageUrl;
+
+    await req.user.save();
+    return res.json(null);
+  } catch(err) {
+    const error = new Error('Event not found');
+    error.statusCode = 404;
+    error.errors = { message: "No event found with that id" };
+    return next(error);
+  }
+})
 
 // GET current user info
 router.get('/current', restoreUser, async (req, res) => {
