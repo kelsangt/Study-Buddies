@@ -1,3 +1,11 @@
 #big-user-container{
     display: flex;
 }
+
+#editsettings-button{
+    cursor: pointer;
+}
+
+#savesettings-button{
+    cursor: pointer;
+}
