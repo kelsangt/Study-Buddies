@@ -2,6 +2,8 @@ import { useState } from 'react';
 import './EventSidebar.css';
 import { CenterModal, NameToolTip } from '../../context/Modal';
 import EventShow from '../EventShow';
+import { useDispatch } from 'react-redux';
+import { receiveEventClicked } from '../../store/ui';
 
 const EventSidebarItem = ({event, selected}) => {
   const [showModal, setShowModal] = useState(false);
@@ -9,6 +11,7 @@ const EventSidebarItem = ({event, selected}) => {
   const [left, setLeft] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
   const [showEventInfoModal, setShowEventInfoModal] = useState(false);
+  const dispatch = useDispatch();
 
   const showHandler = (id) => (e) => {
     e.preventDefault();
@@ -31,11 +34,21 @@ const EventSidebarItem = ({event, selected}) => {
     setShowModal(false);
   }
 
+  const handleSelectEvent = () => {
+    setShowEventInfoModal(true);
+    dispatch(receiveEventClicked(event._id));
+  }
+
+  const leaveEventShowPage = () => {
+    setShowEventInfoModal(false);
+    dispatch(receiveEventClicked(null));
+  }
+
   return (
     <>
       <div 
         className={`event-sidebar-item ${selected ? 'selected' : ''}`}
-        onClick={() => setShowEventInfoModal(true)}
+        onClick={handleSelectEvent}
       >
         <span className="event-name">
           {event.name}
@@ -90,7 +103,7 @@ const EventSidebarItem = ({event, selected}) => {
       </div>
 
       {showEventInfoModal && (
-        <CenterModal onClose={() => setShowEventInfoModal(false)}>
+        <CenterModal onClose={leaveEventShowPage}>
           <EventShow event={event} />
         </CenterModal>
       )}
