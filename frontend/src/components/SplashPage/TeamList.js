@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import capy from './assets/powerup.wav';
 import leo from './assets/keleo.mp3';
 import mongo from './assets/mongoose.mp3';
-import kitty from './assets/kitty3.mp3';
+import kitty from './assets/kitty4.mp3';
 
 const { useSelector, useDispatch } = require('react-redux')
 const { getMemes, setLeo, setGiiirrrl, setCapy, setMongoose, resetMemes } = require('../../store/memes')
@@ -16,7 +16,7 @@ const TeamList = () => {
   const leoSound = new Audio(leo);
   const mongoSound = new Audio(mongo);
   const kittySound = new Audio(kitty);
-  kittySound.volume = 0.6;
+  // kittySound.volume = 0.6;
   
   useEffect(() => {
     dispatch(resetMemes());
@@ -45,6 +45,15 @@ const TeamList = () => {
 
           dispatch(setGiiirrrl(true));
           e.currentTarget.src = require('./assets/giiirrrl.jpg');
+
+          const positionText = document.getElementById("frontend-lead");
+          positionText.innerHTML = "Frontend Lead <br /> guuuuuuuuurl";
+
+          const positionClass = document.querySelectorAll(".teamPosition");
+          positionClass.forEach(item => {
+            const newHeight = Math.max(positionText.offsetHeight, item.offsetHeight)
+            item.style.minHeight = `${newHeight}px`
+          });
         }
         break;
       case 'capy':
@@ -58,11 +67,13 @@ const TeamList = () => {
           e.currentTarget.src = require('./assets/ssj_capy.png');
 
           const positionText = document.getElementById("meme-lead");
-          positionText.innerHTML = "Backend lead, frontend lead, flex lead, meme lead, lead lead, the whole stack lead tbh";
+          positionText.innerHTML = "Backend Lead <br /> Frontend Lead <br /> Flex Lead <br /> Meme Lead <br /> Lead Lead <br /> Mongobara Lead";
 
           const positionClass = document.querySelectorAll(".teamPosition");
-          console.log(positionClass)
-          positionClass.forEach(item => item.style.minHeight = `${positionText.offsetHeight}px`);
+          positionClass.forEach(item => {
+            const newHeight = Math.max(positionText.offsetHeight, item.offsetHeight)
+            item.style.minHeight = `${newHeight}px`
+          });
         }
         break;
       case 'mongoose':
@@ -70,6 +81,15 @@ const TeamList = () => {
           mongoSound.play();
           dispatch(setMongoose(true));
           e.currentTarget.src = require('./assets/mongoose.jpg');
+
+          const positionText = document.getElementById("flex-lead");
+          positionText.innerHTML = "Flex Engineer <br /> Lv 99 Map Wizard <br /> Map Guru <br /> Map Meister <br /> Reincarnation of Gerardus Mercator <br /> Erastothenes' Descendant <br /> Lord of Gmaps <br /> Mr. Steal Yo GMap <br /> Creator of Sorcerer's Quest";
+
+          const positionClass = document.querySelectorAll(".teamPosition");
+          positionClass.forEach(item => {
+            const newHeight = Math.max(positionText.offsetHeight, item.offsetHeight)
+            item.style.minHeight = `${newHeight}px`
+          });
         }
         break;
       default:
@@ -83,7 +103,7 @@ const TeamList = () => {
 
       <div className='team-holder'>
         <div className='individual-team-component'>
-            <div className='teamPosition'>Team Lead</div>
+            <div id="team-lead" className='teamPosition'>Team Lead</div>
             <div className='team-pics-holder'>
               <img 
                 className='team-pics' 
@@ -96,7 +116,7 @@ const TeamList = () => {
         </div>
       
         <div className='individual-team-component'>
-            <div className='teamPosition'>Frontend Lead</div>
+            <div id="frontend-lead" className='teamPosition'>Frontend Lead</div>
             <div className='team-pics-holder'>
               <img 
                 className='team-pics' 
@@ -122,7 +142,7 @@ const TeamList = () => {
         </div>
       
         <div className='individual-team-component'>
-            <div className='teamPosition'>Flex Engineer</div>
+            <div id="flex-lead" className='teamPosition'>Flex Engineer</div>
             <div className='team-pics-holder'>
               <img 
                 className='team-pics' 
