@@ -17,7 +17,7 @@ const TeamList = () => {
   const leoSound = new Audio(leo);
   const mongoSound = new Audio(mongo);
   const kittySound = new Audio(kitty);
-  kittySound.volume = 0.6;
+  kittySound.volume = 0.3;
   const kittyAlertSound = new Audio(kittyAlert);
   
   useEffect(() => {
