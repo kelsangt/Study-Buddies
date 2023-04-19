@@ -47,13 +47,12 @@ function EventCreateForm () {
 
     const handleEventCreate = e => {
         e.preventDefault();
-        console.log("submit");
 
         const [year, month, day] = date.split('-');
         const [startHour, startMin] = startTimeInitial.split(':');
         const [endHour, endMin] = endTimeInitial.split(':');
-        const startTime = new Date(year, month, day, startHour, startMin);
-        const endTime = new Date(year, month, day, endHour, endMin);
+        const startTime = new Date(year, parseInt(month) - 1, day, startHour, startMin);
+        const endTime = new Date(year, parseInt(month) - 1, day, endHour, endMin);
 
         const location = locations[locationIndex];
 
