@@ -48,7 +48,7 @@
     /* border: 1px solid green; */
     display: flex;
     flex-direction: row;
-    margin-top: 4px;
+    margin-top: 5px;
     margin-bottom: 5px;
     width: 25vw;
     justify-content: center;
@@ -64,10 +64,16 @@
     margin-bottom: 5px;
     text-align: center;
     vertical-align: center;
+    cursor: pointer;
+}
+.myevents-header.selected {
+    color: orange;
+}
+.myevents-header:active{
+    color: rgb(255, 191, 0);
 }
 #myevents-header-last{
     border-right: none;
-
 }
 
 #plus-icon {
@@ -76,7 +82,7 @@
 #create-event-button {
     border: 1px solid black;
     padding: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     cursor: pointer;
 }
 
@@ -108,7 +114,7 @@
     display: none;
 }
 .individual-event-holder {
-    margin-top:10px;
+    margin-top:5px;
     margin-left:10px;
     margin-right:10px;
     border: 1px solid #1E54AB;
