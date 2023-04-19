@@ -3,7 +3,7 @@ import './EventSidebar.css';
 import { CenterModal, NameToolTip } from '../../context/Modal';
 import EventShow from '../EventShow';
 
-const EventSidebarItem = ({event}) => {
+const EventSidebarItem = ({event, selected}) => {
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
@@ -34,7 +34,7 @@ const EventSidebarItem = ({event}) => {
   return (
     <>
       <div 
-        className="event-sidebar-item"
+        className={`event-sidebar-item ${selected ? 'selected' : ''}`}
         onClick={() => setShowEventInfoModal(true)}
       >
         <span className="event-name">
