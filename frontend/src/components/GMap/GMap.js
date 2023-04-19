@@ -5,11 +5,11 @@ import InfoBoxInternal from './marker/InfoBoxInternal';
 import NavBar from '../NavBar/NavBar';
 import { getEvents } from '../../store/events';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLocations } from '../../store/locations';
 import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked } from '../../store/ui';
+import { receiveAllLocations } from '../../store/locations';
 
-const GMap = ({center, zoom}) => {
+const GMap = () => {
 	const dispatch = useDispatch();
 	const [map, setMap] = useState();
 	const centerCoords = { lat: 40.73630, lng: -73.99379 };
@@ -20,8 +20,10 @@ const GMap = ({center, zoom}) => {
 	const userLocationCoords = useRef({});
 	const events = useSelector(getEvents);
 	const image = "../icon.png";
-	const blueIcon = "../bluemarker.png"	
+	const blueIcon = "../bluemarker.png"
+	const libraryIcon = "../library_icon.png"	
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
+	const [requestedLibraries, setRequestedLibraries] = useState(false);
 
 	// Geolocation Button
 	const infoWindow = new window.google.maps.InfoWindow(); 
@@ -30,58 +32,93 @@ const GMap = ({center, zoom}) => {
 	locationButton.classList.add("custom-map-control-button")
 
 	const stylesArray = [
-    {
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [
-          { visibility: "off" }
-        ]
-    }
-];
+		{
+				featureType: "poi",
+				elementType: "labels",
+				stylers: [
+					{ visibility: "off" }
+				]
+		}
+	];
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-	infoWindow.setPosition(pos);
-	infoWindow.setContent(
-		browserHasGeolocation 
-			? "Error: The Geolocation service failed."
-			: "Error: Your browser doesn't support geolocation."
-	);
-	infoWindow.open(map);
-}
+	function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+		infoWindow.setPosition(pos);
+		infoWindow.setContent(
+			browserHasGeolocation 
+				? "Error: The Geolocation service failed."
+				: "Error: Your browser doesn't support geolocation."
+		);
+		infoWindow.open(map);
+	}
 
-const findGeoLocation = () => {
-	setGeoLocationClicked(false);
-	
-	if (!geoLocationClicked) {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				(position) => {
-					const userLocation = {
-						lat: position.coords.latitude, 
-						lng: position.coords.longitude
-					};
-					userLocationCoords.current = userLocation; 
-					// Setting the map to the new location. 
-					const newMap = new window.google.maps.Map(ref.current, {
-						center: { lat: userLocation.lat, lng: userLocation.lng},
-						zoom: zoomAmount,
-						styles: stylesArray
-					})
-					newMap.setCenter(userLocation);
-					newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-					setMap(newMap);
-				},
-				() => {
-					handleLocationError(true, infoWindow, map.getCenter());
-				}
-			);
-		} else {
-			// Browser doesn't support Geolocation
-			handleLocationError(false, infoWindow, map.getCenter());
+	const findGeoLocation = () => {
+		setGeoLocationClicked(false);
+		setRequestedLibraries(false);
+
+		if (!geoLocationClicked) {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					(position) => {
+						const userLocation = {
+							lat: position.coords.latitude, 
+							lng: position.coords.longitude
+						};
+						userLocationCoords.current = userLocation; 
+						// Setting the map to the new location. 
+						const newMap = new window.google.maps.Map(ref.current, {
+							center: { lat: userLocation.lat, lng: userLocation.lng},
+							zoom: zoomAmount,
+							styles: stylesArray
+						})
+						newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+						setMap(newMap);
+					},
+					() => {
+						handleLocationError(true, infoWindow, map.getCenter());
+					}
+				);
+			} else {
+				// Browser doesn't support Geolocation
+				handleLocationError(false, infoWindow, map.getCenter());
+			}
 		}
 	}
-}
 
+	function placeLibraries(results, status) {
+		if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+			let holder = [];
+
+			results.forEach(result => {
+				let photoUrl = "https://upload.wikimedia.org/wikipedia/commons/6/60/Statsbiblioteket_l%C3%A6sesalen-2.jpg";
+				
+				if (result.photos) {
+					photoUrl = result.photos[0].getUrl()
+				}
+				holder.push({
+					name: result.name,
+					latitude: result.geometry.location.lat(),
+					longitude: result.geometry.location.lng(),
+					imageUrl: photoUrl
+				})
+
+				let resultLat = result.geometry.location.lat();
+				let resultLng = result.geometry.location.lng();
+				new window.google.maps.Marker({
+					position: {lat: resultLat, lng: resultLng},
+					map: map, 
+					icon: {
+						url: libraryIcon, 
+						scaledSize: new window.google.maps.Size(54, 54)
+					},
+					title: result.name,
+					animation: window.google.maps.Animation.DROP
+				});
+			})
+			dispatch(receiveAllLocations(holder));
+		}
+	}
+
+	// Initialize Map
 	useEffect(() => {
 		const initialMap = new window.google.maps.Map(ref.current, {
 			center: { lat: centerCoords.lat, lng: centerCoords.lng},
@@ -90,7 +127,7 @@ const findGeoLocation = () => {
 		})
 
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-		locationButton.addEventListener("click", findGeoLocation);
+		locationButton.addEventListener("click", findGeoLocation, {passive: true});
 		setMap(initialMap)
 	}, []);
 
@@ -108,10 +145,10 @@ const findGeoLocation = () => {
 				}
 			}));
 		});
-		
+
 		// Setting the markers Ref to the eventMarkers Array
 		markers.current = eventMarkers;
-		
+	
 		// Setting the infoTiles Ref to an array of empty InfoWindows the same length as the eventMarkers Array.
 		infoTiles.current = eventMarkers.map(() => new window.google.maps.InfoWindow({ content: ""}));
 
@@ -125,23 +162,26 @@ const findGeoLocation = () => {
 		for (let i = 0; i < infoTiles.current.length; i++) {
 			infoTiles.current[i].setContent(infoTileAttachments[i]); 
 		}
-		
-		// Adding the listener to show the InfoTile on mouseover. 
+
+		// Adding the listener to the Marker to show the InfoTile on mouseover. 
 		for (let i = 0; i < markers.current.length; i++) {
 			markers.current[i].addListener("click", () => {
+				let newMap = map;
+				newMap.setCenter(new window.google.maps.LatLng(Number(events[i].location.latitude), Number(events[i].location.longitude)));
+				setMap(newMap)
+
 				dispatch(receiveEventClicked(events[i]._id))
 				infoTiles.current[i].open({
 					anchor: markers.current[i],
-					map
+					map: map
 				})
-			})
+			}, {passive: true})
 		}
 
 		if (!geoLocationClicked) {
-			setGeoLocationClicked(true);
-			if (userLocationCoords) {
+			if (userLocationCoords.current) {
 				const locationMarker = new window.google.maps.Marker({
-					position: {lat: userLocationCoords.current.lat, lng: userLocationCoords.current.lng},
+					position: {lat: Number(userLocationCoords.current.lat), lng: Number(userLocationCoords.current.lng)},
 					map: map, 
 					icon: {
 						url: blueIcon, 
@@ -149,13 +189,14 @@ const findGeoLocation = () => {
 					},
 					animation: window.google.maps.Animation.DROP
 				});
-				
-				infoWindow.setPosition(userLocationCoords.current);
+				let userLatLng = new window.google.maps.LatLng(userLocationCoords.current)
+				infoWindow.setPosition(userLatLng);
 				infoWindow.setContent("Your Approximate Location.")
 				infoWindow.open({
 					anchor: locationMarker,
 					map: map 
 				})
+
 				const circle = new window.google.maps.Circle({
 					map: map, 
 					radius: 36,
@@ -164,7 +205,22 @@ const findGeoLocation = () => {
 					fillColor: '#4a80f5'
 				})
 				circle.bindTo('center', locationMarker, 'position');
+				setGeoLocationClicked(true);
 			}
+		}
+
+		if (map && !requestedLibraries) {
+			let locationLng = map.center.lng();
+			let locationLat = map.center.lat();
+			let request = {
+				location: new window.google.maps.LatLng({lat: locationLat, lng: locationLng}), 
+				radius: '400',
+				type: ['library']
+			};
+	
+			let service = new window.google.maps.places.PlacesService(map);
+			service.nearbySearch(request, placeLibraries);
+			setRequestedLibraries(true);
 		}
 	}, [map, events])
 

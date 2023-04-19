@@ -4,9 +4,10 @@ import { useEffect } from 'react';
 import { fetchAllEventsForDay } from '../../store/events';
 import { fetchAllLocations } from '../../store/locations';
 import GMap from '../GMap/GMap';
-import { Wrapper } from "@googlemaps/react-wrapper";
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import EventSideBar from '../EventsSidebar';
 import ProfileModal from '../ProfileModal/ProfileModal';
+import Loading from '../GMap/Loading/Loading';
 
 const MainContent = () => {
     const dispatch = useDispatch();
@@ -21,11 +22,18 @@ const MainContent = () => {
 
     }, [dispatch])
 
-    console.log(todayEvents)
+		const render = (status) => {
+			switch (status) {
+				case Status.LOADING:
+					return <Loading />; 
+				case Status.SUCCESS: 
+					return <GMap />;
+			}
+		}
+
     return (
         <>
-            <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY}>
-                <GMap />
+            <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places", "geocoder"]}>
             </Wrapper>
             {modalToggle && <ProfileModal/>}
         </>
