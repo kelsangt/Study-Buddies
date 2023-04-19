@@ -29,6 +29,9 @@ export const getEvents = (state) => {
 export const getMyCreatedEvents = (state) => {
     return state.session.user.createdEvents
 }
+export const getMyJoinedEvents = (state) => {
+    return state.session.user.joinedEvents
+}
 
 // Thunk Action Creators 
 // year-month-day
