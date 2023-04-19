@@ -52,6 +52,8 @@ export const fetchSpecificEvent = (eventId) => async dispatch => {
 
 // not tested
 export const createEvent = (eventInfo) => async dispatch => {
+    console.log("create");
+
     const res = await jwtFetch('/api/events', {
         method: 'POST',
         body: JSON.stringify(eventInfo),
@@ -59,8 +61,10 @@ export const createEvent = (eventInfo) => async dispatch => {
             'Content-Type': 'application/json'
         }
     });
+
     const data = await res.json();
-    return dispatch(createEvent(data));
+    dispatch(receiveSpecificEvent(data));
+    dispatch(getCurrentUser());
 }
 
 export const createEventRequest = (eventId) => async dispatch => {

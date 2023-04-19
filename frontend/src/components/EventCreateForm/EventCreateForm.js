@@ -47,9 +47,13 @@ function EventCreateForm () {
 
     const handleEventCreate = e => {
         e.preventDefault();
+        console.log("submit");
 
-        const startTime = date + "T" + startTimeInitial + ".00.000+00:00";
-        const endTime = date + "T" + endTimeInitial + ".00.000+00:00";
+        const [year, month, day] = date.split('-');
+        const [startHour, startMin] = startTimeInitial.split(':');
+        const [endHour, endMin] = endTimeInitial.split(':');
+        const startTime = new Date(year, month, day, startHour, startMin);
+        const endTime = new Date(year, month, day, endHour, endMin);
 
         const event = {
             name,
@@ -58,7 +62,6 @@ function EventCreateForm () {
             startTime: startTime,
             endTime: endTime
         };
-        console.log(event);
         dispatch(createEvent(event));
     }
   
