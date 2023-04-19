@@ -1,11 +1,70 @@
 #big-user-container{
     display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+}
+
+#greeting{
+    font-size: 2rem;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-left: 45px;
+}
+
+#medium-user-container{
+    display: flex;
+    gap: 8vw;
+    margin-left: 5vw;
+}
+#user-profile-photo-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#user-profile-edit-container{
+    width: 54vw;
+}
+#display-profile-info-container {
+    padding: 2vw;
+    width: 40vw;
+    border: 1px solid green;
+}
+
+#edit-settings-image-holder{
+    border: 10px double orange;
+    width: 25vw;
+    height: 25vw;
+    overflow: hidden;
+    margin-top: 30px;
+    margin-bottom: 5vh;
+    border-radius: 50%;
+}
+
+#edit-settings-image{
+    width: 29vw;
 }
 
 #editsettings-button{
+    border: 1px solid red;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
 #savesettings-button{
+    border: 1px solid black;
+    font-size: 25px;
+    text-align: center;
     cursor: pointer;
+}
+
+.edit-profile-input {
+    font-size: 18px;
+    padding: 15px;
+    width: 37.5vw;
+    margin-bottom: 27px;
+}
+.usersettings-label{
+    font-size: 18px;
+    margin-bottom: 8px;
 }

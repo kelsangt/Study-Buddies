@@ -4,6 +4,7 @@ const RECEIVE_CURRENT_USER = "session/RECEIVE_CURRENT_USER";
 const RECEIVE_SESSION_ERRORS = "session/RECEIVE_SESSION_ERRORS";
 const CLEAR_SESSION_ERRORS = "session/CLEAR_SESSION_ERRORS";
 export const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
+export const PATCH_USER = "session/PATCH_USER";
 
 // Dispatch receiveCurrentUser when a user logs in.
 const receiveCurrentUser = currentUser => ({
@@ -26,6 +27,11 @@ const logoutUser = () => ({
 export const clearSessionErrors = () => ({
   type: CLEAR_SESSION_ERRORS
 });
+
+export const patchUser = (user) => ({
+  type: PATCH_USER,
+  user
+})
 
 export const signup = user => startSession(user, 'api/users/register');
 export const login = user => startSession(user, 'api/users/login');
@@ -57,16 +63,33 @@ export const logout = () => dispatch => {
   dispatch(logoutUser());
 };
 
+
+export const updateUser = (userInfo) => async dispatch => {
+  const res = await jwtFetch(`/api/users/`, {
+    method: 'PATCH',
+    body: JSON.stringify(userInfo),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  const data = await res.json();
+  return dispatch(patchUser(data))
+}
+
+
 const initialState = {
   user: undefined
 };
   
 const sessionReducer = (state = initialState, action) => {
+  let nextState = {...state}
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
       return { user: action.currentUser };
     case RECEIVE_USER_LOGOUT:
       return initialState;
+    case PATCH_USER:
+      return { user: action.user }
     default:
       return state;
   }
