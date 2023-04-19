@@ -11,9 +11,16 @@ const { requireUser } = require('../../config/passport');
 // GET all events
 router.get('/', async (req, res) => {
   try {
-    const startDay = new Date(req.query.date);
-    const endDay = new Date(req.query.date);
-    endDay.setDate(endDay.getDate() + 1);
+    const startDay = new Date(req.query.startDate);
+
+    let endDay;
+    if (req.query.endDate) {
+      endDay = new Date(req.query.endDate);
+    } else {
+      endDay = new Date(req.query.startDate);
+      endDay.setDate(endDay.getDate() + 1);
+    }
+    
 
     const events = await Event.find({
       startTime: {
