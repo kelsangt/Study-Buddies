@@ -2,16 +2,70 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  max-width: 50vw;
+  max-height: 80vh;
+  overflow: hidden;
+  padding: 5px;
 }
 
 .event-show .event-name {
   font-size: 30px;
+  margin-bottom: 5px;
 }
 
 .event-show .event-location {
   font-size: 22px;
+  margin-bottom: 5px;
 }
 
 .event-show .event-description {
   font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.show-header {
+  font-size: 18px;
+}
+
+.event-show .event-creator {
+  margin-bottom: 5px;
+}
+
+.event-show .attendee-photos {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  max-height: 40vh;
+  margin-bottom: 20px;
+  overflow: hidden auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.event-show .attendee-info {
+  display: flex;
+  align-items: center;
+  margin: 2px 0;
+}
+
+.event-show .attendee-photos::-webkit-scrollbar {
+  display: none;
+}
+
+.user-image.show {
+  width: 40px;
+  height: 40px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.request-button {
+  width: 110px;
+  height: 30px;
+}
+
+.request-button:hover {
+  cursor: pointer;
 }

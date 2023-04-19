@@ -5,12 +5,15 @@ import { useSelector } from 'react-redux';
 import { getMyCreatedEvents, getMyJoinedEvents } from '../../store/events';
 import MyCreatedEvents from '../MyCreatedEvents/MyCreatedEvents';
 import { useState } from 'react';
-import { selectedTab, setTabStatus } from '../../store/ui';
+import { selectedTab, setModalStatus, setTabStatus } from '../../store/ui';
+import { CenterModal } from '../../context/Modal';
+import EventCreateForm from '../EventCreateForm/EventCreateForm';
 const ProfileModal = () => {
     const dispatch = useDispatch();
     const createdEvents = useSelector(getMyCreatedEvents);
     const joinedEvents = useSelector(getMyJoinedEvents);
     const requestedEvents = useSelector(state => state.session.user.requestedEvents);
+    const [showEventCreateModal, setShowEventCreateModal] = useState(false);
 
     const currentTab = useSelector(selectedTab);
     let myEventTab;
@@ -39,6 +42,21 @@ const ProfileModal = () => {
         dispatch(setTabStatus("Requested Events"))
     }
 
+    const showCreateForm = (e) => {
+        e.preventDefault();
+        setShowEventCreateModal(true);
+        const sideModal = document.getElementById('profile-modal-container');
+        sideModal.style.display = 'none';
+    }
+
+    const hideCreateForm = (e) => {
+        e.preventDefault();
+        setShowEventCreateModal(false);
+        dispatch(setModalStatus(true));
+        const sideModal = document.getElementById('profile-modal-container');
+        sideModal.style.display = 'flex';
+    }
+
     return (
         <div id='profile-modal-container'> 
             <div id='big-event-container'>
@@ -48,9 +66,18 @@ const ProfileModal = () => {
                         <div className={`myevents-header ${currentTab === "Joined Events" ? 'selected' : ''}`} onClick={selectJoinedEvents}>Joined Events</div>
                         <div className={`myevents-header ${currentTab === "Requested Events" ? 'selected' : ''}`} onClick={selectRequestEvents}>Requested Events</div>
                     </div>
-                    <div id='create-event-button'>
+                    <div 
+                        id='create-event-button'
+                        onClick={showCreateForm}
+                    >
                         <i className="fa-solid fa-plus" id='plus-icon'></i>
-                        Create Event</div>
+                        Create Event
+                    </div>
+                    {showEventCreateModal && (
+                        <CenterModal onClose={hideCreateForm}>
+                            <EventCreateForm />
+                        </CenterModal>
+                    )}
                 </div>
 
                 <div id='events-holder'>

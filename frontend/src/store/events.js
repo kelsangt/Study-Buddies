@@ -1,4 +1,5 @@
 import jwtFetch from "./jwt";
+import { getCurrentUser } from "./session";
 
 
 export const RECEIVE_ALL_EVENTS_FOR_DAY = "events/RECEIVE_ALL_EVENTS_FOR_DAY";
@@ -60,6 +61,17 @@ export const createEvent = (eventInfo) => async dispatch => {
     });
     const data = await res.json();
     return dispatch(createEvent(data));
+}
+
+export const createEventRequest = (eventId) => async dispatch => {
+    const res = await jwtFetch(`/api/events/requests/${eventId}`, {
+        method: "POST"
+    });
+
+    const data = await res.json();
+    console.log(data);
+    dispatch(receiveSpecificEvent(data));
+    dispatch(getCurrentUser());
 }
 
 const eventsReducer = (state={}, action) => {
