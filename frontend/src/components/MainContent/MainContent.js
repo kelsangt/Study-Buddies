@@ -33,7 +33,7 @@ const MainContent = () => {
 
     return (
         <>
-            <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places"]}>
+            <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places", "geocoder"]}>
             </Wrapper>
             {modalToggle && <ProfileModal/>}
         </>

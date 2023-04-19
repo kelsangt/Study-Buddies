@@ -37,11 +37,17 @@ const EventSidebarItem = ({event, selected}) => {
   const handleSelectEvent = () => {
     setShowEventInfoModal(true);
     dispatch(receiveEventClicked(event._id));
+
+    const sideModal = document.getElementById('profile-modal-container');
+    if (sideModal) sideModal.style.display = 'none';
   }
 
   const leaveEventShowPage = () => {
     setShowEventInfoModal(false);
     dispatch(receiveEventClicked(null));
+
+    const sideModal = document.getElementById('profile-modal-container');
+    if (sideModal) sideModal.style.display = 'flex';
   }
 
   return (

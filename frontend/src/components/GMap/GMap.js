@@ -19,8 +19,10 @@ const GMap = () => {
 	const userLocationCoords = useRef({});
 	const events = useSelector(getEvents);
 	const image = "../icon.png";
-	const blueIcon = "../bluemarker.png"	
+	const blueIcon = "../bluemarker.png"
+	const libraryIcon = "../library_icon.png"	
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
+	const [requestedLibraries, setRequestedLibraries] = useState(false);
 
 	// Geolocation Button
 	const infoWindow = new window.google.maps.InfoWindow(); 
@@ -51,6 +53,7 @@ const GMap = () => {
 	const findGeoLocation = () => {
 	
 		setGeoLocationClicked(false);
+		setRequestedLibraries(false);
 
 		if (!geoLocationClicked) {
 			if (navigator.geolocation) {
@@ -81,9 +84,23 @@ const GMap = () => {
 		}
 	}
 
-	function callback(results, status) {
+	function placeLibraries(results, status) {
 		if (status == window.google.maps.places.PlacesServiceStatus.OK) {
 			console.log(results);
+			results.forEach(result => {
+				let resultLat = result.geometry.location.lat();
+				let resultLng = result.geometry.location.lng();
+				new window.google.maps.Marker({
+					position: {lat: resultLat, lng: resultLng},
+					map: map, 
+					icon: {
+						url: libraryIcon, 
+						scaledSize: new window.google.maps.Size(54, 54)
+					},
+					title: result.name,
+					animation: window.google.maps.Animation.DROP
+				});
+			})
 		}
 	}
 
@@ -98,28 +115,11 @@ const GMap = () => {
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 		locationButton.addEventListener("click", findGeoLocation, {passive: true});
 		setMap(initialMap)
-
-		//let location = new window.google.maps.LatLng(40.7363, -73.99379)
-		//let request = {
-		//	location: location, 
-		//	radius: '400',
-		//	type: ['library']
-		//};
-		
-		//let service = new window.google.maps.places.PlacesService(map);
-		//service.nearbySearch(request, callback);
-
-		//service.findPlaceFromQuery(request, function(results, status) {
-		//	if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-		//		console.log(results);
-		//	}
-		//})
 	}, []);
 
 	useEffect(() => {
 		// Creating all Event Markers and placing them on the map. 
 		let eventMarkers = [];
-
 		events.forEach(event => {
 			eventMarkers.push(new window.google.maps.Marker({
 				position: {lat: event.location.latitude, lng: event.location.longitude},
@@ -193,6 +193,20 @@ const GMap = () => {
 				circle.bindTo('center', locationMarker, 'position');
 				setGeoLocationClicked(true);
 			}
+		}
+
+		if (map && !requestedLibraries) {
+			let locationLng = map.center.lng();
+			let locationLat = map.center.lat();
+			let request = {
+				location: new window.google.maps.LatLng({lat: locationLat, lng: locationLng}), 
+				radius: '400',
+				type: ['library']
+			};
+	
+			let service = new window.google.maps.places.PlacesService(map);
+			service.nearbySearch(request, placeLibraries);
+			setRequestedLibraries(true);
 		}
 	}, [map, events])
 

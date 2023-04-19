@@ -1,4 +1,5 @@
 import jwtFetch from "./jwt";
+import { getCurrentUser } from "./session";
 
 
 export const RECEIVE_ALL_EVENTS_FOR_DAY = "events/RECEIVE_ALL_EVENTS_FOR_DAY";
@@ -28,6 +29,9 @@ export const getEvents = (state) => {
 
 export const getMyCreatedEvents = (state) => {
     return state.session.user.createdEvents
+}
+export const getMyJoinedEvents = (state) => {
+    return state.session.user.joinedEvents
 }
 
 // Thunk Action Creators 
@@ -59,11 +63,23 @@ export const createEvent = (eventInfo) => async dispatch => {
     return dispatch(createEvent(data));
 }
 
+export const createEventRequest = (eventId) => async dispatch => {
+    const res = await jwtFetch(`/api/events/requests/${eventId}`, {
+        method: "POST"
+    });
+
+    const data = await res.json();
+    dispatch(receiveSpecificEvent(data));
+    dispatch(getCurrentUser());
+}
+
 const eventsReducer = (state={}, action) => {
     let nextState = {...state}
     switch (action.type) {
         case RECEIVE_ALL_EVENTS_FOR_DAY:
-            return {...action.allEventsForDay}
+            const events = {};
+            action.allEventsForDay.forEach(event => events[event._id] = event)
+            return events
         case RECEIVE_SPECIFIC_EVENT:
             nextState[action.event._id] = action.event;
             return nextState;

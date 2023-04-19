@@ -1,11 +1,11 @@
 @keyframes modal {
-    0% {right: -25vw;}
+    0% {right: -27vw;}
     100% {right: 0px;}
 }
 
 @keyframes reversemodal {
     0% {right: 0px;}
-    100% {right: -25vw;}
+    100% {right: -27vw;}
 }
 
 #profile-modal-container{
@@ -15,7 +15,7 @@
     z-index: 100;
     border: 1px solid rgb(0, 0, 0);
     border-radius: 8px;
-    width: 25vw;
+    width: 27vw;
     /* height: 58vh; */
     height: fit-content;
     background-color: rgb(255, 255, 255);
@@ -44,10 +44,47 @@
     flex-direction: column;
     align-items: center;
 }
-#myevents-header {
-    margin-top: 10px;
-    font-size: 27px;
+#events-tab{
+    /* border: 1px solid green; */
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
     margin-bottom: 5px;
+    width: 27vw;
+    justify-content: center;
+}
+#close-caret{
+    font-size: 23px;
+    margin-top: 15px;
+    margin-right: 7px;
+    color: #1e54abcc;
+    cursor: pointer;
+}
+#close-caret i:hover{
+    color: rgb(255, 191, 0);
+}
+.myevents-header {
+    padding: 7px 10px;
+    border-right: 2px solid #1e54abcc;
+    border-bottom: 2px solid #1e54abcc;
+    width: fit-content;
+    margin-top: 10px;
+    font-size: 23px;
+    font-size: 1.05rem;
+    margin-bottom: 5px;
+    text-align: center;
+    vertical-align: center;
+    cursor: pointer;
+}
+
+.myevents-header.selected {
+    color: rgb(255, 191, 0);
+}
+.myevents-header:active{
+    color: rgb(255, 191, 0);
+}
+#myevents-header-last{
+    border-right: none;
 }
 
 #plus-icon {
@@ -56,7 +93,7 @@
 #create-event-button {
     border: 1px solid black;
     padding: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     cursor: pointer;
 }
 
@@ -64,8 +101,8 @@
     transform: scale(1.05);
 }
 #divider {
-    width: 22vw;
-    border: 1px solid #1E54AB;
+    width: 23vw;
+    border: 1px solid #1e54abcc;
 }
 
 #events-holder{
@@ -88,7 +125,7 @@
     display: none;
 }
 .individual-event-holder {
-    margin-top:10px;
+    margin-top:5px;
     margin-left:10px;
     margin-right:10px;
     border: 1px solid #1E54AB;
@@ -127,7 +164,7 @@
     padding-right: 15px;
     padding-left: 15px;
     border-radius:8px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     cursor: pointer;
 }
 #logout-button:hover {

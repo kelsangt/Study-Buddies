@@ -13,6 +13,7 @@ import SignupForm from './components/SessionForms/SignupForm';
 
 import { getCurrentUser } from './store/session';
 import MainContent from './components/MainContent/MainContent';
+import EventCreateForm from './components/EventCreateForm/EventCreateForm';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -29,6 +30,7 @@ function App() {
         <ProtectedRoute exact path='/home' component={MainContent}/>
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
+
       </Switch>
     </>
   );
