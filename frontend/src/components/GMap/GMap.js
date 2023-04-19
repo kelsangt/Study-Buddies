@@ -25,12 +25,13 @@ const GMap = () => {
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
 
-	// Geolocation Button
+	// Creating Geolocation Button including InfoWindow
 	const infoWindow = new window.google.maps.InfoWindow(); 
 	const locationButton = document.createElement("button");
 	locationButton.textContent = "Click to View Study Sessions In Your Area"
 	locationButton.classList.add("custom-map-control-button")
 
+	// Map Initial Styles 
 	const stylesArray = [
 		{
 				featureType: "poi",
@@ -41,6 +42,7 @@ const GMap = () => {
 		}
 	];
 
+	// If Geolocation is not available. 
 	function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 		infoWindow.setPosition(pos);
 		infoWindow.setContent(
@@ -51,6 +53,7 @@ const GMap = () => {
 		infoWindow.open(map);
 	}
 
+	// Function run when someone wants to use their Geolocation. 
 	const findGeoLocation = () => {
 		setGeoLocationClicked(false);
 		setRequestedLibraries(false);
@@ -86,7 +89,7 @@ const GMap = () => {
 
 	function placeLibraries(results, status) {
 		if (status == window.google.maps.places.PlacesServiceStatus.OK) {
-			let holder = [];
+			let googleFetchedLibraries = [];
 
 			results.forEach(result => {
 				let photoUrl = "https://upload.wikimedia.org/wikipedia/commons/6/60/Statsbiblioteket_l%C3%A6sesalen-2.jpg";
@@ -94,7 +97,8 @@ const GMap = () => {
 				if (result.photos) {
 					photoUrl = result.photos[0].getUrl()
 				}
-				holder.push({
+
+				googleFetchedLibraries.push({
 					name: result.name,
 					latitude: result.geometry.location.lat(),
 					longitude: result.geometry.location.lng(),
@@ -104,6 +108,7 @@ const GMap = () => {
 
 				let resultLat = result.geometry.location.lat();
 				let resultLng = result.geometry.location.lng();
+				
 				new window.google.maps.Marker({
 					position: {lat: resultLat, lng: resultLng},
 					map: map, 
@@ -115,11 +120,11 @@ const GMap = () => {
 					animation: window.google.maps.Animation.DROP
 				});
 			})
-			dispatch(receiveAllLocations(holder));
+			dispatch(receiveAllLocations(googleFetchedLibraries));
 		}
 	}
 
-	// Initialize Map
+	// Initialize The Map
 	useEffect(() => {
 		const initialMap = new window.google.maps.Map(ref.current, {
 			center: { lat: centerCoords.lat, lng: centerCoords.lng},
@@ -127,13 +132,16 @@ const GMap = () => {
 			styles: stylesArray
 		})
 
+		// Creating the Geolocation Controls Button and Event Listener
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 		locationButton.addEventListener("click", findGeoLocation, {passive: true});
+		
 		setMap(initialMap)
 	}, []);
 
+	// UseEffect run on every map and event change.
 	useEffect(() => {
-		// Creating all Event Markers and placing them on the map. 
+		// Creating all Study Event Markers and placing them on the map. 
 		let eventMarkers = [];
 		events.forEach(event => {
 			eventMarkers.push(new window.google.maps.Marker({
@@ -150,10 +158,10 @@ const GMap = () => {
 		// Setting the markers Ref to the eventMarkers Array
 		markers.current = eventMarkers;
 	
-		// Setting the infoTiles Ref to an array of empty InfoWindows the same length as the eventMarkers Array.
+		// Setting the InfoTiles Ref to an array of empty InfoWindows the same length as the eventMarkers Array.
 		infoTiles.current = eventMarkers.map(() => new window.google.maps.InfoWindow({ content: ""}));
 
-		// Creating The Content of the InfoTiles and Putting into array (the same legnth as markers.current.) It creates new InfoBoxInternal components with the event[i] passed as a prop. 
+		// Creating The content of the InfoTiles and pushing into infoTileAttachments array (which is the same legnth as markers.current.) This creates new InfoBoxInternal components with the event[i] passed as the event prop. 
 		const infoTileAttachments = [];
 		for (let i = 0; i < markers.current.length; i++) {
 			infoTileAttachments.push(renderToString(<div id="InfoBoxInternal_wrapper"><InfoBoxInternal event={events[i]} /></div>))
@@ -164,7 +172,7 @@ const GMap = () => {
 			infoTiles.current[i].setContent(infoTileAttachments[i]); 
 		}
 
-		// Adding the listener to the Marker to show the InfoTile on mouseover. 
+		// Adding the click listener to the Marker to show the corresponding InfoTile on mouseclick. 
 		for (let i = 0; i < markers.current.length; i++) {
 			markers.current[i].addListener("click", () => {
 				let newMap = map;
