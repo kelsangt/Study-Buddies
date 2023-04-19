@@ -109,7 +109,7 @@ const GMap = () => {
 				let resultLat = result.geometry.location.lat();
 				let resultLng = result.geometry.location.lng();
 				
-				new window.google.maps.Marker({
+				let eventMarker = new window.google.maps.Marker({
 					position: {lat: resultLat, lng: resultLng},
 					map: map, 
 					icon: {
@@ -119,6 +119,15 @@ const GMap = () => {
 					title: result.name,
 					animation: window.google.maps.Animation.DROP
 				});
+				let eventInfoWindow = new window.google.maps.InfoWindow({
+					content: result.name
+				})
+				eventMarker.addListener("click", () => {
+					eventInfoWindow.open({
+						anchor: eventMarker, 
+						map: map
+					})
+				})
 			})
 			dispatch(receiveAllLocations(googleFetchedLibraries));
 		}
