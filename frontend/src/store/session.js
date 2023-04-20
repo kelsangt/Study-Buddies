@@ -104,6 +104,8 @@ const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
       let user = {...action.currentUser};
+      if (!Object.keys(user).length) return initialState;
+
       if (action.currentUser) {
         user.createdEvents = {};
         action.currentUser.createdEvents.forEach(event => user.createdEvents[event._id] = event)
