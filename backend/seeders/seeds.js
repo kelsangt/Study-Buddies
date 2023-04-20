@@ -162,7 +162,7 @@ for (let j = 0; j < 10; j++) {
     creator.createdEvents.push(event._id);
     
     // making random attendees
-    const numRandAttendees = Math.floor(Math.random()*5);
+    const numRandAttendees = Math.floor(Math.random() * (5 - 1) + 1);
     for (let i = 0; i < numRandAttendees; i++) {
       const attendee = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
       event.attendees.push(attendee._id);
@@ -170,7 +170,7 @@ for (let j = 0; j < 10; j++) {
     }
     
     // making random requesters
-    const numRandRequesters = Math.floor(Math.random()*2);
+    const numRandRequesters = Math.floor(Math.random() * (3 - 1) + 1);
     for (let i = 0; i < numRandRequesters; i++) {
       const requester = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
       event.requesters.push(requester._id);
