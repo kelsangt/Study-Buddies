@@ -17,6 +17,7 @@ const DateSelector = () => {
         selected={chosenDate} 
         onChange={(date) => setChosenDate(date)}
         onSelect={handleSelectedDate}
+        popperPlacement='bottom'
         />
     )
 }
