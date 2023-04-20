@@ -1,18 +1,8 @@
-const EventUpdateForm = ({event}) => {
-    return (
-        <>
-        <div id="event-update"> 
-
-        </div>
-        <h1>{event.name}</h1>
-        </>
-    )
-}
-
 
 
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { createEvent } from '../../store/events';
 import { updateEvent } from '../../store/events';
 import { getLocations } from '../../store/locations';
 
