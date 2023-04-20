@@ -192,10 +192,8 @@ const insertSeeds = () => {
   console.log("Resetting db and seeding users, locations, events...");
 
   User.collection.drop()
-                  .then(() => Location.collection.drop())
                   .then(() => Event.collection.drop())
                   .then(() => User.insertMany(users))
-                  // .then(() => Location.insertMany(locations))
                   .then(() => Event.insertMany(events))
                   .then(() => {
                     console.log("Done!");
