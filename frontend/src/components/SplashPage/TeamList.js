@@ -4,6 +4,7 @@ import leo from './assets/keleo.mp3';
 import mongo from './assets/mongoose.mp3';
 import kitty from './assets/kitty4.mp3';
 import kittyAlert from "./assets/kitty_red_alert.mp3";
+import './TeamList.css'
 
 const { useSelector, useDispatch } = require('react-redux')
 const { getMemes, setLeo, setGiiirrrl, setCapy, setMongoose, resetMemes } = require('../../store/memes')
@@ -119,6 +120,15 @@ const TeamList = () => {
               />
             </div>
             <div id='team-member-name'>Kelsang Tsering</div>
+            <div id="kelsang-links">
+              <a href="https://github.com/kelsangt/Study-Buddies">
+                  <i className="fa fa-github" id="githubLink"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/kelsang-tsering/">
+                  <i className="fa fa-linkedin" id="linkedInLink"></i>
+              </a>
+            </div>
+
         </div>
       
         <div className='individual-team-component'>
@@ -132,6 +142,15 @@ const TeamList = () => {
               />
             </div>
             <div id='team-member-name'>Yinglin Zhou</div>
+            <div id="ying-links">
+              <a href="https://github.com/yinglzhou">
+                  <i className="fa fa-github" id="githubLink"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/yinglzhou/">
+                  <i className="fa fa-linkedin" id="linkedInLink"></i>
+              </a>
+            </div>
+
         </div>
       
         <div className='individual-team-component'>
@@ -145,6 +164,14 @@ const TeamList = () => {
               />
             </div>
             <div id='team-member-name'>Fahim Khan</div>
+            <div id="fahim-links">
+              <a href="https://github.com/fk652">
+                  <i className="fa fa-github" id="githubLink"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/fk652/">
+                  <i className="fa fa-linkedin" id="linkedInLink"></i>
+              </a>
+            </div>
         </div>
       
         <div className='individual-team-component'>
@@ -158,6 +185,14 @@ const TeamList = () => {
               />
             </div>
             <div id='team-member-name'>Justin Diner</div>
+            <div id="justin-links">
+              <a href="https://github.com/Justin-Diner">
+                  <i className="fa fa-github" id="githubLink"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/justin-diner/">
+                  <i className="fa fa-linkedin" id="linkedInLink"></i>
+              </a>
+            </div>
         </div>
       </div>
     </div>
