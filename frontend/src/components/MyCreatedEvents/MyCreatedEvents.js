@@ -6,6 +6,8 @@ import { selectedTab } from '../../store/ui';
 import { CenterModal } from '../../context/Modal';
 import { setModalStatus } from '../../store/ui';
 import EventUpdateForm from '../EventUpdateForm/EventUpdateForm';
+import { deleteEvent } from '../../store/events';
+import { deleteRequest } from '../../store/events';
 
 const MyCreatedEvents = ({event}) => {
     const [showModal, setShowModal] = useState(false);
@@ -30,6 +32,15 @@ const MyCreatedEvents = ({event}) => {
         dispatch(setModalStatus(true));
         const sideModal2 = document.getElementById('profile-modal-container');
         sideModal2.style.display = 'flex';
+    }
+    const handleLeave = (e) => {
+        e.preventDefault();
+        dispatch(deleteEvent(event._id))
+    }
+
+    const handleRequest = (e) => {
+        e.preventDefault();
+        dispatch(deleteRequest(event._id))
     }
 
     return (
@@ -59,6 +70,18 @@ const MyCreatedEvents = ({event}) => {
                 )}
             </div>
             }
+            {(currentTab === "Joined Events") &&
+            <div className='myevent-edit-holder'>
+                <div onClick={handleLeave} id='myevent-edit-button'>Leave Event</div>
+            </div>
+            }
+
+            {(currentTab === "Requested Events") &&
+            <div className='myevent-edit-holder'>
+                <div onClick={handleRequest} id='myevent-edit-button'>Cancel Request</div>
+            </div>
+            }
+
         </div>
     )
 }
