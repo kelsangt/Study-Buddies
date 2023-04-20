@@ -4,6 +4,7 @@ const RECEIVE_CURRENT_USER = "session/RECEIVE_CURRENT_USER";
 const RECEIVE_SESSION_ERRORS = "session/RECEIVE_SESSION_ERRORS";
 const CLEAR_SESSION_ERRORS = "session/CLEAR_SESSION_ERRORS";
 export const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
+export const PATCH_USER = "session/PATCH_USER";
 
 const RECEIVE_REQUESTED_EVENT = "session/RECEIVE_REQUESTED_EVENT";
 const RECEIVE_JOINED_EVENT = "session/RECEIVE_JOINED_EVENT";
@@ -31,6 +32,11 @@ export const clearSessionErrors = () => ({
   type: CLEAR_SESSION_ERRORS
 });
 
+export const patchUser = (user) => ({
+  type: PATCH_USER,
+  user
+})
+
 export const addRequestedEvent = (event) => ({
   type: RECEIVE_REQUESTED_EVENT,
   event
@@ -44,7 +50,6 @@ export const addCreatedEvent = (event) => ({
 export const addJoinedEvent = (event) => ({
   type: RECEIVE_JOINED_EVENT,
   event
-})
 
 export const signup = user => startSession(user, 'api/users/register');
 export const login = user => startSession(user, 'api/users/login');
@@ -76,13 +81,26 @@ export const logout = () => dispatch => {
   dispatch(logoutUser());
 };
 
+
+export const updateUser = (userInfo) => async dispatch => {
+  const res = await jwtFetch(`/api/users/`, {
+    method: 'PATCH',
+    body: JSON.stringify(userInfo),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  const data = await res.json();
+  return dispatch(patchUser(data))
+}
+
+
 const initialState = {
   user: undefined
 };
   
 const sessionReducer = (state = initialState, action) => {
   const newState = {...state};
-
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
       let user = {...action.currentUser};
@@ -100,6 +118,8 @@ const sessionReducer = (state = initialState, action) => {
       return { user };
     case RECEIVE_USER_LOGOUT:
       return initialState;
+    case PATCH_USER:
+      return { user: action.user }
     case RECEIVE_REQUESTED_EVENT:
       newState.user.requestedEvents[action.event._id] = action.event;
       return newState

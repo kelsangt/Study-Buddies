@@ -2,10 +2,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import NavBar from '../NavBar/NavBar';
 import './UserSettings.css'
+import { updateUser } from '../../store/session';
 
 const UserSettings = () => {
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch();
+    const linkedin = useSelector(state => state.session.user.linkedInUrl ? state.session.user.linkedInUrl: "")
+    const phone = useSelector(state => state.session.user.phone ? state.session.user.phone: "")
+
+    // --------
+    const [firstName, setFirstName] = useState(user.firstName)
+    const [lastName, setLastName] = useState(user.lastName)
+    const [username, setUsername] = useState(user.username)
+    const [email, setEmail] = useState(user.email)
+    const [school, setSchool] = useState(user.school)
+    const [major, setMajor] = useState(user.major)
+    const [linkedInUrl, setLinkedInUrl] = useState(user.linkedInUrl)
+    const [phoneNum, setPhoneNum] = useState(user.phone)
 
 
 
@@ -15,59 +28,122 @@ const UserSettings = () => {
             input.disabled = false
         })
     }
+    
+
+    const handleUpdate = () => {
+        dispatch(updateUser({firstName, lastName, username, email, school, major, linkedInUrl, phone}))
+        
+        let get = Array.from(document.getElementsByClassName('edit-profile-input'))
+        get.forEach((input) => {
+            input.disabled = true
+        })
+
+    }
 
     return (
         <>
         <NavBar/>
+
         <div id='big-user-container'>
-            <div id='user-profile-photo-container'>
-                <div>
-                    <img src={require('../NavBar/assets/cat.jpeg')}></img>
-                </div>
-                <div onClick={editSettings} id='editsettings-button'>Edit Settings</div>
-            </div>
+            <div id='greeting'>Hello,  {user.firstName} {user.lastName}</div>
 
-            <div id='user-profile-edit-container'>
-                <div id='greeting'>Hello, {user.firstName} {user.lastName}</div>
-
-                <div>
-                    <div>Username</div>
-                    <input className='edit-profile-input'
-                            value={user.username}
-                            type='text'
-                            disabled
-                    />
-
+            <div id='medium-user-container'>
+                <div id='user-profile-photo-container'>
+                    <div id='edit-settings-image-holder'>
+                        <img src={require('../NavBar/assets/cat.jpeg')}
+                            id='edit-settings-image'
+                        ></img>
+                    </div>
+                    <div onClick={editSettings} id='editsettings-button'>Edit Settings</div>
                 </div>
 
-                <div>
-                    <div>Email</div>
-                    <input className='edit-profile-input'
-                            value={user.email}
-                            type='text'
-                            disabled
-                    />
-                </div>
+                <div id='user-profile-edit-container'>
 
-                <div>
-                    <div>School</div>
-                    <input className='edit-profile-input'
-                            value={user.school}
-                            type='text'
-                            disabled
-                    />
-                </div>
 
-                <div>
-                    <div>Major</div>
-                    <input className='edit-profile-input'
-                            value={user.major}
-                            type='text'
-                            disabled
-                    />
-                </div>
+                    <div id='display-profile-info-container'>
+                        <div>
+                            <div className='usersettings-label'>First Name</div>
+                            <input className='edit-profile-input'
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    type='text'
+                                    disabled
+                                    />
+                        </div>
 
-                <div id='savesettings-button'>Save Settings</div>
+                        <div>
+                            <div className='usersettings-label'>Last Name</div>
+                            <input className='edit-profile-input'
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    type='text'
+                                    disabled
+                                    />
+                        </div>
+
+                        <div>
+                            <div className='usersettings-label'>Username</div>
+                            <input className='edit-profile-input'
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    type='text'
+                                    disabled
+                                    />
+                        </div>
+
+                        <div>
+                            <div className='usersettings-label'>Email</div>
+                            <input className='edit-profile-input'
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    type='text'
+                                    disabled
+                                    />
+                        </div>
+
+                        <div>
+                            <div className='usersettings-label'>School</div>
+                            <input className='edit-profile-input'
+                                    value={school}
+                                    onChange={(e) => setSchool(e.target.value)}
+                                    type='text'
+                                    disabled
+                                    />
+                        </div>
+
+                        <div>
+                            <div className='usersettings-label'>Major</div>
+                            <input className='edit-profile-input'
+                                    value={major}
+                                    onChange={(e) => setMajor(e.target.value)}
+                                    type='text'
+                                    disabled
+                                    />
+                        </div>
+
+                        <div>
+                            <div className='usersettings-label'>LinkedIn Url</div>
+                            <input className='edit-profile-input'
+                                    value={linkedInUrl}
+                                    onChange={(e) => setLinkedInUrl(e.target.value)}
+                                    type='text'
+                                    disabled
+                                    />
+                        </div>
+
+                        <div>
+                            <div className='usersettings-label'>Phone</div>
+                            <input className='edit-profile-input'
+                                    value={phoneNum}
+                                    onChange={(e) => setPhoneNum(e.target.value)}
+                                    type='text'
+                                    disabled
+                                    />
+                        </div>
+                    <div id='savesettings-button' onClick={handleUpdate}>Save Settings</div>
+                    </div>
+
+                </div>
             </div>
         </div>
         </>
