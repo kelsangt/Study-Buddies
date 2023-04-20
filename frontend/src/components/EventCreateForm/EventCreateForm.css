@@ -1,0 +1,40 @@
+#mainEventCreateDiv {
+    display: flex;
+    width: 30vw;
+    height: 60vh;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.eventCreateLabel {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.event-create-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.eventCreateFormSpan  {
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+#eventCreateFormDiv {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    font-family: var(--font);
+}
+
+#selectLocation {
+    width: 344px;
+}
+
