@@ -6,14 +6,14 @@ import splashimage1 from './assets/splashimage1.png';
 import splashimage3 from './assets/splashimage3.png';
 import Footer from "../Footer/Footer";
 import { useEffect, useState } from 'react';
-import { AdToolTip, AdToolTip2 } from '../../context/Modal';
+import { AdToolTip } from '../../context/Modal';
 
 function SplashPage() {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setShowModal(true), 5000);
+    setTimeout(() => setShowModal(true), 10000);
   }, [])
 
   const handleClose = () => {
