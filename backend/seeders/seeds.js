@@ -135,46 +135,50 @@ const locations = [
 // Create events
 const events = [];
 const timeSlotMinutes = [30, 45, 60, 90, 120];
-const today = new Date();
-const endDay = new Date();
-endDay.setDate(endDay.getDate() + 10);
 
-for (let i = 0; i < NUM_SEED_EVENTS; i++) {
-  // const startTime = faker.date.between('2023-05-01T00:00:00.000Z', '2023-05-10T00:00:00.000Z')
-  const startTime = faker.date.between(today, endDay);
-  const endTime = new Date(startTime.getTime() + (timeSlotMinutes[Math.floor(Math.random() * timeSlotMinutes.length)])*60000)
-  const usersCopy = [...users];
-  const creator = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
+for (let j = 0; j < 10; j++) {
+  const today = new Date();
+  today.setDate(today.getDate() + j - 2);
 
-  const event = new Event ({
-    creator: creator._id,
-    name: faker.git.commitMessage(),
-    description: faker.lorem.sentence(),
-    // location: locations[Math.floor(Math.random()*locations.length)]._id,
-    location: locations[Math.floor(Math.random()*locations.length)],
-    startTime: startTime,
-    endTime: endTime
-  })
-
-  creator.createdEvents.push(event._id);
+  const endDay = new Date();
+  endDay.setDate(endDay.getDate() + j - 1);
   
-  // making random attendees
-  const numRandAttendees = Math.floor(Math.random()*5);
-  for (let i = 0; i < numRandAttendees; i++) {
-    const attendee = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
-    event.attendees.push(attendee._id);
-    attendee.joinedEvents.push(event._id);
-  }
+  for (let i = 0; i < Math.floor(Math.random() * (10 - 3) + 3); i++) {
+    const startTime = faker.date.between(today, endDay);
+    const endTime = new Date(startTime.getTime() + (timeSlotMinutes[Math.floor(Math.random() * timeSlotMinutes.length)])*60000)
+    const usersCopy = [...users];
+    const creator = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
   
-  // making random requesters
-  const numRandRequesters = Math.floor(Math.random()*2);
-  for (let i = 0; i < numRandRequesters; i++) {
-    const requester = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
-    event.requesters.push(requester._id);
-    requester.requestedEvents.push(event._id);
+    const event = new Event ({
+      creator: creator._id,
+      name: faker.git.commitMessage(),
+      description: faker.lorem.sentence(),
+      // location: locations[Math.floor(Math.random()*locations.length)]._id,
+      location: locations[Math.floor(Math.random()*locations.length)],
+      startTime: startTime,
+      endTime: endTime
+    })
+  
+    creator.createdEvents.push(event._id);
+    
+    // making random attendees
+    const numRandAttendees = Math.floor(Math.random()*5);
+    for (let i = 0; i < numRandAttendees; i++) {
+      const attendee = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
+      event.attendees.push(attendee._id);
+      attendee.joinedEvents.push(event._id);
+    }
+    
+    // making random requesters
+    const numRandRequesters = Math.floor(Math.random()*2);
+    for (let i = 0; i < numRandRequesters; i++) {
+      const requester = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
+      event.requesters.push(requester._id);
+      requester.requestedEvents.push(event._id);
+    }
+  
+    events.push(event);
   }
-
-  events.push(event);
 }
 
 mongoose
