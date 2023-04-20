@@ -18,13 +18,13 @@ const MainContent = () => {
     const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
     const modalToggle = useSelector(state => state.ui.modalStatus)
     const selectedId = useSelector(selectedEventId);
-    const todaysDate = new Date().toISOString().split("T")[0];
+    const date = useSelector(selectedDate)
     
     useEffect(() => {
-        dispatch(fetchAllEventsForDay(currentDate));
+        dispatch(fetchAllEventsForDay(date.toISOString().split("T")[0]));
         // dispatch(fetchAllLocations());
 
-    }, [dispatch, currentDate])
+    }, [dispatch, date])
 
     useEffect(() => {
         const closeButton = document.querySelectorAll('button.gm-ui-hover-effect');

@@ -56,72 +56,81 @@ for (let i = 1; i < NUM_SEED_USERS; i++) {
 }
 
 // Create locations
-const locations = [];
-const locationData = [
+const locations = [
   {
     name: "Seward Park Library",
     imageUrl: "https://lh5.googleusercontent.com/p/AF1QipMO5emKizopnNp2N_KGQlCqvuYwjgEVi4XsBmQ3=w408-h544-k-no",
+    address: "10 West Street",
     latitude: 40.71465519155157, 
     longitude: -73.98834015261731
   },
   {
     name: "Chatham Square Library",
     imageUrl: "https://lh5.googleusercontent.com/p/AF1QipMtiTtlG0b2jG7MIvkeO24jx7Q3zMRrFxQkLJKe=w408-h481-k-no",
+    address: "23 State Street",
     latitude: 40.71413473453696, 
     longitude: -73.99666572894645
   },
   {
     name: "Kips Bay Library",
+    address: "140 Peach Road",
     latitude: 40.745042011615695,
     longitude: -73.97992193841986
   },
   {
     name: "Battery Park City Library",
+    address: "15 Union Square",
     latitude: 40.7165388289107,
     longitude: -74.01559101609772
   },
   {
     name: "Tompkins Square Library",
+    address: "35 8th Street",
     latitude: 40.72734177701872,
     longitude: -73.98039817443512
   },
   {
     name: "Hamilton Fish Park Library",
+    address: "230 34th Street",
     latitude: 40.72045921941025,
     longitude: -73.9794761693269
   }, 
   {
     name: "Andrew Heiskell Braille and Talking Book Library",
+    address: "300 Broadway Street",
     latitude: 40.74099110899836,
     longitude: -73.99043085753692
   },
   {
     name: "Epiphany Library",
+    address: "420 8th Avenue Street",
     latitude: 40.73882452808173,
     longitude: -73.98195297003078
   },
   {
     name: "Mulberry Street Library",
+    address: "120 3rd Avenue Road",
     latitude: 40.724684064312044,
     longitude: -73.99396141770526
   },
   {
     name: "Jefferson Market Library",
+    address: "Houston Texas",
     latitude: 40.73545263981523,
     longitude: -73.99895900866127
   },
   {
     name: "Hudson Park Library",
+    address: "Mongoose Avenue",
     latitude: 40.7307185544648,
     longitude: -74.00531001605788
   }, {
     name: "Ottendorfer Library",
+    address: "Rainbow Road",
     latitude: 40.729649750454314,
     longitude: -73.98764198537313
   }
 ]
-
-locationData.forEach(loc => locations.push(new Location(loc)));
 
 // Create events
 const events = [];
