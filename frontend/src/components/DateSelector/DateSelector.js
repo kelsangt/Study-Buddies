@@ -16,6 +16,7 @@ const DateSelector = () => {
         selected={currentDate} 
         onChange={(e) => dispatch(receiveDate(e))}
         popperPlacement='bottom'
+        minDate={new Date()}
         />
     )
 }

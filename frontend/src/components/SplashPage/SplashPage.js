@@ -5,11 +5,41 @@ import TeamList from "./TeamList";
 import splashimage1 from './assets/splashimage1.png';
 import splashimage3 from './assets/splashimage3.png';
 import Footer from "../Footer/Footer";
+import { useEffect, useState } from 'react';
+import { AdToolTip } from '../../context/Modal';
 
 function SplashPage() {
+  const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setShowModal(true), 10000);
+  }, [])
+
+  const handleClose = () => {
+    setShowModal(false);
+    setTimeout(() => setShowModal2(true), 5000);
+  }
+
     return (
       <>
         <NavBar />
+        {showModal && (
+          <AdToolTip type="default" onClose={handleClose}>
+            <span className="tooltip">
+              SIGN UP TODAY AND GET 20% OFF YOUR NEXT UNDER ARMOUR PURCHASE
+            </span>
+          </AdToolTip>
+        )}
+
+        {showModal2 && (
+          <AdToolTip type="alt" onClose={() => setShowModal2(false)}>
+            <span className="tooltip">
+              INTERESTED IN SPORTS? <br /> CHECK OUT BENCHWARMERS
+            </span>
+          </AdToolTip>
+        )}
+
         <div id='splashpage'>
             <div id='big-cover-photo'>
               <div id='info-words'>
