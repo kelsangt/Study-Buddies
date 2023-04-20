@@ -28,7 +28,6 @@ const MainContent = () => {
 
     useEffect(() => {
         const closeButton = document.querySelectorAll('button.gm-ui-hover-effect');
-        console.log("close", closeButton);
         closeButton.forEach(button => button.addEventListener('click', () => dispatch(receiveEventClicked(null))))
     }, [selectedId])
 

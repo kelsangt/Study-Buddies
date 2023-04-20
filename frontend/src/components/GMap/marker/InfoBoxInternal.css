@@ -56,7 +56,8 @@
 
 #infobox_internal_bottom_row_wrapper {
 	display: flex;
-	justify-content: space-between;
+	/* justify-content: space-between; */
+	justify-content: end;
 	flex-direction: row;
 	align-items: end;
 }
