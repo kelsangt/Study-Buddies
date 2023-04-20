@@ -1,0 +1,56 @@
+#mainEventUpdateDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding: 20px;
+}
+
+
+#all-requesters-container{
+    display: flex;
+    flex-direction: column;
+    gap: 200px;
+}
+
+#pending-requesters-container {
+}
+
+#attendee-title{
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.individual-attendee-container {
+    display: flex;
+    gap: 20px;
+    border: 1px solid red;
+    padding: 5px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.attendee-options{
+    border: 1px solid green;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    padding-left: 8px;
+    padding-right: 8px;
+
+}
+#accept-button{
+    border: 1px solid green;
+    background-color: rgb(22, 177, 2);
+}
+#reject-button{
+    border: 1px solid red;
+    background-color: rgb(253, 111, 111);
+}
+#reject-button:hover{
+    background-color: rgb(248, 49, 49);
+}
+
+#accept-button:hover{
+    background-color: rgb(145, 197, 138);
+}
+
