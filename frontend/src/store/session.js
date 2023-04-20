@@ -6,6 +6,10 @@ const CLEAR_SESSION_ERRORS = "session/CLEAR_SESSION_ERRORS";
 export const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
 export const PATCH_USER = "session/PATCH_USER";
 
+const RECEIVE_REQUESTED_EVENT = "session/RECEIVE_REQUESTED_EVENT";
+const RECEIVE_JOINED_EVENT = "session/RECEIVE_JOINED_EVENT";
+const RECEIVE_CREATED_EVENT = "session/RECEIVE_CREATED_EVENT";
+
 // Dispatch receiveCurrentUser when a user logs in.
 const receiveCurrentUser = currentUser => ({
   type: RECEIVE_CURRENT_USER,
@@ -32,6 +36,20 @@ export const patchUser = (user) => ({
   type: PATCH_USER,
   user
 })
+
+export const addRequestedEvent = (event) => ({
+  type: RECEIVE_REQUESTED_EVENT,
+  event
+})
+
+export const addCreatedEvent = (event) => ({
+  type: RECEIVE_CREATED_EVENT,
+  event
+})
+
+export const addJoinedEvent = (event) => ({
+  type: RECEIVE_JOINED_EVENT,
+  event
 
 export const signup = user => startSession(user, 'api/users/register');
 export const login = user => startSession(user, 'api/users/login');
@@ -82,14 +100,35 @@ const initialState = {
 };
   
 const sessionReducer = (state = initialState, action) => {
-  let nextState = {...state}
+  const newState = {...state};
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
-      return { user: action.currentUser };
+      let user = {...action.currentUser};
+      if (action.currentUser) {
+        user.createdEvents = {};
+        action.currentUser.createdEvents.forEach(event => user.createdEvents[event._id] = event)
+  
+        user.joinedEvents = {};
+        action.currentUser.joinedEvents.forEach(event => user.joinedEvents[event._id] = event)
+  
+        user.requestedEvents = {};
+        action.currentUser.requestedEvents.forEach(event => user.requestedEvents[event._id] = event)
+      }
+
+      return { user };
     case RECEIVE_USER_LOGOUT:
       return initialState;
     case PATCH_USER:
       return { user: action.user }
+    case RECEIVE_REQUESTED_EVENT:
+      newState.user.requestedEvents[action.event._id] = action.event;
+      return newState
+    case RECEIVE_CREATED_EVENT:
+      newState.user.createdEvents[action.event._id] = action.event;
+      return newState
+    case RECEIVE_JOINED_EVENT:
+      newState.user.joinedEvents[action.event._id] = action.event;
+      return newState
     default:
       return state;
   }

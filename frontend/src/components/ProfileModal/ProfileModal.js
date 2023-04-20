@@ -2,7 +2,7 @@ import './ProfileModal.css'
 import { logout } from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getMyCreatedEvents, getMyJoinedEvents } from '../../store/events';
+import { getMyCreatedEvents, getMyJoinedEvents, getMyRequestedEvents } from '../../store/events';
 import MyCreatedEvents from '../MyCreatedEvents/MyCreatedEvents';
 import { useState } from 'react';
 import { selectedTab, setModalStatus, setTabStatus } from '../../store/ui';
@@ -13,7 +13,7 @@ const ProfileModal = () => {
     const dispatch = useDispatch();
     const createdEvents = useSelector(getMyCreatedEvents);
     const joinedEvents = useSelector(getMyJoinedEvents);
-    const requestedEvents = useSelector(state => state.session.user.requestedEvents);
+    const requestedEvents = useSelector(getMyRequestedEvents);
     const [showEventCreateModal, setShowEventCreateModal] = useState(false);
 
     const currentTab = useSelector(selectedTab);

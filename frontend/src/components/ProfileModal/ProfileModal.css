@@ -13,7 +13,7 @@
     right: 0px;
     top: 116px;
     z-index: 100;
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid gray;
     border-radius: 8px;
     width: 27vw;
     /* height: 58vh; */
@@ -23,7 +23,8 @@
     flex-direction: column;
     justify-content: space-between;
 
-
+    font-family: var(--font);
+    font-weight: var(--font-regular);
     animation-name: modal;
     animation-duration: 0.5s;
 }
@@ -89,9 +90,13 @@
 
 #plus-icon {
     margin-right: 5px;
+    color: white;
 }
 #create-event-button {
-    border: 1px solid black;
+    border: 1px solid gray;
+    background-color: rgb(31 84 171);
+    border-radius: 5px;
+    color: white;
     padding: 5px;
     margin-bottom: 5px;
     cursor: pointer;
@@ -143,15 +148,16 @@
 }
 
 #settings-button {
-    color: black;
+    color: white;
     width:10vw;
     text-align: center;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding: 5px;
     padding-right: 15px;
     padding-left: 15px;
     border-radius:8px;
     cursor: pointer;
+    background-color: rgb(31 84 171);
 }
 #settings-button:hover {
     transform: scale(1.05);
@@ -160,13 +166,15 @@
 #logout-button {
     width:10vw;
     text-align: center;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    color: white;
     padding: 5px;
     padding-right: 15px;
     padding-left: 15px;
     border-radius:8px;
     margin-bottom: 10px;
     cursor: pointer;
+    background-color: rgb(31 84 171);
 }
 #logout-button:hover {
     transform: scale(1.05);

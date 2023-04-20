@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
     })
     .populate("creator", "_id username profileImageUrl")
     .populate("attendees", "_id username profileImageUrl")
-    .populate("requesters", "_id username profileImageUrl")
+    // .populate("requesters", "_id username profileImageUrl")
     .populate("location", "_id name latitude longitude imageUrl")
     .sort({ startTime: 1 });
 
@@ -75,7 +75,6 @@ router.post('/', requireUser, async (req, res, next) => {
     await req.user.save();
 
     const createdEvent = await Event.findById(event._id)
-                                    .populate("creator", "_id username profileImageUrl")
                                     .populate("attendees", "_id username profileImageUrl")
                                     .populate("requesters", "_id username profileImageUrl")
                                     .populate("location", "_id name latitude longitude imageUrl")
@@ -203,12 +202,14 @@ router.post('/requests/:id', requireUser, async (req, res, next) => {
     }
     
     event.requesters.push(req.user._id);
+    req.user.requestedEvents.push(event._id);
     await event.save();
+    await req.user.save();
 
     const updatedEvent = await Event.findById(event._id)
                                     .populate("creator", "_id username profileImageUrl")
                                     .populate("attendees", "_id username profileImageUrl")
-                                    .populate("requesters", "_id username profileImageUrl")
+                                    // .populate("requesters", "_id username profileImageUrl")
                                     .populate("location", "_id name latitude longitude imageUrl")
 
     return res.json(updatedEvent);
@@ -232,9 +233,14 @@ router.delete('/requests/:id', requireUser, async (req, res, next) => {
       return next(error);
     }
 
-    const idx = event.requesters.indexOf(req.user._id)
+    let idx = event.requesters.indexOf(req.user._id);
     event.requesters.splice(idx, 1);
+
+    idx = req.user.requestedEvents.indexOf(event._id);
+    req.user.requestedEvents.splice(idx, 1);
+
     await event.save();
+    await req.user.save();
 
     return res.json(event);
   } catch(err) {
