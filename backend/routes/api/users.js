@@ -50,7 +50,8 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     profileImageUrl: req.body.profileImageUrl,
-    linkedInUrl: req.body.linkedInUrl
+    linkedInUrl: req.body.linkedInUrl,
+    major: req.body.major
   });
 
   bcrypt.genSalt(10, (err, salt) => {

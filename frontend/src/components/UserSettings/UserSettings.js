@@ -96,7 +96,7 @@ const UserSettings = () => {
                             <input className='edit-profile-input'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    type='text'
+                                    type='email'
                                     disabled
                                     />
                         </div>
@@ -126,7 +126,9 @@ const UserSettings = () => {
                             <input className='edit-profile-input'
                                     value={linkedInUrl}
                                     onChange={(e) => setLinkedInUrl(e.target.value)}
-                                    type='text'
+                                    type='url'
+                                    placeholder="https://www.linkedin.com/in/<EXAMPLE>"
+                                    pattern="https://www.linkedin.com/in/*"
                                     disabled
                                     />
                         </div>
@@ -136,7 +138,9 @@ const UserSettings = () => {
                             <input className='edit-profile-input'
                                     value={phoneNum}
                                     onChange={(e) => setPhoneNum(e.target.value)}
-                                    type='text'
+                                    type='tel'
+                                    placeholder="123-45-678" 
+                                    pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                                     disabled
                                     />
                         </div>
