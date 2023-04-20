@@ -60,6 +60,7 @@ const MyCreatedEvents = ({event}) => {
             <div className="myattendee-count">
                 # of Attendees: {count}
             </div>
+            
             {(currentTab === "My Events") &&
             <div className='myevent-edit-holder'>
                 <div onClick={showEditForm} id='myevent-edit-button'>Edit Event</div>

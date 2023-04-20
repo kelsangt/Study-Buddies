@@ -10,19 +10,21 @@ import ProfileModal from '../ProfileModal/ProfileModal';
 import Loading from '../GMap/Loading/Loading';
 import { receiveEventClicked, selectedEventId } from '../../store/ui';
 import Footer from '../Footer/Footer';
+import { selectedDate } from '../../store/ui';
 
 const MainContent = () => {
     const dispatch = useDispatch();
+    const currentDate = useSelector(selectedDate);
     const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
     const modalToggle = useSelector(state => state.ui.modalStatus)
     const selectedId = useSelector(selectedEventId);
     const todaysDate = new Date().toISOString().split("T")[0];
     
     useEffect(() => {
-        dispatch(fetchAllEventsForDay(todaysDate));
+        dispatch(fetchAllEventsForDay(currentDate));
         // dispatch(fetchAllLocations());
 
-    }, [dispatch])
+    }, [dispatch, currentDate])
 
     useEffect(() => {
         const closeButton = document.querySelectorAll('button.gm-ui-hover-effect');
