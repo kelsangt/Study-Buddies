@@ -38,15 +38,6 @@ const eventSchema = new Schema({
     type: String,
     required: false
   },
-  // location: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Location',
-  //   required: true
-  // },
-  // location: {
-  //   type: locationSchema,
-  //   required: true
-  // },
   location: {
     name: {
       type: String,
@@ -62,6 +53,10 @@ const eventSchema = new Schema({
     },
     longitude: {
       type: Number,
+      required: true
+    },
+    address: {
+      type: String,
       required: true
     },
     imageUrl: {
