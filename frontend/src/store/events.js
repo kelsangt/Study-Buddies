@@ -91,7 +91,7 @@ export const createEventRequest = (eventId) => async dispatch => {
 
 export const updateEvent = (eventInfo) => async dispatch => {
 
-    const res = await jwtFetch(`/api/events/${eventInfo}._id`, {
+    const res = await jwtFetch(`/api/events/${eventInfo._id}`, {
         method: 'PATCH',
         body: JSON.stringify(eventInfo),
         headers: {
