@@ -38,7 +38,13 @@
     overflow: hidden;
     margin-top: 30px;
     margin-bottom: 5vh;
-    border-radius: 50%;
+    border-radius: 100%;
+    display: flex;
+}
+
+.edit-profile-photo{
+    width: 100%;
+    height: 100%;
 }
 
 #edit-settings-image{
