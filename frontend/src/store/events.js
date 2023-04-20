@@ -53,7 +53,6 @@ export const fetchSpecificEvent = (eventId) => async dispatch => {
     return dispatch(receiveSpecificEvent(data))
 }
 
-// not tested
 export const createEvent = (eventInfo) => async dispatch => {
     console.log("create");
 
