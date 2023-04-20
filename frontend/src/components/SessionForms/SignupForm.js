@@ -16,6 +16,7 @@ function SignupForm () {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [school, setSchool] = useState('');
+  const [major, setMajor] = useState('');
 
   const errors = useSelector(state => state.errors.session);
   const dispatch = useDispatch();
@@ -45,6 +46,9 @@ function SignupForm () {
       case 'school':
         setState = setSchool;
         break;
+      case 'major':
+        setState = setMajor;
+        break;
       case 'password':
         setState = setPassword;
         break;
@@ -66,9 +70,10 @@ function SignupForm () {
       firstName,
       lastName,
       school,
+      major,
       password
     };
-
+    console.log(user)
     dispatch(signup(user)); 
   }
 
@@ -131,6 +136,16 @@ function SignupForm () {
             />
           </label>
 
+          <div className="errors">{errors?.school}</div>
+          <label class="signupLabel">
+            <span id="majorSpan">Major</span>
+            <input className="inputField" type="text"
+              value={major}
+              onChange={update('major')}
+              placeholder="Major"
+            />
+          </label>
+
           <div className="errors">{errors?.password}</div>
           <label class="signupLabel">
             <span id="passwordSpan">Password</span>
@@ -155,7 +170,7 @@ function SignupForm () {
             <input className="submitInput"
               type="submit"
               value="Sign Up"
-              disabled={!email || !username || !password || password !== password2}
+              disabled={!email || !username || !password || password !== password2 || !major}
             />
           </label>
         </form>

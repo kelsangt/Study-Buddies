@@ -33,6 +33,11 @@
   margin-bottom: 5px;
 }
 
+.event-show .event-address {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
 .event-show .event-description {
   font-size: 18px;
   margin-top: 20px;
@@ -42,6 +47,7 @@
 
 .show-header {
   font-size: 18px;
+  margin-top: 10px;
   margin-right: 10px;
   font-family: var(--font);
 }

@@ -60,6 +60,8 @@ function EventCreateForm () {
 
         const location = locations[locationIndex];
 
+        console.log(location)
+
         const event = {
             name,
             description,
