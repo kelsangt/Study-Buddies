@@ -25,6 +25,48 @@
   font-size: 14px;
 }
 
+.ad-tooltip {
+  position: fixed;
+  z-index: 5;
+
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  white-space: pre-line;
+  word-break: break-all;
+  overflow: auto;
+
+  font-weight: bold;
+  text-align: center;
+  background-color: white;
+  color: black;
+  border-radius: 6px;
+  padding: 1px 2px;
+  font-size: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  animation: tooltip .4s ease-in;
+
+  font-size: 100px;
+  width: 50vw;
+  word-break: break-word;
+  top: 8vh;
+  left: calc(25vw);
+  overflow: hidden;
+  background-color: greenyellow;
+  color: red;
+}
+
+.ad-tooltip.alt {
+  background-color: rgb(255, 0, 242);
+  color: greenyellow;
+  width: 60vw;
+  top: 25vh;
+  left: calc(20vw);
+}
+
 #modal-center {
   position: fixed;
   top: 0;
