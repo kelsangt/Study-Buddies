@@ -54,6 +54,10 @@ function EventCreateForm () {
         const startTime = new Date(year, parseInt(month) - 1, day, startHour, startMin);
         const endTime = new Date(year, parseInt(month) - 1, day, endHour, endMin);
 
+        if (startTime > endTime) {
+          console.log("time error")
+        }
+
         const location = locations[locationIndex];
 
         const event = {
@@ -65,8 +69,7 @@ function EventCreateForm () {
         };
         dispatch(createEvent(event));
     }
-  
-  
+
     return (
       <div id="mainEventCreateDiv">
         <div id="eventCreateFormDiv">
@@ -113,6 +116,7 @@ function EventCreateForm () {
                 value={date}
                 onChange={update('Date')}
                 placeholder="Date"
+                min={new Date().toISOString().split('T')[0]}
               />
             </label>
             {/* <div className="errors">{errors?.lastName}</div> */}

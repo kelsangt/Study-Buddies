@@ -106,6 +106,12 @@ const EventSidebarItem = ({event, selected}) => {
             alt=''
           />
         </div>
+
+        <div className="time">
+          {new Date(event.startTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ')[1]} 
+          {` - `}  
+          {new Date(event.endTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ')[1]}
+        </div>
       </div>
 
       {showEventInfoModal && (

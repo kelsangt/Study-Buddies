@@ -57,7 +57,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // POST new event
-router.post('/', requireUser, async (req, res, next) => {
+router.post('/', requireUser, validateEventInput, async (req, res, next) => {
   try {
     const newEvent = new Event({
       creator: req.user._id,
@@ -170,10 +170,7 @@ router.patch('/:id', requireUser, async (req, res, next) => {
 
     return res.json(updatedEvent);
   } catch(err) {
-    const error = new Error('Event not found');
-    error.statusCode = 404;
-    error.errors = { message: "No event found with that id" };
-    return next(error);
+    next(err);
   }
 })
 
