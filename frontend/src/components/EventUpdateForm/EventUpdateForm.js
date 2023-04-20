@@ -80,7 +80,7 @@ function EventUpdateForm ({event}) {
   
     // accept deny
     const handleKick = (eventId, attendeeId) => () => {
-      debugger
+      // debugger
       dispatch(deleteAttendee(eventId, attendeeId))
     }
     const handleAccept = (eventId, attendeeId, accept) => () => {

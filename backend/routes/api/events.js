@@ -163,10 +163,10 @@ router.patch('/:id', requireUser, async (req, res, next) => {
     event.endTime = req.body.endTime 
     await event.save();
 
-    const updatedEvent = Event.findById(event._id)
-                              .populate("attendees", "_id username profileImageUrl")
-                              .populate("requesters", "_id username profileImageUrl")
-                              .populate("location", "_id name latitude longitude imageUrl")
+    const updatedEvent = await Event.findById(event._id)
+                                    .populate("attendees", "_id username profileImageUrl")
+                                    .populate("requesters", "_id username profileImageUrl")
+                                    .populate("location", "_id name latitude longitude imageUrl")
 
     return res.json(updatedEvent);
   } catch(err) {
@@ -275,10 +275,10 @@ router.patch('/:id/requests/:userId', requireUser, async (req, res, next) => {
     await user.save();
     await event.save();
 
-    const updatedEvent = Event.findById(event._id)
-                              .populate("attendees", "_id username profileImageUrl")
-                              .populate("requesters", "_id username profileImageUrl")
-                              .populate("location", "_id name latitude longitude imageUrl")
+    const updatedEvent = await Event.findById(event._id)
+                                    .populate("attendees", "_id username profileImageUrl")
+                                    .populate("requesters", "_id username profileImageUrl")
+                                    .populate("location", "_id name latitude longitude imageUrl")
 
     return res.json(updatedEvent);
   } catch(err) {
@@ -293,7 +293,7 @@ router.patch('/:id/requests/:userId', requireUser, async (req, res, next) => {
 router.delete('/:id/attendees/:userId', requireUser, async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
-
+    // console.log(event)
     if (event.creator.toString() !== req.user._id.toString()) {
       const error = new Error('Unauthorized');
       error.statusCode = 401;
@@ -302,6 +302,7 @@ router.delete('/:id/attendees/:userId', requireUser, async (req, res, next) => {
     }
 
     const user = await User.findById(req.params.userId)
+    // console.log(user)
 
     let idx = event.attendees.indexOf(user._id)
     event.attendees.splice(idx, 1);
@@ -312,11 +313,12 @@ router.delete('/:id/attendees/:userId', requireUser, async (req, res, next) => {
     await user.save();
     await event.save();
 
-    const updatedEvent = Event.findById(event._id)
-                              .populate("attendees", "_id username profileImageUrl")
-                              .populate("requesters", "_id username profileImageUrl")
-                              .populate("location", "_id name latitude longitude imageUrl")
+    const updatedEvent = await Event.findById(event._id)
+                                    .populate("attendees", "_id username profileImageUrl")
+                                    .populate("requesters", "_id username profileImageUrl")
+                                    .populate("location", "_id name latitude longitude imageUrl");
 
+    console.log(updatedEvent)
     return res.json(updatedEvent);
   } catch(err) {
     const error = new Error('Event or user not found');
