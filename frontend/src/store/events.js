@@ -1,5 +1,5 @@
 import jwtFetch from "./jwt";
-import { getCurrentUser } from "./session";
+import { addCreatedEvent, addRequestedEvent, getCurrentUser } from "./session";
 
 
 export const RECEIVE_ALL_EVENTS_FOR_DAY = "events/RECEIVE_ALL_EVENTS_FOR_DAY";
@@ -28,10 +28,13 @@ export const getEvents = (state) => {
 }
 
 export const getMyCreatedEvents = (state) => {
-    return state.session.user.createdEvents
+    return state.session.user?.createdEvents ? Object.values(state.session.user.createdEvents) : []
 }
 export const getMyJoinedEvents = (state) => {
-    return state.session.user.joinedEvents
+    return state.session.user?.joinedEvents ? Object.values(state.session.user.joinedEvents) : []
+}
+export const getMyRequestedEvents = (state) => {
+    return state.session.user?.requestedEvents ? Object.values(state.session.user.requestedEvents) : []
 }
 
 // Thunk Action Creators 
@@ -69,7 +72,7 @@ export const createEvent = (eventInfo) => async dispatch => {
     const todaysDate = new Date().toISOString().split("T")[0];
     dispatch(fetchAllEventsForDay(todaysDate));
 
-    dispatch(getCurrentUser());
+    dispatch(addCreatedEvent(data));
 }
 
 export const createEventRequest = (eventId) => async dispatch => {
@@ -84,7 +87,7 @@ export const createEventRequest = (eventId) => async dispatch => {
     const todaysDate = new Date().toISOString().split("T")[0];
     dispatch(fetchAllEventsForDay(todaysDate));
 
-    dispatch(getCurrentUser());
+    dispatch(addRequestedEvent(data));
 }
 
 export const updateEvent = (eventInfo) => async dispatch => {
