@@ -24,16 +24,19 @@ const EventShow = ({event}) => {
         {event.location.name}
       </span>
 
+      <span className="event-address">
+        {event.location.address}
+      </span> 
+      
+
       <div id="photoDiv">
         <img className="event-photo" src={event.location.imageUrl} />
       </div>
       
-
       <span className="event-description">
         {event.description}
       </span>
 
-      
       <div className="event-creator">
         <span className="show-header">Hosted by</span>
         <img 
