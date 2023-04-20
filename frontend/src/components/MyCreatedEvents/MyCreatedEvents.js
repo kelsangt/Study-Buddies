@@ -20,26 +20,16 @@ const MyCreatedEvents = ({event}) => {
     const showEditForm = (e) => {
         e.preventDefault();
         setShowEventEditModal(true);
-        const sideModal = document.getElementById('profile-modal-container');
-        sideModal.style.display = 'flex';
+        const sideModal2 = document.getElementById('profile-modal-container');
+        sideModal2.style.display = 'none';
     }
 
     const hideEditForm = (e) => {
         e.preventDefault();
         setShowEventEditModal(false);
         dispatch(setModalStatus(true));
-        const sideModal = document.getElementById('profile-modal-container');
-        sideModal.style.display = 'flex';
-    }
-
-
-    const closeModal2 = () => {
-        const modal = document.getElementById('profile-modal-container')
-        modal.classList.add('slideout')
-        console.log(modal)
-        setTimeout(()=>{
-        dispatch(setModalStatus(false))
-      }, 500)
+        const sideModal2 = document.getElementById('profile-modal-container');
+        sideModal2.style.display = 'flex';
     }
 
     return (
