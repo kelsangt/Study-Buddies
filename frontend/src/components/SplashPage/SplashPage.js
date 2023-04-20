@@ -4,6 +4,7 @@ import './SplashPage.css';
 import TeamList from "./TeamList";
 import splashimage1 from './assets/splashimage1.png';
 import splashimage3 from './assets/splashimage3.png';
+import Footer from "../Footer/Footer";
 
 function SplashPage() {
     return (
@@ -28,11 +29,10 @@ function SplashPage() {
             </div>
             </div>
             <TeamList />
+            <Footer />
         </div>
 
-        <footer id="footer">
-          Copyright &copy; 2023 there's no copyright
-        </footer>
+        
       </>
     );
 }
