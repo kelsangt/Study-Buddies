@@ -9,6 +9,9 @@ export const PATCH_USER = "session/PATCH_USER";
 const RECEIVE_REQUESTED_EVENT = "session/RECEIVE_REQUESTED_EVENT";
 const RECEIVE_JOINED_EVENT = "session/RECEIVE_JOINED_EVENT";
 const RECEIVE_CREATED_EVENT = "session/RECEIVE_CREATED_EVENT";
+const DELETE_REQUESTED_EVENT = "session/DELETE_REQUESTED_EVENT";
+const DELETE_JOINED_EVENT = "session/DELETE_JOINED_EVENT";
+const DELETE_CREATED_EVENT = "session/DELETE_CREATED_EVENT";
 
 // Dispatch receiveCurrentUser when a user logs in.
 const receiveCurrentUser = currentUser => ({
@@ -50,6 +53,21 @@ export const addCreatedEvent = (event) => ({
 export const addJoinedEvent = (event) => ({
   type: RECEIVE_JOINED_EVENT,
   event
+})
+
+export const deleteRequestedEvent = (eventId) => ({
+  type: DELETE_REQUESTED_EVENT,
+  eventId
+})
+
+export const deleteCreatedEvent = (eventId) => ({
+  type: DELETE_CREATED_EVENT,
+  eventId
+})
+
+export const deleteJoinedEvent = (eventId) => ({
+  type: DELETE_JOINED_EVENT,
+  eventId
 })
 
 export const signup = user => startSession(user, 'api/users/register');
@@ -132,6 +150,15 @@ const sessionReducer = (state = initialState, action) => {
     case RECEIVE_JOINED_EVENT:
       newState.user.joinedEvents[action.event._id] = action.event;
       return newState
+    case DELETE_REQUESTED_EVENT:
+      delete newState.user.requestedEvents[action.eventId];
+      return newState;
+    case DELETE_CREATED_EVENT:
+      delete newState.user.createdEvents[action.eventId];
+      return newState;
+    case DELETE_JOINED_EVENT:
+      delete newState.user.joinedEvents[action.eventId];
+      return newState;
     default:
       return state;
   }

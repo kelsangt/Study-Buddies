@@ -114,6 +114,8 @@ router.delete('/:id', requireUser, async (req, res, next) => {
 
       // delete the event itself
       await event.deleteOne();
+
+      return res.json("created deleted");
     } else {
       // delete event from current user's joinedEvents
       await User.findByIdAndUpdate(
@@ -134,9 +136,9 @@ router.delete('/:id', requireUser, async (req, res, next) => {
       // idx = event.attendees.indexOf(req.user._id)
       // event.attendees.splice(idx, 1);
       // await event.save();
-    }
 
-    return res.json(null);
+      return res.json("joined deleted");
+    }
   } catch(err) {
     const error = new Error('Event not found');
     error.statusCode = 404;
@@ -164,7 +166,6 @@ router.patch('/:id', requireUser, async (req, res, next) => {
     await event.save();
 
     const updatedEvent = Event.findById(event._id)
-                              .populate("creator", "_id username profileImageUrl")
                               .populate("attendees", "_id username profileImageUrl")
                               .populate("requesters", "_id username profileImageUrl")
                               .populate("location", "_id name latitude longitude imageUrl")
@@ -180,7 +181,7 @@ router.patch('/:id', requireUser, async (req, res, next) => {
 
 // event requests
 // POST new request
-router.post('/requests/:id', requireUser, async (req, res, next) => {
+router.post('/:id/requests', requireUser, async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
 
@@ -222,7 +223,7 @@ router.post('/requests/:id', requireUser, async (req, res, next) => {
 })
 
 // DELETE request
-router.delete('/requests/:id', requireUser, async (req, res, next) => {
+router.delete('/:id/requests', requireUser, async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
 
@@ -252,7 +253,7 @@ router.delete('/requests/:id', requireUser, async (req, res, next) => {
 })
 
 // UPDATE request status
-router.patch('/requests/:id/:userId', requireUser, async (req, res, next) => {
+router.patch('/:id/requests/:userId', requireUser, async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
 
@@ -279,7 +280,12 @@ router.patch('/requests/:id/:userId', requireUser, async (req, res, next) => {
     await user.save();
     await event.save();
 
-    return res.json(event);
+    const updatedEvent = Event.findById(event._id)
+                              .populate("attendees", "_id username profileImageUrl")
+                              .populate("requesters", "_id username profileImageUrl")
+                              .populate("location", "_id name latitude longitude imageUrl")
+
+    return res.json(updatedEvent);
   } catch(err) {
     const error = new Error('Event or user not found');
     error.statusCode = 404;
@@ -288,8 +294,8 @@ router.patch('/requests/:id/:userId', requireUser, async (req, res, next) => {
   }
 })
 
-// PATCH remove attendee
-router.patch('/attendees/:id/:userId', requireUser, async (req, res, next) => {
+// DELETE attendee
+router.delete('/:id/attendees/:userId', requireUser, async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
 
@@ -311,7 +317,12 @@ router.patch('/attendees/:id/:userId', requireUser, async (req, res, next) => {
     await user.save();
     await event.save();
 
-    return res.json(event);
+    const updatedEvent = Event.findById(event._id)
+                              .populate("attendees", "_id username profileImageUrl")
+                              .populate("requesters", "_id username profileImageUrl")
+                              .populate("location", "_id name latitude longitude imageUrl")
+
+    return res.json(updatedEvent);
   } catch(err) {
     const error = new Error('Event or user not found');
     error.statusCode = 404;

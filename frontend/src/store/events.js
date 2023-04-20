@@ -1,5 +1,5 @@
 import jwtFetch from "./jwt";
-import { addCreatedEvent, addRequestedEvent, getCurrentUser } from "./session";
+import { addCreatedEvent, addRequestedEvent, deleteCreatedEvent, deleteJoinedEvent, deleteRequestedEvent, getCurrentUser } from "./session";
 
 
 export const RECEIVE_ALL_EVENTS_FOR_DAY = "events/RECEIVE_ALL_EVENTS_FOR_DAY";
@@ -75,7 +75,7 @@ export const createEvent = (eventInfo) => async dispatch => {
 }
 
 export const createEventRequest = (eventId) => async dispatch => {
-    const res = await jwtFetch(`/api/events/requests/${eventId}`, {
+    const res = await jwtFetch(`/api/events/${eventId}/requests`, {
         method: "POST"
     });
 
@@ -103,6 +103,69 @@ export const updateEvent = (eventInfo) => async dispatch => {
     dispatch(receiveSpecificEvent(data));
     dispatch(getCurrentUser());
 }
+
+export const deleteEvent = (eventId) => async dispatch => {
+    const res = await jwtFetch(`/api/events/${eventId}`, {
+        method: 'DELETE'
+    })
+
+    const data = await res.json();
+    if (data === "created deleted") {
+        dispatch(deleteCreatedEvent(eventId));
+    } else if (data === "joined deleted") {
+        dispatch(deleteJoinedEvent(eventId));
+    }
+
+    // refactor this later when adding date filter
+    const todaysDate = new Date().toISOString().split("T")[0];
+    dispatch(fetchAllEventsForDay(todaysDate));
+}
+
+export const updateEventInfo = (eventInfo) => async dispatch => {
+    const res = await jwtFetch(`/api/events/${eventInfo._id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(eventInfo)
+    })
+
+    const data = await res.json();
+    dispatch(addCreatedEvent(data));
+}
+
+export const updateRequester = (eventId, userId, choice) => async dispatch => {
+    const res = await jwtFetch(`/api/events/${eventId}/requests/${userId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({choice})
+    })
+
+    const data = await res.json();
+    dispatch(addCreatedEvent(data));
+
+    // refactor this later when adding date filter
+    const todaysDate = new Date().toISOString().split("T")[0];
+    dispatch(fetchAllEventsForDay(todaysDate));
+}
+
+export const deleteAttendee = (eventId, userId) => async dispatch => {
+    const res = await jwtFetch(`/api/events/${eventId}/attendees/${userId}`, {
+        method: 'DELETE'
+    })
+
+    const data = await res.json();
+    dispatch(addCreatedEvent(data));
+
+    // refactor this later when adding date filter
+    const todaysDate = new Date().toISOString().split("T")[0];
+    dispatch(fetchAllEventsForDay(todaysDate));
+}
+
+export const deleteRequest = (eventId) => async dispatch => {
+    const res = await jwtFetch(`/api/events/${eventId}/requests`, {
+        method: "DELETE"
+    })
+
+    dispatch(deleteRequestedEvent(eventId));
+}
+
 
 const eventsReducer = (state={}, action) => {
     let nextState = {...state}
