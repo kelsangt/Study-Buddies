@@ -28,6 +28,11 @@ const EventShow = ({event}) => {
         {event.location.address}
       </span> 
       
+      <div className="timeWindow">
+        {new Date(event.startTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ')[1]} 
+        {` to `}  
+        {new Date(event.endTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ')[1]}
+      </div>
 
       <div id="photoDiv">
         <img className="event-photo" src={event.location.imageUrl} />

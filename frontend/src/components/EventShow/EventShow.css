@@ -98,3 +98,8 @@
 .creator-username {
   font-family: var(--font);
 }
+
+.timeWindow {
+  font-family: var(--font);
+  margin-top: 10px;
+}
