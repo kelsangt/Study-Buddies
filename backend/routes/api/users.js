@@ -96,7 +96,17 @@ router.patch('/', requireUser, async (req, res, next) => {
     req.user.profileImageUrl = req.body.profileImageUrl;
 
     await req.user.save();
-    return res.json(req.user);
+
+    return res.json({
+      username: req.user.username,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      school: req.user.school,
+      major: req.user.major,
+      linkedInUrl: req.user.linkedInUrl,
+      phone: req.user.phone,
+      profileImageUrl: req.user.profileImageUrl
+    });
   } catch(err) {
     const error = new Error('Event not found');
     error.statusCode = 404;
