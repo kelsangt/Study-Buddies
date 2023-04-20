@@ -7,6 +7,7 @@ const Event = mongoose.model('Event');
 // const Location = mongoose.model('Location');
 
 const { requireUser } = require('../../config/passport');
+const validateEventInput = require('../../validations/eventInput');
 
 // GET all events
 router.get('/', async (req, res) => {
@@ -66,10 +67,7 @@ router.post('/', requireUser, async (req, res, next) => {
       startTime: req.body.startTime,
       endTime: req.body.endTime
     });
-
-    console.log(newEvent);
     let event = await newEvent.save();
-    console.log(event);
 
     req.user.createdEvents.push(event._id)
     await req.user.save();
