@@ -1,6 +1,13 @@
-const EventUpdateForm = () => {
+import './EventUpdateForm.css'
+
+const EventUpdateForm = ({event}) => {
     return (
-        <h1>HELLO</h1>
+        <>
+        <div id="event-update"> 
+
+        </div>
+        <h1>{event.name}</h1>
+        </>
     )
 }
 

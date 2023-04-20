@@ -54,7 +54,7 @@ const MyCreatedEvents = ({event}) => {
                 <div onClick={showEditForm} id='myevent-edit-button'>Edit Event</div>
                 {showEventEditModal && (
                     <CenterModal onClose={hideEditForm}>
-                        <EventUpdateForm />
+                        <EventUpdateForm event={event} key={event._id}/>
                     </CenterModal>
                 )}
             </div>
