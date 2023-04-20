@@ -1,7 +1,7 @@
 .event-sidebar {
   padding-top: 10px;
   flex-basis: 25%;
-  height: calc(100% - 55px);
+  height: calc(100% - 10px);
   display: flex;
   flex-direction: column;
   justify-content: start;

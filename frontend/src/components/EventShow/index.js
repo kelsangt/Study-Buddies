@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const EventShow = ({event}) => {
   const sessionUser = useSelector(state => state.session.user)
-  const requestedEvents = useSelector(state => state.session.user.requestedEvents)
+  const requestedStatus = useSelector(state => !!state.session.user.requestedEvents[event._id])
   const dispatch = useDispatch();
 
   const handleRequest = (e) => {
@@ -71,7 +71,7 @@ const EventShow = ({event}) => {
               <button 
                 className="request-button" 
                 onClick={handleRequest}
-                disabled={event.requesters.map(requester => requester._id).includes(sessionUser._id)}
+                disabled={requestedStatus}
               > Request to Join </button>
             </div>
           : null
