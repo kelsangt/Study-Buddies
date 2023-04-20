@@ -96,7 +96,7 @@ router.patch('/', requireUser, async (req, res, next) => {
     req.user.profileImageUrl = req.body.profileImageUrl;
 
     await req.user.save();
-    return res.json(null);
+    return res.json(req.user);
   } catch(err) {
     const error = new Error('Event not found');
     error.statusCode = 404;

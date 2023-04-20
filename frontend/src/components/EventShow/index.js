@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const EventShow = ({event}) => {
   const sessionUser = useSelector(state => state.session.user)
+  const requestedEvents = useSelector(state => state.session.user.requestedEvents)
   const dispatch = useDispatch();
 
   const handleRequest = (e) => {

@@ -50,6 +50,7 @@ export const addCreatedEvent = (event) => ({
 export const addJoinedEvent = (event) => ({
   type: RECEIVE_JOINED_EVENT,
   event
+})
 
 export const signup = user => startSession(user, 'api/users/register');
 export const login = user => startSession(user, 'api/users/login');
