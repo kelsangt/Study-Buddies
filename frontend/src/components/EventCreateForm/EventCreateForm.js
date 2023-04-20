@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createEvent } from '../../store/events';
 import { getLocations } from '../../store/locations';
+import './EventCreateForm.css'
 
 function EventCreateForm () {
     const [name, setName] = useState('');
@@ -75,11 +76,11 @@ function EventCreateForm () {
     return (
       <div id="mainEventCreateDiv">
         <div id="eventCreateFormDiv">
-          <h2 id="createSessionH2">Create Session</h2>
-          <form className="signup-form" onSubmit={handleEventCreate}>
+          <h2 id="createSessionH2">Create a Session</h2>
+          <form className="event-create-form" onSubmit={handleEventCreate}>
             {/* <div className="errors">{errors?.email}</div> */}
-            <label className="signupLabel">
-              <span id="emailSpan">Name</span>
+            <label className="eventCreateLabel">
+              <span className="eventCreateFormSpan">Name</span>
               <input className="inputField" type="text"
                 value={name}
                 onChange={update('Name')}
@@ -87,8 +88,8 @@ function EventCreateForm () {
               />
             </label>
             {/* <div className="errors">{errors?.username}</div> */}
-            <label className="signupLabel">
-              <span id="usernameSpan">Description</span>
+            <label className="eventCreateLabel">
+              <span className="eventCreateFormSpan">Description</span>
               <input className="inputField" type="text"
                 value={description}
                 onChange={update('Description')}
@@ -97,8 +98,8 @@ function EventCreateForm () {
             </label>
   
             {/* <div className="errors">{errors?.firstName}</div> */}
-            <label className="signupLabel">
-              <span id="firstNameSpan">Location</span>
+            <label className="eventCreateLabel">
+              <span className="eventCreateFormSpan">Location</span>
              
               <select className="inputField" id="selectLocation" onChange={update('Location')}>
                 <option disabled selected value>Select a location</option>
@@ -112,8 +113,8 @@ function EventCreateForm () {
               </select>
 
             </label>
-            <label className="signupLabel">
-              <span id="passwordSpan">Date</span>
+            <label className="eventCreateLabel">
+              <span className="eventCreateFormSpan">Date</span>
               <input className="inputField" type="date"
                 value={date}
                 onChange={update('Date')}
@@ -122,8 +123,8 @@ function EventCreateForm () {
               />
             </label>
             {/* <div className="errors">{errors?.lastName}</div> */}
-            <label className="signupLabel">
-              <span id="lastNameSpan">Start Time</span>
+            <label className="eventCreateLabel">
+              <span className="eventCreateFormSpan">Start Time</span>
               <input className="inputField" type="time"
                 value={startTimeInitial}
                 onChange={update('Start Time')}
@@ -133,8 +134,8 @@ function EventCreateForm () {
   
   
             {/* <div className="errors">{errors?.school}</div> */}
-            <label className="signupLabel">
-              <span id="schoolSpan">End Time</span>
+            <label className="eventCreateLabel">
+              <span className="eventCreateFormSpan">End Time</span>
               <input className="inputField" type="time"
                 value={endTimeInitial}
                 onChange={update('End Time')}
