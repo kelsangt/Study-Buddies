@@ -50,8 +50,15 @@ const UserSettings = () => {
             <div id='medium-user-container'>
                 <div id='user-profile-photo-container'>
                     <div id='edit-settings-image-holder'>
-                        <img src={require('../NavBar/assets/defaultprofile.png')}
+                        <img 
+                            className="edit-profile-photo"
+                            src={
+                                user.firstName === "Amiter"
+                                ? require('../NavBar/assets/demo_user.jpg')
+                                : require('../NavBar/assets/defaultprofile.png')
+                            }
                             id='edit-settings-image'
+                            alt=''
                         ></img>
                     </div>
                     <div onClick={editSettings} id='editsettings-button'>Edit Settings</div>
