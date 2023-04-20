@@ -87,6 +87,21 @@ export const createEventRequest = (eventId) => async dispatch => {
     dispatch(getCurrentUser());
 }
 
+export const updateEvent = (eventInfo) => async dispatch => {
+
+    const res = await jwtFetch(`/api/events/${eventInfo}._id`, {
+        method: 'PATCH',
+        body: JSON.stringify(eventInfo),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = await res.json();
+    dispatch(receiveSpecificEvent(data));
+    dispatch(getCurrentUser());
+}
+
 const eventsReducer = (state={}, action) => {
     let nextState = {...state}
     switch (action.type) {
