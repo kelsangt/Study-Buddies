@@ -91,7 +91,6 @@ export const updateUser = (userInfo) => async dispatch => {
     }
   })
   const data = await res.json();
-  console.log("data", data);
   return dispatch(patchUser(data))
 }
 
@@ -121,7 +120,9 @@ const sessionReducer = (state = initialState, action) => {
     case RECEIVE_USER_LOGOUT:
       return initialState;
     case PATCH_USER:
-      return { user: action.user }
+      console.log("current", newState);
+      console.log("new", action.user);
+      return { user: {...newState.user, ...action.user} }
     case RECEIVE_REQUESTED_EVENT:
       newState.user.requestedEvents[action.event._id] = action.event;
       return newState
