@@ -3,7 +3,8 @@
     background-color: rgb(30, 84, 171);
     display: flex;
     justify-content: center;
-    height: 65px;
+    min-height: 65px;
+    max-height: 65px;
     align-items: center;
 }
 .study-buddies{

@@ -82,7 +82,6 @@ export const logout = () => dispatch => {
   dispatch(logoutUser());
 };
 
-
 export const updateUser = (userInfo) => async dispatch => {
   const res = await jwtFetch(`/api/users/`, {
     method: 'PATCH',
@@ -92,9 +91,9 @@ export const updateUser = (userInfo) => async dispatch => {
     }
   })
   const data = await res.json();
+  console.log("data", data);
   return dispatch(patchUser(data))
 }
-
 
 const initialState = {
   user: undefined
