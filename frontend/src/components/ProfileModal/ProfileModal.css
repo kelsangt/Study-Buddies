@@ -79,10 +79,10 @@
 }
 
 .myevents-header.selected {
-    color: rgb(255, 191, 0);
+    color: rgb(255, 145, 0);
 }
 .myevents-header:active{
-    color: rgb(255, 191, 0);
+    color: rgb(255, 145, 0);
 }
 #myevents-header-last{
     border-right: none;

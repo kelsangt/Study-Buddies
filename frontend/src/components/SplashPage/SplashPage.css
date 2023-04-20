@@ -83,17 +83,6 @@
     color: white;
 }
 
-#footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 10vh;
-    background-color: rgb(30, 84, 171);
-    color: white;
-    font-family: var(--font);
-    font-weight: var(--font-regular);
-}
 
 #splashimage1 {
     height: 60%;

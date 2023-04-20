@@ -9,6 +9,7 @@ import EventSideBar from '../EventsSidebar';
 import ProfileModal from '../ProfileModal/ProfileModal';
 import Loading from '../GMap/Loading/Loading';
 import { receiveEventClicked, selectedEventId } from '../../store/ui';
+import Footer from '../Footer/Footer';
 
 const MainContent = () => {
     const dispatch = useDispatch();
@@ -42,9 +43,12 @@ const MainContent = () => {
 
     return (
         <>
-            <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places", "geocoder"]}>
-            </Wrapper>
-            {modalToggle && <ProfileModal/>}
+            <div id="mainContent">  
+                <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places", "geocoder"]}>
+                </Wrapper>
+                {modalToggle && <ProfileModal/>}
+                <Footer />
+            </div>
         </>
     )
 }
