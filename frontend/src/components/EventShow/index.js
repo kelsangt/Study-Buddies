@@ -34,7 +34,7 @@ const EventShow = ({event}) => {
           className="user-image show"
           src={
             event.creator.profileImageUrl ||
-            require('../NavBar/assets/cat.jpeg')
+            require('../NavBar/assets/defaultprofile.png')
           }
           alt=''
         />
@@ -53,7 +53,7 @@ const EventShow = ({event}) => {
                   className='user-image show'
                   src={
                     attendee.profileImageUrl ||
-                    require('../NavBar/assets/cat.jpeg')
+                    require('../NavBar/assets/defaultprofile.png')
                   }
                   alt=''
                 />

@@ -50,7 +50,7 @@ const UserSettings = () => {
             <div id='medium-user-container'>
                 <div id='user-profile-photo-container'>
                     <div id='edit-settings-image-holder'>
-                        <img src={require('../NavBar/assets/cat.jpeg')}
+                        <img src={require('../NavBar/assets/defaultprofile.png')}
                             id='edit-settings-image'
                         ></img>
                     </div>

@@ -39,7 +39,7 @@ function NavBar () {
           <Link style={{ textDecoration: 'none' }} to={'/events/new'}>Create an Event</Link>
         <div onClick={logoutUser}>Logout</div> */}
           <div id='profile-button'>
-            <img src={require('./assets/cat.jpeg')} id='user-profile-img' onClick={handleModalToggle}></img>
+            <img src={require('./assets/defaultprofile.png')} id='user-profile-img' onClick={handleModalToggle}></img>
           </div>
         </div>
         {/* {showModal && <ProfileModal/>} */}

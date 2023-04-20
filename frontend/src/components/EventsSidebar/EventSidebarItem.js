@@ -73,7 +73,7 @@ const EventSidebarItem = ({event, selected}) => {
                     className='user-image attendee'
                     src={
                       attendee.profileImageUrl ||
-                      require('../NavBar/assets/cat.jpeg')
+                      require('../NavBar/assets/defaultprofile.png')
                     }
                     alt=''
                     onMouseEnter={showHandler(attendee._id)}
@@ -101,7 +101,7 @@ const EventSidebarItem = ({event, selected}) => {
             className="user-image"
             src={
               event.creator.profileImageUrl ||
-              require('../NavBar/assets/cat.jpeg')
+              require('../NavBar/assets/defaultprofile.png')
             }
             alt=''
           />
