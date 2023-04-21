@@ -3,6 +3,7 @@
     flex-direction: row;
     gap: 40px;
     padding: 20px;
+    font-family: var(--font);
 }
 
 
@@ -23,10 +24,14 @@
 .individual-attendee-container {
     display: flex;
     gap: 20px;
-    border: 1px solid red;
-    padding: 5px;
+    /* border: 1px solid red; */
+    background-color: rgb(30, 84, 171);
+    color: white;
+    padding: 10px;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
+    border-radius: 10px;
 }
 
 .attendee-options{
@@ -41,10 +46,12 @@
 #accept-button{
     border: 1px solid green;
     background-color: rgb(22, 177, 2);
+    border-radius: 10px;
 }
 #reject-button{
     border: 1px solid red;
     background-color: rgb(253, 111, 111);
+    border-radius: 10px;
 }
 #reject-button:hover{
     background-color: rgb(248, 49, 49);
