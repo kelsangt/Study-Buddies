@@ -1,14 +1,15 @@
 #big-user-container{
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
+    align-items: center;
+    font-family: var(--font);
 }
 
 #greeting{
-    font-size: 2rem;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    margin-left: 45px;
+    font-size: 3rem;
+    margin-top: 35px;
+    margin-bottom: 30px;
+    /* margin-left: 150px; */
 }
 
 #medium-user-container{
@@ -28,7 +29,7 @@
 #display-profile-info-container {
     padding: 2vw;
     width: 40vw;
-    border: 1px solid green;
+    /* border: 1px solid green; */
 }
 
 #edit-settings-image-holder{
@@ -52,16 +53,31 @@
 }
 
 #editsettings-button{
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(30, 84, 171);
+    color: white;
+    height: 40px;
+    width: 50%;
     font-size: 1.5rem;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 #savesettings-button{
-    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid black; */
+    color: white;
     font-size: 25px;
     text-align: center;
     cursor: pointer;
+    height: 50px;
+    background-color: rgb(30, 84, 171);
+    border-radius: 10px;
 }
 
 .edit-profile-input {
