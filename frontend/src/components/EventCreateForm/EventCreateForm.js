@@ -73,6 +73,12 @@ function EventCreateForm () {
         dispatch(createEvent(event));
     }
 
+    const getMinDate = () => {
+      const today = new Date().toLocaleDateString("en-us", {year: "numeric", month: "2-digit", day: "2-digit"})
+      const [month, day, year] = today.split('/');
+      return `${year}-${month}-${day}`
+    }
+
     return (
       <div id="mainEventCreateDiv">
         <div id="eventCreateFormDiv">
@@ -119,7 +125,7 @@ function EventCreateForm () {
                 value={date}
                 onChange={update('Date')}
                 placeholder="Date"
-                min={new Date().toISOString().split('T')[0]}
+                min={getMinDate()}
               />
             </label>
             {/* <div className="errors">{errors?.lastName}</div> */}

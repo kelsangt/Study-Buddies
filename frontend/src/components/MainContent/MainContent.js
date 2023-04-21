@@ -21,7 +21,8 @@ const MainContent = () => {
     const date = useSelector(selectedDate)
     
     useEffect(() => {
-        dispatch(fetchAllEventsForDay(date.toISOString().split("T")[0]));
+        // console.log("date", date.toLocaleDateString("en-us", {dateStyle: "long"}).split("T")[0]);
+        dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
         // dispatch(fetchAllLocations());
 
     }, [dispatch, date])
