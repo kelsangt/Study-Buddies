@@ -93,18 +93,36 @@
     justify-content: center;
     align-items: center;
     background-color: rgb(61, 14, 170);
+    padding-left: 10px;
 }
 
-#splashimage3 {
+#splashmapimage {
     width: 750px;
     margin-top: 50px;
     margin-bottom: 50px;
 }
 
 #tagline2 {
+    display: flex;
+    flex-direction: column;
     color: white;
     font-family: var(--font);
     font-weight: var(--font-bold);
     font-size: 36px;
     margin-left: 40px;
+}
+
+#tagline2H1 {
+    margin-bottom: 20px;
+}
+
+#taglineInnerDiv {
+    display: flex; 
+    justify-content: center;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+#initialH3 {
+    margin-bottom: 20px;
 }
