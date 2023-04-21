@@ -6,17 +6,17 @@ import { getLocations } from '../../store/locations';
 import './EventUpdateForm.css'
 
 function EventUpdateForm ({event}) {
+    const locations = useSelector(getLocations);
+
     const currentAttendees = event.attendees
     const requestedAttendees = event.requesters
     const [name, setName] = useState(event.name);
     const [description, setDescription] = useState(event.description);
-    // const [location, setLocation] = useState(event.location.name);
-    const [locationIndex, setLocationIndex] = useState("");
-    const [startTimeInitial, setStartTimeInitial] = useState(event.startTime);
-    const [endTimeInitial, setEndTimeInitial] = useState(event.endTime);
-    const [date, setDate] = useState(event.startTime.split('T')[0]);
+    const [locationIndex, setLocationIndex] = useState(0);
+    const [startTimeInitial, setStartTimeInitial] = useState(event.startTime.split('T')[1].slice(0, 5));
+    const [endTimeInitial, setEndTimeInitial] = useState(event.endTime.split('T')[1].slice(0, 5));
+    const [date, setDate] = useState(event.endTime.split('T')[0]);
 
-    const locations = useSelector(getLocations);
   // debugger
     // const errors = useSelector(state => state.errors.session);
     const dispatch = useDispatch();
@@ -53,29 +53,28 @@ function EventUpdateForm ({event}) {
     const handleEventCreate = e => {
         e.preventDefault();
 
-        // const [year, month, day] = date.split('-');
-        // const [startHour, startMin] = startTimeInitial.split(':');
-        // const [endHour, endMin] = endTimeInitial.split(':');
-        // const startTime = new Date(year, parseInt(month) - 1, day, startHour, startMin);
-        // const endTime = new Date(year, parseInt(month) - 1, day, endHour, endMin);
+        const [year, month, day] = date.split('-');
+        const [startHour, startMin] = startTimeInitial.split(':');
+        const [endHour, endMin] = endTimeInitial.split(':');
+        const startTime = new Date(year, parseInt(month) - 1, day, startHour, startMin);
+        const endTime = new Date(year, parseInt(month) - 1, day, endHour, endMin);
+
+        if (startTime > endTime) {
+          console.log("time error")
+        }
 
         const location = locations[locationIndex];
 
-        // const event = {
-        //     name,
-        //     description,
-        //     location,
-        //     startTimeInitial,
-        //     endTimeInitial
-        // };
-        dispatch(updateEvent({_id: event._id,
-                              name,
-                              description, 
-                              location, 
-                              startTime: startTimeInitial, 
-                              endTime: endTimeInitial, 
-                              date
-                            }));
+        const updatedEvent = {
+            _id: event._id,
+            name,
+            description,
+            location,
+            startTime: startTime,
+            endTime: endTime
+        };
+
+        dispatch(updateEvent(updatedEvent));
     }
   
     // accept deny
@@ -118,11 +117,14 @@ function EventUpdateForm ({event}) {
             <label className="signupLabel">
               <span id="firstNameSpan">Location</span>
              
-              <select className="inputField" id="selectLocation" onChange={update('Location')}>
+              <select className="inputField" id="selectLocation" onChange={update('Location')} value={locationIndex}>
                 <option disabled selected value>Select a Location</option>
                 {locations.map((location, index)=>{
                     return (
-                        <option key={index} value={index}>
+                        <option 
+                          key={index} 
+                          value={index}
+                        >
                             {location.name}
                         </option>
                     )
@@ -136,13 +138,14 @@ function EventUpdateForm ({event}) {
                 value={date}
                 onChange={update('Date')}
                 placeholder="Date"
+                min={new Date().toISOString().split('T')[0]}
               />
             </label>
             {/* <div className="errors">{errors?.lastName}</div> */}
             <label className="signupLabel">
               <span id="lastNameSpan">Start Time</span>
               <input className="inputField" type="time"
-                value={startTimeInitial.split('T')[1].slice(0,5)}
+                value={startTimeInitial}
                 onChange={update('Start Time')}
                 placeholder="Start Time"
               />
@@ -153,7 +156,7 @@ function EventUpdateForm ({event}) {
             <label className="signupLabel">
               <span id="schoolSpan">End Time</span>
               <input className="inputField" type="time"
-                value={endTimeInitial.split('T')[1].slice(0,5)}
+                value={endTimeInitial}
                 onChange={update('End Time')}
                 placeholder="End Time"
               />
