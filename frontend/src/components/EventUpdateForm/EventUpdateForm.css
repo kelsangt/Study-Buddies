@@ -10,7 +10,7 @@
 #all-requesters-container{
     display: flex;
     flex-direction: column;
-    gap: 200px;
+    gap: 100px;
 }
 
 /* #pending-requesters-container {
