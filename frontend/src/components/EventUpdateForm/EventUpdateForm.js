@@ -8,11 +8,16 @@ import './EventUpdateForm.css'
 function EventUpdateForm ({event}) {
     const locations = useSelector(getLocations);
 
+    let selectedIndex = null;
+    locations.forEach((loc, idx) => {
+      if (loc.name === event.location.name) selectedIndex = idx
+    })
+
     const currentAttendees = event.attendees
     const requestedAttendees = event.requesters
     const [name, setName] = useState(event.name);
     const [description, setDescription] = useState(event.description);
-    const [locationIndex, setLocationIndex] = useState(0);
+    const [locationIndex, setLocationIndex] = useState(selectedIndex);
     const [startTimeInitial, setStartTimeInitial] = useState(event.startTime.split('T')[1].slice(0, 5));
     const [endTimeInitial, setEndTimeInitial] = useState(event.endTime.split('T')[1].slice(0, 5));
     const [date, setDate] = useState(event.endTime.split('T')[0]);
