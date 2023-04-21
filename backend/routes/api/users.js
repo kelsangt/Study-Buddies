@@ -127,7 +127,7 @@ router.get('/current', restoreUser, async (req, res) => {
   const user = await User.findById(req.user._id)
                           .populate({
                             path: "createdEvents", 
-                            select: "_id name location startTime endTime",
+                            select: "_id name location description startTime endTime",
                             populate: [
                               {
                                 path: "location",
@@ -145,7 +145,7 @@ router.get('/current', restoreUser, async (req, res) => {
                           })
                           .populate({
                             path: "joinedEvents", 
-                            select: "_id name location startTime endTime",
+                            select: "_id name location description startTime endTime",
                             populate: [
                               {
                                 path: "creator",
@@ -163,7 +163,7 @@ router.get('/current', restoreUser, async (req, res) => {
                           })
                           .populate({
                             path: "requestedEvents", 
-                            select: "_id name location startTime endTime",
+                            select: "_id name location description startTime endTime",
                             populate: [
                               {
                                 path: "creator",

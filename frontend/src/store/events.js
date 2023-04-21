@@ -89,21 +89,6 @@ export const createEventRequest = (eventId) => async dispatch => {
     dispatch(addRequestedEvent(data));
 }
 
-export const updateEvent = (eventInfo) => async dispatch => {
-
-    const res = await jwtFetch(`/api/events/${eventInfo._id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(eventInfo),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-
-    const data = await res.json();
-    dispatch(receiveSpecificEvent(data));
-    dispatch(getCurrentUser());
-}
-
 export const deleteEvent = (eventId) => async dispatch => {
     const res = await jwtFetch(`/api/events/${eventId}`, {
         method: 'DELETE'
@@ -121,13 +106,14 @@ export const deleteEvent = (eventId) => async dispatch => {
     dispatch(fetchAllEventsForDay(todaysDate));
 }
 
-export const updateEventInfo = (eventInfo) => async dispatch => {
+export const updateEvent = (eventInfo) => async dispatch => {
     const res = await jwtFetch(`/api/events/${eventInfo._id}`, {
         method: 'PATCH',
         body: JSON.stringify(eventInfo)
     })
 
     const data = await res.json();
+    console.log(data);
     dispatch(addCreatedEvent(data));
 }
 

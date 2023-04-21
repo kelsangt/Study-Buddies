@@ -18,7 +18,7 @@ passport.use(new LocalStrategy({
   const user = await User.findOne({ email })
                           .populate({
                             path: "createdEvents", 
-                            select: "_id name location startTime endTime",
+                            select: "_id name location description startTime endTime",
                             populate: [
                               {
                                 path: "location",
@@ -36,7 +36,7 @@ passport.use(new LocalStrategy({
                           })
                           .populate({
                             path: "joinedEvents", 
-                            select: "_id name location startTime endTime",
+                            select: "_id name location description startTime endTime",
                             populate: [
                               {
                                 path: "creator",
@@ -54,7 +54,7 @@ passport.use(new LocalStrategy({
                           })
                           .populate({
                             path: "requestedEvents", 
-                            select: "_id name location startTime endTime",
+                            select: "_id name location description startTime endTime",
                             populate: [
                               {
                                 path: "creator",
