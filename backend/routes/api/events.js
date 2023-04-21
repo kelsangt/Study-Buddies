@@ -4,12 +4,11 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Event = mongoose.model('Event');
-// const Location = mongoose.model('Location');
 
 const { requireUser } = require('../../config/passport');
-const validateEventInput = require('../../validations/eventInput');
+// const validateEventInput = require('../../validations/eventInput');
 
-// GET all events
+// GET all events within a date range
 router.get('/', async (req, res) => {
   try {
     const startDay = new Date(req.query.startDate);
@@ -21,10 +20,7 @@ router.get('/', async (req, res) => {
       endDay = new Date(req.query.startDate);
       endDay.setDate(endDay.getDate() + 1);
     }
-
-    console.log(startDay, endDay);
     
-
     const events = await Event.find({
       startTime: {
         $gte: startDay,
@@ -33,7 +29,6 @@ router.get('/', async (req, res) => {
     })
     .populate("creator", "_id username profileImageUrl")
     .populate("attendees", "_id username profileImageUrl")
-    // .populate("requesters", "_id username profileImageUrl")
     .populate("location", "_id name latitude longitude imageUrl")
     .sort({ startTime: 1 });
 
@@ -59,7 +54,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // POST new event
-router.post('/', requireUser, validateEventInput, async (req, res, next) => {
+router.post('/', requireUser, async (req, res, next) => {
   try {
     const newEvent = new Event({
       creator: req.user._id,
@@ -207,7 +202,6 @@ router.post('/:id/requests', requireUser, async (req, res, next) => {
     const updatedEvent = await Event.findById(event._id)
                                     .populate("creator", "_id username profileImageUrl")
                                     .populate("attendees", "_id username profileImageUrl")
-                                    // .populate("requesters", "_id username profileImageUrl")
                                     .populate("location", "_id name latitude longitude imageUrl")
 
     return res.json(updatedEvent);
@@ -295,7 +289,6 @@ router.patch('/:id/requests/:userId', requireUser, async (req, res, next) => {
 router.delete('/:id/attendees/:userId', requireUser, async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
-    // console.log(event)
     if (event.creator.toString() !== req.user._id.toString()) {
       const error = new Error('Unauthorized');
       error.statusCode = 401;
@@ -303,13 +296,12 @@ router.delete('/:id/attendees/:userId', requireUser, async (req, res, next) => {
       return next(error);
     }
 
-    const user = await User.findById(req.params.userId)
-    // console.log(user)
+    const user = await User.findById(req.params.userId);
 
-    let idx = event.attendees.indexOf(user._id)
+    let idx = event.attendees.indexOf(user._id);
     event.attendees.splice(idx, 1);
 
-    idx = user.joinedEvents.indexOf(event._id)
+    idx = user.joinedEvents.indexOf(event._id);
     user.joinedEvents.splice(idx, 1);
 
     await user.save();
@@ -319,8 +311,6 @@ router.delete('/:id/attendees/:userId', requireUser, async (req, res, next) => {
                                     .populate("attendees", "_id username profileImageUrl")
                                     .populate("requesters", "_id username profileImageUrl")
                                     .populate("location", "_id name latitude longitude imageUrl");
-
-    console.log(updatedEvent)
     return res.json(updatedEvent);
   } catch(err) {
     const error = new Error('Event or user not found');
