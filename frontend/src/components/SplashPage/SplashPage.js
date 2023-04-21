@@ -112,7 +112,7 @@ function SplashPage() {
           <AdToolTip type="alt-9" onClose={handleClose(11)}>
             <span className="tooltip">
               Looking to become a software engineer?
-              <br /> Or a professional hacky sack player?
+              <br /> Or a professional hacky sack athlete?
               <br /> Join App Academy
               <img src="https://cdn.buttercms.com/TOVp24PyQ9m6bD8LrV3t" alt="" className="ad-pic"/>
             </span>

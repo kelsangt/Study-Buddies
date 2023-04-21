@@ -74,6 +74,9 @@ const TeamList = () => {
           const positionText = document.getElementById("meme-lead");
           positionText.innerHTML = "Backend Lead <br /> Frontend Lead <br /> Flex Lead <br /> Meme Lead <br /> Lead Lead <br /> Mongobara Lead";
 
+          const nameText = document.getElementById("meme-lead-name");
+          nameText.innerHTML = "Fahim SSJ Capybara Khan"
+
           const positionClass = document.querySelectorAll(".teamPosition");
           positionClass.forEach(item => {
             const newHeight = Math.max(positionText.offsetHeight, item.offsetHeight)
@@ -163,7 +166,7 @@ const TeamList = () => {
                 onClick={handleMemeToggle('capy')}
               />
             </div>
-            <div id='team-member-name'>Fahim Khan</div>
+            <div id='team-member-name'><div id="meme-lead-name">Fahim Khan</div></div>
             <div id="fahim-links">
               <a href="https://github.com/fk652">
                   <i className="fa fa-github" id="githubLink"></i>
