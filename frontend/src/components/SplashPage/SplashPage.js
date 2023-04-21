@@ -13,7 +13,7 @@ function SplashPage() {
   const [showModal2, setShowModal2] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setShowModal(true), 10000);
+    setTimeout(() => setShowModal(true), 15000);
   }, [])
 
   const handleClose = () => {
