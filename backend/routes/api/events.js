@@ -21,6 +21,8 @@ router.get('/', async (req, res) => {
       endDay = new Date(req.query.startDate);
       endDay.setDate(endDay.getDate() + 1);
     }
+
+    console.log(startDay, endDay);
     
 
     const events = await Event.find({
