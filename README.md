@@ -1,6 +1,12 @@
 # Study Buddies 
 
+<a href="https://studybuddies.onrender.com/">Live Link</a>
+
 # Background and Overview 
+
+<img width=600 alt="overview" src="./frontend/src/images/overview.png">
+
+<img width=600 alt="overview2" src="./frontend/src/images/overview2.png">
 
 Study Buddies is an app that allows students to be able to create and attend study sessions. These study sessions will be held in libraries across America and can be easily organized by the study session creator. Utilizing the Google Maps API, students will be able to browse available study sessions in their area, create study sessions, and request to join existing study sessions. Study Buddies fosters learning by allowing students to build their network and find peers to study with. 
 
@@ -12,19 +18,301 @@ Users must be able to sign up to create an account. Users must also be able to s
 
 ## Feature 2 - User Profile
 
+<img width=600 alt="profilesettings" src="./frontend/src/images/profilesettings.png">
+
 Users will have their own profiles where they can add more information about themselves. Users can update their information on their profile. 
+
+```javascript 
+    <div>
+        <div className='usersettings-label'>First Name</div>
+            <input className='edit-profile-input'
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                type='text'
+                disabled
+            />
+    </div>
+
+    <div>
+        <div className='usersettings-label'>Last Name</div>
+            <input className='edit-profile-input'
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                type='text'
+                disabled
+            />
+    </div>
+
+     <div onClick={editSettings} id='editsettings-button'>Edit Settings</div>
+
+      const editSettings = () => {
+           let get = Array.from(document.getElementsByClassName('edit-profile-input'))
+            get.forEach((input) => {
+               input.disabled = false
+            })
+      }
+```
+
+In the user's settings page, the user's information is displayed in input fields that are disabled by default. When the user clicks the Edit button, the input fields are then enabled, allowing them to make changes.
+
+<img width=600 alt="eventstabs" src="./frontend/src/images/eventstabs.png">
+
+```javascript 
+    <div id='events-holder'>
+                        {
+                            myEventTab &&
+                            createdEvents.map(event => {
+                                return <MyCreatedEvents event={event} key={event._id}/>
+                            })
+                        }
+                        {
+                            joinedEventTab &&
+                            joinedEvents.map(event => {
+                                return <MyCreatedEvents event={event} key={event._id}/>
+                            })
+                        }
+
+                        {
+                            requestedEventTab &&
+                            requestedEvents.map(event => {
+                                return <MyCreatedEvents event={event} key={event._id}/>
+                            })
+                        }
+    </div>
+```
+When a user clicks on their profile icon in the upper right corner, a slideout component will render with tabs for "My Events", "Joined Events", and "Requested Events". These events are all stored in the store under the user.
 
 ## Feature 3 - Google Maps
 
+<img width=600 alt="googlemaps" src="./frontend/src/images/googlemaps.png">
+
 The Google Maps API will allow the user to browse study sessions around them on the map. 
 
+```javascript
+    let eventMarkers = [];
+    events.forEach(event => {
+        eventMarkers.push(new window.google.maps.Marker({
+            position: {lat: event.location.latitude, lng: event.location.longitude},
+            map: map, 
+            title: event.description, 
+            icon: {
+                url: image, 
+                scaledSize: new window.google.maps.Size(64, 64)
+            }
+        }));
+    });
+```
+
+Creating all Study Event Markers and placing them on the map. 
+
+```javascript
+   function placeLibraries(results, status) {
+		if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+			let googleFetchedLibraries = [];
+
+			results.forEach(result => {
+				let photoUrl = "https://upload.wikimedia.org/wikipedia/commons/6/60/Statsbiblioteket_l%C3%A6sesalen-2.jpg";
+				
+				if (result.photos) {
+					photoUrl = result.photos[0].getUrl()
+				}
+
+				googleFetchedLibraries.push({
+					name: result.name,
+					latitude: result.geometry.location.lat(),
+					longitude: result.geometry.location.lng(),
+					imageUrl: photoUrl,
+					address: result.vicinity
+				})
+
+				let resultLat = result.geometry.location.lat();
+				let resultLng = result.geometry.location.lng();
+				
+				let eventMarker = new window.google.maps.Marker({
+					position: {lat: resultLat, lng: resultLng},
+					map: map, 
+					icon: {
+						url: libraryIcon, 
+						scaledSize: new window.google.maps.Size(54, 54)
+					},
+					title: result.name,
+					animation: window.google.maps.Animation.DROP
+				});
+				let eventInfoWindow = new window.google.maps.InfoWindow({
+					content: result.name
+				})
+				eventMarker.addListener("click", () => {
+					eventInfoWindow.open({
+						anchor: eventMarker, 
+						map: map
+					})
+				})
+			})
+			dispatch(receiveAllLocations(googleFetchedLibraries));
+		}
+	}
+```
+
+Placing Libraries on the map.
+
+```javascript
+    const findGeoLocation = () => {
+		setGeoLocationClicked(false);
+		setRequestedLibraries(false);
+
+		if (!geoLocationClicked) {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					(position) => {
+						const userLocation = {
+							lat: position.coords.latitude, 
+							lng: position.coords.longitude
+						};
+						userLocationCoords.current = userLocation; 
+						const newMap = new window.google.maps.Map(ref.current, {
+							center: { lat: userLocation.lat, lng: userLocation.lng},
+							zoom: zoomAmount,
+							styles: stylesArray
+						})
+						newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+						setMap(newMap);
+					},
+					() => {
+						handleLocationError(true, infoWindow, map.getCenter());
+					}
+				);
+			} else {
+				handleLocationError(false, infoWindow, map.getCenter());
+			}
+		}
+	}
+```
+
+Geolocation functionality - When user requests to use their Geolocation.
+
 ## Feature 4 - Study Sessions (CRUD)
+
+<img width=600 alt="eventshow" src="./frontend/src/images/eventshow.png">
 
 Users can create, read, update, and destroy study sessions. 
 - Create - A user will be able to be the creator of a study session, allowing other users to request to join their session. 
 - Read - Users will be able to see study sessions near them. 
 - Update - A study session creator will be able to change the details of their study session (date and time, number of people attending, etc). 
 - Destroy - A study creator will be able to delete their study session. 
+
+<img width=600 alt="eventcreate" src="./frontend/src/images/eventcreate.png">
+
+```javascript
+    export const createEvent = (eventInfo) => async dispatch => {
+        console.log("create");
+
+        const res = await jwtFetch('/api/events', {
+            method: 'POST',
+            body: JSON.stringify(eventInfo),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await res.json();
+        dispatch(addCreatedEvent(data));
+        
+        const day = useSelector(selectedDate);
+        dispatch(fetchAllEventsForDay(day.toLocaleDateString("en-us").split("T")[0]));
+    }
+```
+
+A user can create a new event.
+
+<img width=600 alt="dateselector" src="./frontend/src/images/dateselector.png">
+
+```javascript
+    const EventSideBar = () => {
+    const events = useSelector(getEvents);
+    const selectedEvent = useSelector(selectedEventId);
+
+    return (
+        <div className="event-sidebar">
+        <DateSelector id='dateselector'/>
+        {
+            events.map(event => {
+            return <EventSidebarItem 
+                        event={event} 
+                        key={event._id} 
+                        selected={selectedEvent === event._id}
+                    />
+            })
+        }
+        </div>
+    )
+    }
+```
+
+A user can browse through events for today or upcoming events using a date selector. When a date is selected, it will be saved in the store and the component that renders all the events will dispatch a thunk function to retrieve the events for the selected date.
+
+<img width=600 alt="eventedit" src="./frontend/src/images/eventedit.png">
+
+```javascript
+    {
+        currentAttendees.map((attendee) => {
+                        let attendeeId = attendee._id
+                        let eventId = event._id
+                        return (
+                            <div className='individual-attendee-container'>
+                            <div>{attendee.username}</div>
+                            <div className='attendee-options' id='reject-button' onClick={handleKick(eventId, attendeeId)}>Kick</div>
+                            </div>
+                        )
+                    })
+    }
+
+    const handleKick = (eventId, attendeeId) => () => {
+        dispatch(deleteAttendee(eventId, attendeeId))
+    }
+```
+
+A user can only edit events that they've created. The edit form is prefilled with the current details of the event. The creator is allowed to kick attendees and accept/deny pending requests.
+
+<img width=600 alt="eventcancelrequest" src="./frontend/src/images/eventcancelrequest.png">
+
+```javascript
+    const handleLeave = (e) => {
+            e.preventDefault();
+            dispatch(deleteEvent(event._id))
+    }
+
+    const handleRequest = (e) => {
+            e.preventDefault();
+            dispatch(deleteRequest(event._id))
+    }
+
+    export const deleteRequest = (eventId) => async dispatch => {
+        const res = await jwtFetch(`/api/events/${eventId}/requests`, {
+            method: "DELETE"
+        })
+
+        dispatch(deleteRequestedEvent(eventId));
+    }
+
+    export const deleteEvent = (eventId) => async dispatch => {
+        const res = await jwtFetch(`/api/events/${eventId}`, {
+            method: 'DELETE'
+        })
+
+        const data = await res.json();
+        if (data === "created deleted") {
+            dispatch(deleteCreatedEvent(eventId));
+        } else if (data === "joined deleted") {
+            dispatch(deleteJoinedEvent(eventId));
+        }
+
+        const day = useSelector(selectedDate);
+        dispatch(fetchAllEventsForDay(day.toLocaleDateString("en-us").split("T")[0]));
+    }
+```
+
+For "Joined Events" and "Requested Events", the current user can leave the event or rescind their request.
+
 
 ## Feature 5 - Notifications 
 
@@ -38,13 +326,14 @@ Users will be notified when someone has requested to join their study session (i
 
 # Technologies and Technical Challenges
 
-## Technologies that will be implemented:
+## Technologies implemented:
 - MongoDB
 - Express
 - React and Redux
 - Node.js 
-- Amazon S3 
+- Amazon S3 (coming soon)
 - Google Maps API 
+- Google Maps - Places API
 
 # Group Members and Work Breakdown
 
