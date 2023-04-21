@@ -52,19 +52,100 @@
   font-size: 100px;
   width: 50vw;
   word-break: break-word;
-  top: 8vh;
-  left: calc(25vw);
+  top: 50%;
+  left: 50%;
+  margin-left: -25vw;
+  margin-top: -22%;
   overflow: hidden;
   background-color: greenyellow;
   color: red;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  padding: 10px 0;
 }
 
 .ad-tooltip.alt {
   background-color: rgb(255, 0, 242);
   color: greenyellow;
   width: 60vw;
-  top: 25vh;
-  left: calc(20vw);
+  margin-left: -30vw;
+  margin-top: -15%;
+}
+
+.ad-tooltip.alt-2 {
+  background-color: blue;
+  color: rgb(255, 0, 242);
+  width: 70vw;
+  margin-left: -35vw;
+  margin-top: -10%;
+}
+
+.small-tooltip {
+  font-size: 30px;
+}
+
+.ad-tooltip.alt-3 {
+  background-color: yellow;
+  color: orange;
+  width: 60vw;
+  margin-left: -30vw;
+  margin-top: -15%;
+}
+
+.ad-tooltip.alt-4 {
+  background-color: brown;
+  color: white;
+  width: 60vw;
+  margin-left: -30vw;
+  margin-top: -15%;
+}
+
+.ad-tooltip.alt-5 {
+  background-color: black;
+  color: gold;
+  width: 80vw;
+  margin-left: -40vw;
+  margin-top: -15%;
+}
+
+.ad-tooltip.alt-6 {
+  background-color: white;
+  color: green;
+  width: 60vw;
+  margin-left: -30vw;
+  margin-top: -15%;
+}
+
+.ad-tooltip.alt-7 {
+  background-color: purple;
+  color: white;
+  width: 70vw;
+  margin-left: -35vw;
+  margin-top: -10%;
+}
+
+.ad-tooltip.alt-8 {
+  background-color: gray;
+  color: brown;
+  width: 20vw;
+  margin-left: -10vw;
+  margin-top: -5%;
+  font-size: 30px;
+}
+
+.ad-tooltip.alt-9 {
+  background-color: red;
+  color: white;
+  width: 60vw;
+  font-size: 90px;
+  margin-left: -30vw;
+  margin-top: -25%;
+}
+
+.ad-pic {
+  margin-top: 10px;
 }
 
 #modal-center {
