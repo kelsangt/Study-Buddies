@@ -39,21 +39,6 @@ export function NameToolTip({ top, left, onClose, children }) {
   );
 }
 
-export function AdToolTip({ onClose, children, type }) {
-  const modalNode = useContext(ModalContext);
-  if (!modalNode) return null;
-
-  return ReactDOM.createPortal(
-    <div 
-      className={`ad-tooltip ${type}`} 
-      onClick={onClose}
-    >
-      {children}
-    </div>,
-    modalNode
-  );
-}
-
 export function CenterModal({ onClose, children }) {
   const modalNode = useContext(ModalContext);
   if (!modalNode) return null;
