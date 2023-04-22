@@ -52,11 +52,7 @@ const UserSettings = () => {
                     <div id='edit-settings-image-holder'>
                         <img 
                             className="edit-profile-photo"
-                            src={
-                                user.firstName === "Amiter"
-                                ? require('../NavBar/assets/demo_user.jpg')
-                                : require('../NavBar/assets/defaultprofile.png')
-                            }
+                            src={require('../NavBar/assets/defaultprofile.png')}
                             id='edit-settings-image'
                             alt=''
                         ></img>
