@@ -33,3 +33,14 @@
 .custom-map-control-button:hover {
   background: rgb(235, 235, 235);
 }
+
+.info_join_session {
+	color: blue;
+	text-decoration: underline;
+	margin-right: 18px;
+	font-weight: 800;
+}
+
+.info_join_session:hover {
+	cursor: pointer; 
+}
