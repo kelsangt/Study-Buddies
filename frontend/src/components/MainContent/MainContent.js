@@ -10,7 +10,10 @@ import ProfileModal from '../ProfileModal/ProfileModal';
 import Loading from '../GMap/Loading/Loading';
 import { receiveEventClicked, selectedEventId } from '../../store/ui';
 import Footer from '../Footer/Footer';
-import { selectedDate } from '../../store/ui';
+import { selectedDate, selectedEventDetailsModalStatus } from '../../store/ui';
+import { CenterModal } from '../../context/Modal';
+import EventShow from '../EventShow';
+import { getSpecificEvents } from '../../store/events';
 
 const MainContent = () => {
     const dispatch = useDispatch();
@@ -19,6 +22,8 @@ const MainContent = () => {
     const modalToggle = useSelector(state => state.ui.modalStatus)
     const selectedId = useSelector(selectedEventId);
     const date = useSelector(selectedDate)
+		const selectedEventModalStatus = useSelector(selectedEventDetailsModalStatus);
+		const selectedEvent = useSelector(getSpecificEvents(selectedId));
     
     useEffect(() => {
         // console.log("date", date.toLocaleDateString("en-us", {dateStyle: "long"}).split("T")[0]);
@@ -51,6 +56,12 @@ const MainContent = () => {
                 {modalToggle && <ProfileModal/>}
                 <Footer />
             </div>
+						
+						{selectedEventModalStatus && (
+							<CenterModal >
+								<EventShow event={selectedEvent} />
+							</CenterModal>
+						)}
         </>
     )
 }
