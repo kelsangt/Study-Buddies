@@ -124,6 +124,9 @@ router.get('/current', restoreUser, async (req, res) => {
   }
   if (!req.user) return res.json(null);
 
+  const today = new Date().toLocaleDateString("en-us").split("T")[0];
+  console.log("today", today);
+  
   const user = await User.findById(req.user._id)
                           .populate({
                             path: "createdEvents", 
@@ -142,6 +145,9 @@ router.get('/current', restoreUser, async (req, res) => {
                                 select: "_id username profileImageUrl"
                               }
                             ],
+                            match: {
+                              "startTime": { $gte: today }
+                            }
                           })
                           .populate({
                             path: "joinedEvents", 
@@ -159,7 +165,10 @@ router.get('/current', restoreUser, async (req, res) => {
                                 path: "attendees",
                                 select: "_id username profileImageUrl"
                               }
-                            ]
+                            ],
+                            match: {
+                              "startTime": { $gte: today }
+                            }
                           })
                           .populate({
                             path: "requestedEvents", 
@@ -177,7 +186,10 @@ router.get('/current', restoreUser, async (req, res) => {
                                 path: "attendees",
                                 select: "_id username profileImageUrl"
                               }
-                            ]
+                            ],
+                            match: {
+                              "startTime": { $gte: today }
+                            }
                           })
   res.json(user);
 });
