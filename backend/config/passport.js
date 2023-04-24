@@ -15,6 +15,8 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
 }, async function (email, password, done) {
+  const today = new Date().toLocaleDateString("en-us").split("T")[0];
+  
   const user = await User.findOne({ email })
                           .populate({
                             path: "createdEvents", 

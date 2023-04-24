@@ -125,7 +125,6 @@ router.get('/current', restoreUser, async (req, res) => {
   if (!req.user) return res.json(null);
 
   const today = new Date().toLocaleDateString("en-us").split("T")[0];
-  console.log("today", today);
   
   const user = await User.findById(req.user._id)
                           .populate({
