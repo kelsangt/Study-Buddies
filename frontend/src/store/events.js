@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import jwtFetch from "./jwt";
 import { addCreatedEvent, addRequestedEvent, deleteCreatedEvent, deleteJoinedEvent, deleteRequestedEvent, getCurrentUser } from "./session";
-import { selectedDate } from "./ui";
+import { selectedDate, setFetchNewEvents } from "./ui";
 
 
 export const RECEIVE_ALL_EVENTS_FOR_DAY = "events/RECEIVE_ALL_EVENTS_FOR_DAY";
@@ -69,10 +69,7 @@ export const createEvent = (eventInfo) => async dispatch => {
     const data = await res.json();
     // dispatch(receiveSpecificEvent(data));
     dispatch(addCreatedEvent(data));
-    
-    // refactor this later when adding date filter
-    const day = useSelector(selectedDate);
-    dispatch(fetchAllEventsForDay(day.toLocaleDateString("en-us").split("T")[0]));
+    dispatch(setFetchNewEvents(true));
 }
 
 export const createEventRequest = (eventId) => async dispatch => {
@@ -83,10 +80,7 @@ export const createEventRequest = (eventId) => async dispatch => {
     const data = await res.json();
     // dispatch(receiveSpecificEvent(data));
     dispatch(addRequestedEvent(data));
-
-    // refactor this later when adding date filter
-    const day = useSelector(selectedDate);
-    dispatch(fetchAllEventsForDay(day.toLocaleDateString("en-us").split("T")[0]));
+    dispatch(setFetchNewEvents(true));
 }
 
 export const deleteEvent = (eventId) => async dispatch => {
@@ -101,9 +95,7 @@ export const deleteEvent = (eventId) => async dispatch => {
         dispatch(deleteJoinedEvent(eventId));
     }
 
-    // refactor this later when adding date filter
-    const day = useSelector(selectedDate);
-    dispatch(fetchAllEventsForDay(day.toLocaleDateString("en-us").split("T")[0]));
+    dispatch(setFetchNewEvents(true));
 }
 
 export const updateEvent = (eventInfo) => async dispatch => {
@@ -114,10 +106,7 @@ export const updateEvent = (eventInfo) => async dispatch => {
 
     const data = await res.json();
     dispatch(addCreatedEvent(data));
-
-    // refactor this later when adding date filter
-    const day = useSelector(selectedDate);
-    dispatch(fetchAllEventsForDay(day.toLocaleDateString("en-us").split("T")[0]));
+    dispatch(setFetchNewEvents(true));
 }
 
 export const updateRequester = (eventId, userId, choice) => async dispatch => {
@@ -128,10 +117,7 @@ export const updateRequester = (eventId, userId, choice) => async dispatch => {
 
     const data = await res.json();
     dispatch(addCreatedEvent(data));
-
-    // refactor this later when adding date filter
-    const day = useSelector(selectedDate);
-    dispatch(fetchAllEventsForDay(day.toLocaleDateString("en-us").split("T")[0]));
+    dispatch(setFetchNewEvents(true));
 }
 
 export const deleteAttendee = (eventId, userId) => async dispatch => {
@@ -141,10 +127,7 @@ export const deleteAttendee = (eventId, userId) => async dispatch => {
 
     const data = await res.json();
     dispatch(addCreatedEvent(data));
-
-    // refactor this later when adding date filter
-    const day = useSelector(selectedDate);
-    dispatch(fetchAllEventsForDay(day.toLocaleDateString("en-us").split("T")[0]));
+    dispatch(setFetchNewEvents(true));
 }
 
 export const deleteRequest = (eventId) => async dispatch => {

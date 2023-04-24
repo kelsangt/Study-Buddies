@@ -60,6 +60,18 @@ const MyCreatedEvents = ({event}) => {
             <div className="myattendee-count">
                 # of Attendees: {count}
             </div>
+
+            <div className="time">
+                {new Date(event.startTime).toLocaleDateString("en-us").split("T")[0]} 
+            </div>
+
+            <div className="time">
+                {/* {new Date(event.startTime).toLocaleDateString("en-us").split("T")[0]} 
+                {` `} */}
+                {new Date(event.startTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ')[1]} 
+                {` - `}  
+                {new Date(event.endTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ')[1]}
+            </div>
             
             {(currentTab === "My Events") &&
             <div className='myevent-edit-holder'>
