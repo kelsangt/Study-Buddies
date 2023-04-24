@@ -216,9 +216,12 @@ function EventUpdateForm ({event}) {
                 let deny = 'deny'
                   return (
                     <div className='individual-attendee-container'>
-                      <div>{attendee.username}</div>
-                      <div className='attendee-options' id='accept-button' onClick={handleAccept(eventId, attendeeId, accept)}>Accept</div>
-                      <div className='attendee-options' id='reject-button' onClick={handleReject(eventId, attendeeId, deny)}>Reject</div>
+                      <div className="attendee-username">{attendee.username}</div>
+
+                      <div className="attendee-options-container">
+                        <div className='attendee-options' id='accept-button' onClick={handleAccept(eventId, attendeeId, accept)}>Accept</div>
+                        <div className='attendee-options' id='reject-button' onClick={handleReject(eventId, attendeeId, deny)}>Reject</div>
+                      </div>
                     </div>
                   )
               })
