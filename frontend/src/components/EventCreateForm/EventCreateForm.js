@@ -71,6 +71,8 @@ function EventCreateForm () {
             endTime: endTime
         };
         dispatch(createEvent(event));
+
+        document.getElementById('modal-center-background').click();
     }
 
     const getMinDate = () => {
