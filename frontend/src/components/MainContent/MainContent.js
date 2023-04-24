@@ -8,7 +8,7 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import EventSideBar from '../EventsSidebar';
 import ProfileModal from '../ProfileModal/ProfileModal';
 import Loading from '../GMap/Loading/Loading';
-import { receiveEventClicked, selectedEventId } from '../../store/ui';
+import { getFetchEvents, receiveEventClicked, selectedEventId, setFetchNewEvents } from '../../store/ui';
 import Footer from '../Footer/Footer';
 import { selectedDate } from '../../store/ui';
 
@@ -19,13 +19,20 @@ const MainContent = () => {
     const modalToggle = useSelector(state => state.ui.modalStatus)
     const selectedId = useSelector(selectedEventId);
     const date = useSelector(selectedDate)
+    const fetchEvents = useSelector(getFetchEvents);
     
     useEffect(() => {
         // console.log("date", date.toLocaleDateString("en-us", {dateStyle: "long"}).split("T")[0]);
         dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
         // dispatch(fetchAllLocations());
-
     }, [dispatch, date])
+
+    useEffect(() => {
+        if (fetchEvents) {
+            dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
+            dispatch(setFetchNewEvents(false));
+        }
+    }, [dispatch, fetchEvents])
 
     useEffect(() => {
         const closeButton = document.querySelectorAll('button.gm-ui-hover-effect');
