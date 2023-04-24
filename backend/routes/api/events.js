@@ -6,6 +6,7 @@ const User = mongoose.model('User');
 const Event = mongoose.model('Event');
 
 const { requireUser } = require('../../config/passport');
+const validateEventInput = require('../../validations/eventInput');
 // const validateEventInput = require('../../validations/eventInput');
 
 // GET all events within a date range
@@ -54,7 +55,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // POST new event
-router.post('/', requireUser, async (req, res, next) => {
+router.post('/', requireUser, validateEventInput, async (req, res, next) => {
   try {
     const newEvent = new Event({
       creator: req.user._id,
@@ -143,7 +144,7 @@ router.delete('/:id', requireUser, async (req, res, next) => {
 })
 
 // UPDATE event
-router.patch('/:id', requireUser, async (req, res, next) => {
+router.patch('/:id', requireUser, validateEventInput, async (req, res, next) => {
   try {
     let event = await Event.findById(req.params.id);
     if (event.creator.toString() !== req.user._id.toString()) {
