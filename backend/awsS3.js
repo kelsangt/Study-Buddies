@@ -45,8 +45,6 @@ const singleMulterUpload = (nameOfKey) =>
 module.exports = {
   s3,
   singleFileUpload,
-  multipleFilesUpload,
   retrievePrivateFile,
-  singleMulterUpload,
-  multipleMulterUpload
+  singleMulterUpload
 };
