@@ -10,6 +10,9 @@ const { isProduction } = require('../../config/keys');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
 
+const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
+const DEFAULT_PROFILE_IMAGE_URL = '';
+
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
@@ -24,7 +27,7 @@ router.get('/', async (req, res) => {
 });
 
 // POST new account
-router.post('/register', validateRegisterInput, async (req, res, next) => {
+router.post('/register', singleMulterUpload("image"), validateRegisterInput, async (req, res, next) => {
   const user = await User.findOne({
     $or: [{ email: req.body.email }, { username: req.body.username }]
   });
@@ -42,6 +45,10 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
     err.errors = errors;
     return next(err);
   }
+
+  // const profileImageUrl = req.file ?
+  //     await singleFileUpload({ file: req.file, public: true }) :
+  //     DEFAULT_PROFILE_IMAGE_URL;
 
   const newUser = new User({
     username: req.body.username,
