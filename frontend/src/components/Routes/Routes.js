@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 export const AuthRoute = ({ component: Component, path, exact }) => {
   const loggedIn = useSelector(state => !!state.session.user);
-  console.log("auth", loggedIn);
   return (
     <Route path={path} exact={exact} render={(props) => (
       !loggedIn ? (
@@ -17,7 +16,6 @@ export const AuthRoute = ({ component: Component, path, exact }) => {
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
   const loggedIn = useSelector(state => !!state.session.user);
-  console.log("protected", loggedIn);
   return (
     <Route
       {...rest}
