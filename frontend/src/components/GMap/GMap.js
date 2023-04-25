@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked } from '../../store/ui';
 import { receiveAllLocations } from '../../store/locations';
+import { createEventRequest } from '../../store/events';
+import { showSelectedEventDetails, receiveModalToggle, receiveTabState } from '../../store/ui';
 
 const GMap = () => {
 	const dispatch = useDispatch();
@@ -24,7 +26,7 @@ const GMap = () => {
 	const libraryIcon = "../library_icon.png"	
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
-
+	
 	// Creating Geolocation Button including InfoWindow
 	const infoWindow = new window.google.maps.InfoWindow(); 
 	const locationButton = document.createElement("button");
@@ -144,7 +146,7 @@ const GMap = () => {
 		// Creating the Geolocation Controls Button and Event Listener
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 		locationButton.addEventListener("click", findGeoLocation, {passive: true});
-		
+
 		setMap(initialMap)
 	}, []);
 
@@ -173,19 +175,52 @@ const GMap = () => {
 		// Creating The content of the InfoTiles and pushing into infoTileAttachments array (which is the same legnth as markers.current.) This creates new InfoBoxInternal components with the event[i] passed as the event prop. 
 		const infoTileAttachments = [];
 		for (let i = 0; i < markers.current.length; i++) {
-			infoTileAttachments.push(renderToString(<div id="InfoBoxInternal_wrapper"><InfoBoxInternal event={events[i]} /></div>))
+			infoTileAttachments.push(renderToString(
+				<div id="InfoBoxInternal_wrapper">
+					<InfoBoxInternal event={events[i]} /> 
+					<div id="info_links_wrapper">
+						<div className="info_join_session" id={`info_join_session${i}`}>
+							Join Session
+						</div>
+						<div className="info_event_details_link" id={`info_event_details_link${i}`}>
+							Details
+						</div>
+						<div id="info_links_spacer"></div>
+					</div>
+				</div>
+			))
 		}
 
 		// Setting the content of infoTiles.current ref with the content in infoTileAttachments
 		for (let i = 0; i < infoTiles.current.length; i++) {
-			infoTiles.current[i].setContent(infoTileAttachments[i]); 
+			infoTiles.current[i].setContent(infoTileAttachments[i]);
+			
+			const joinSessionTextEle = document.getElementById(`info_join_session${i}`)
+			if (joinSessionTextEle) {
+				joinSessionTextEle.addEventListener('click', () => {
+					dispatch(createEventRequest(events[i]._id))
+					dispatch(receiveTabState("Requested Events"))
+					dispatch(receiveModalToggle(true));
+				})
+			}
+
+			const sessionDetailsLink = document.getElementById(`info_event_details_link${i}`);
+			if (sessionDetailsLink) {
+				sessionDetailsLink.addEventListener('click', () => {
+					dispatch(showSelectedEventDetails(true));
+				})
+			}
 		}
 
 		// Adding the click listener to the Marker to show the corresponding InfoTile on mouseclick. 
 		for (let i = 0; i < markers.current.length; i++) {
 			markers.current[i].addListener("click", () => {
 				let newMap = map;
-				newMap.setCenter(new window.google.maps.LatLng(Number(events[i].location.latitude), Number(events[i].location.longitude)));
+				newMap.setCenter(
+					new window.google.maps.LatLng(Number(events[i].location.latitude), 
+					Number(events[i].location.longitude)
+					)
+				);
 				setMap(newMap)
 
 				dispatch(receiveEventClicked(events[i]._id))
@@ -199,7 +234,10 @@ const GMap = () => {
 		if (!geoLocationClicked) {
 			if (userLocationCoords.current) {
 				const locationMarker = new window.google.maps.Marker({
-					position: {lat: Number(userLocationCoords.current.lat), lng: Number(userLocationCoords.current.lng)},
+					position: {
+						lat: Number(userLocationCoords.current.lat), 
+						lng: Number(userLocationCoords.current.lng)
+					},
 					map: map, 
 					icon: {
 						url: blueIcon, 
@@ -242,6 +280,7 @@ const GMap = () => {
 		}
 	}, [map, events])
 
+
 	return (
 		<>
 			<NavBar />
@@ -251,6 +290,7 @@ const GMap = () => {
 					<div ref={ref} id="map" />
 				</div>
 			</div>
+			
 		</>
 	)
 }

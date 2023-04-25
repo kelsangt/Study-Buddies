@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import './InfoBoxInternal.css'
+import { useDispatch } from 'react-redux';
 
 const InfoBoxInternal = ({event}) => {
 	const subject = event?.name; 
@@ -17,7 +19,6 @@ const InfoBoxInternal = ({event}) => {
 		}
 	}
 
-
 	//{eventMonth} {eventDay}, {eventYear}
 	return (
 		<div id="infobox_internal_wrapper">
@@ -29,10 +30,6 @@ const InfoBoxInternal = ({event}) => {
 			<div id="infobox_internal_start_time">Begins at: {eventTime} </div>
 			<div id="infobox_internal_membersjoined">{event.attendees.length + 1} Current Buddies</div>
 			<div id="infobox_internal_bottom_row_wrapper">
-				{/* <div id="infobox_internal_join_session_wrapper">
-					<div id="infobox_internal_join_session">Join Session</div>
-					<div id="infobox_internal_session_details">Details</div>
-				</div> */}
 				<div id="infobox_internal_image">
 					<div id="infobox_internal_image_text">{event.creator.username[0]}</div>
 				</div>

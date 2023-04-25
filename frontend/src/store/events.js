@@ -29,6 +29,10 @@ export const getEvents = (state) => {
 	return state.events ? Object.values(state.events) : [];
 }
 
+export const getSpecificEvents = (eventId) => (state) => {
+	return state.events ? state.events[eventId] : null; 
+}
+
 export const getMyCreatedEvents = (state) => {
     return state.session.user?.createdEvents ? Object.values(state.session.user.createdEvents) : []
 }

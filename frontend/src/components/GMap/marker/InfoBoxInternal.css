@@ -25,17 +25,6 @@
 	display: flex;
 }
 
-
-#infobox_internal_join_session {
-	color: blue;
-	text-decoration: underline;
-	margin-right: 18px;
-}
-
-#infobox_internal_join_session:hover {
-	cursor: pointer;
-}
-
 #infobox_internal_session_details {
 	color: blue;
 	text-decoration: underline;
@@ -52,6 +41,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative; 
+	top: 14px;
 }
 
 #infobox_internal_bottom_row_wrapper {

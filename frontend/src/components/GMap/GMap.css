@@ -33,3 +33,37 @@
 .custom-map-control-button:hover {
   background: rgb(235, 235, 235);
 }
+
+.info_join_session {
+	color: blue;
+	margin-right: 18px;
+	font-weight: 800;
+}
+
+.info_join_session:hover {
+	cursor: pointer; 
+}
+
+.info_event_details_link {
+	color: blue;
+	font-weight: 800;
+}
+
+.info_event_details_link:hover {
+	cursor: pointer; 
+}
+
+#InfoBoxInternal_wrapper {
+	display: flex;
+	flex-direction: column;
+
+}
+
+#info_links_wrapper {
+	display: flex;
+	justify-content: space-between;
+}
+
+#info_links_spacer {
+	margin-left: 88px;
+}
