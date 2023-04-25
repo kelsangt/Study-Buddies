@@ -195,7 +195,7 @@ const UserSettings = () => {
                                     value={phoneNum}
                                     onChange={update('phone')}
                                     type='tel'
-                                    placeholder="123-45-678" 
+                                    placeholder="123-456-7890" 
                                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                     disabled
                                     />
