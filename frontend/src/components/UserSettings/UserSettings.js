@@ -23,7 +23,6 @@ const UserSettings = () => {
     const [phoneNum, setPhoneNum] = useState(user.phone)
     const errors = useSelector(state => state.errors.session);
 
-    console.log(errors)
     useEffect(() => {
         return () => {
           dispatch(clearSessionErrors());
