@@ -5,10 +5,12 @@ import sessionReducer from './session';
 import eventsReducer from './events';
 import locationReducer from './locations';
 import uiReducer from './ui';
+import notificationsReducer from './notifications';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   events: eventsReducer,
+  notifications: notificationsReducer,
   locations: locationReducer,
   ui: uiReducer,
   errors
