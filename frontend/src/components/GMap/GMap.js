@@ -9,7 +9,7 @@ import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked } from '../../store/ui';
 import { receiveAllLocations } from '../../store/locations';
 import { createEventRequest } from '../../store/events';
-import { showSelectedEventDetails } from '../../store/ui';
+import { showSelectedEventDetails, receiveModalToggle, receiveTabState } from '../../store/ui';
 
 const GMap = () => {
 	const dispatch = useDispatch();
@@ -194,12 +194,13 @@ const GMap = () => {
 		// Setting the content of infoTiles.current ref with the content in infoTileAttachments
 		for (let i = 0; i < infoTiles.current.length; i++) {
 			infoTiles.current[i].setContent(infoTileAttachments[i]);
+			
 			const joinSessionTextEle = document.getElementById(`info_join_session${i}`)
-
-
 			if (joinSessionTextEle) {
 				joinSessionTextEle.addEventListener('click', () => {
 					dispatch(createEventRequest(events[i]._id))
+					dispatch(receiveTabState("Requested Events"))
+					dispatch(receiveModalToggle(true));
 				})
 			}
 
