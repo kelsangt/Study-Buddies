@@ -148,10 +148,12 @@ for (let j = 0; j < 10; j++) {
     const endTime = new Date(startTime.getTime() + (timeSlotMinutes[Math.floor(Math.random() * timeSlotMinutes.length)])*60000)
     const usersCopy = [...users];
     const creator = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
+    let fakerName = faker.name.jobArea();
+    let studySessionText = " Study Session";
   
     const event = new Event ({
       creator: creator._id,
-      name: faker.name.jobArea(),
+      name: fakerName + studySessionText,
       description: faker.lorem.sentence(),
       // location: locations[Math.floor(Math.random()*locations.length)]._id,
       location: locations[Math.floor(Math.random()*locations.length)],
