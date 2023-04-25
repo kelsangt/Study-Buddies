@@ -16,11 +16,11 @@ function NavBar () {
   
   useEffect(() => {
     if (location.pathname === '/settings') {
-      debugger
+      
       let button = document.getElementsByClassName('profile-button')[0];
-      debugger
+      
       button.setAttribute('id', 'profile-button')
-      debugger
+      
     }
   }, [])
   const handleModalToggle = () => {
