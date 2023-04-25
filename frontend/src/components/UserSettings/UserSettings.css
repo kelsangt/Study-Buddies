@@ -78,7 +78,8 @@
     height: 50px;
     background-color: rgb(30, 84, 171);
     border-radius: 10px;
-    padding: none;
+    padding: 0 20px 0 20px;
+    border: none;
 }
 
 .savesettings-button:disabled {
