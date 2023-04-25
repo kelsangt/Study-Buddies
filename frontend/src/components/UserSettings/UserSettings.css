@@ -66,7 +66,7 @@
     border-radius: 10px;
 }
 
-#savesettings-button{
+.savesettings-button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,6 +78,13 @@
     height: 50px;
     background-color: rgb(30, 84, 171);
     border-radius: 10px;
+    padding: none;
+}
+
+.savesettings-button:disabled {
+    background-color: rgb(35, 75, 154);
+    color: rgb(182, 182, 182);
+    cursor: default;
 }
 
 .edit-profile-input {
@@ -89,4 +96,9 @@
 .usersettings-label{
     font-size: 18px;
     margin-bottom: 8px;
+}
+
+#savesettings-button-holder {
+    display: flex;
+    justify-content: center;
 }
