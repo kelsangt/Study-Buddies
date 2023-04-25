@@ -8,6 +8,8 @@ import { setModalStatus } from '../../store/ui';
 import EventUpdateForm from '../EventUpdateForm/EventUpdateForm';
 import { deleteEvent } from '../../store/events';
 import { deleteRequest } from '../../store/events';
+import { showSelectedEventDetails } from '../../store/ui';
+import { receiveEventClicked } from '../../store/ui';
 
 const MyCreatedEvents = ({event}) => {
     const [showModal, setShowModal] = useState(false);
@@ -41,6 +43,12 @@ const MyCreatedEvents = ({event}) => {
     const handleRequest = (e) => {
         e.preventDefault();
         dispatch(deleteRequest(event._id))
+    }
+
+    const handleShow = (e) => {
+        e.preventDefault();
+        dispatch(receiveEventClicked(event._id));
+        dispatch(showSelectedEventDetails(true));
     }
 
     return (
@@ -95,6 +103,12 @@ const MyCreatedEvents = ({event}) => {
             {(currentTab === "Requested Events") &&
             <div className='myevent-edit-holder'>
                 <div onClick={handleRequest} id='myevent-edit-button'>Cancel Request</div>
+            </div>
+            }
+
+            {(currentTab === "Notifications") &&
+            <div className='myevent-edit-holder'>
+                <div onClick={handleShow} id='myevent-edit-button'>Show Details</div>
             </div>
             }
 

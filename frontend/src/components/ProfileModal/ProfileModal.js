@@ -9,23 +9,29 @@ import { selectedTab, setModalStatus, setTabStatus } from '../../store/ui';
 import { CenterModal } from '../../context/Modal';
 import EventCreateForm from '../EventCreateForm/EventCreateForm';
 import { Link } from 'react-router-dom';
+import { getNotifications } from '../../store/notifications';
+
 const ProfileModal = () => {
     const dispatch = useDispatch();
     const createdEvents = useSelector(getMyCreatedEvents);
     const joinedEvents = useSelector(getMyJoinedEvents);
     const requestedEvents = useSelector(getMyRequestedEvents);
+    const notifications = useSelector(getNotifications);
     const [showEventCreateModal, setShowEventCreateModal] = useState(false);
 
     const currentTab = useSelector(selectedTab);
     let myEventTab;
     let joinedEventTab;
     let requestedEventTab;
+    let notificationTab;
     if (currentTab === 'My Events') {
         myEventTab = true
     } else if (currentTab === 'Joined Events') {
         joinedEventTab = true
-    } else {
+    } else if (currentTab === 'Requested Events') {
         requestedEventTab = true
+    } else {
+        notificationTab = true
     }
 
     const logoutUser = e => {
@@ -41,6 +47,9 @@ const ProfileModal = () => {
     }
     const selectRequestEvents = () => {
         dispatch(setTabStatus("Requested Events"))
+    }
+    const selectNotifications = () => {
+        dispatch(setTabStatus("Notifications"))
     }
 
     const showCreateForm = (e) => {
@@ -76,6 +85,7 @@ const ProfileModal = () => {
                         <div className={`myevents-header ${currentTab === "My Events" ? 'selected' : ''}`} onClick={selectMyEvents}>My Events</div>
                         <div className={`myevents-header ${currentTab === "Joined Events" ? 'selected' : ''}`} onClick={selectJoinedEvents}>Joined Events</div>
                         <div className={`myevents-header ${currentTab === "Requested Events" ? 'selected' : ''}`} onClick={selectRequestEvents}>Requested Events</div>
+                        <div className={`myevents-header ${currentTab === "Notifications" ? 'selected' : ''}`} onClick={selectNotifications}>Notifications</div>
                     </div>
                     <div 
                         id='create-event-button'
@@ -109,6 +119,22 @@ const ProfileModal = () => {
                         requestedEventTab &&
                         requestedEvents.map(event => {
                             return <MyCreatedEvents event={event} key={event._id}/>
+                        })
+                    }
+
+                    {
+                        notificationTab &&
+                        Object.keys(notifications).map(timeNotification => {
+                            return (
+                                <>
+                                    <span className="notificationTime">{timeNotification}</span>
+                                    {
+                                        notifications[timeNotification].map(event => {
+                                            return <MyCreatedEvents event={event} key={event._id}/>
+                                        })
+                                    }
+                                </>
+                            )
                         })
                     }
                 </div>
