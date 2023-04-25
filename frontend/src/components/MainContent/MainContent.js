@@ -14,6 +14,7 @@ import { selectedDate, selectedEventDetailsModalStatus } from '../../store/ui';
 import { CenterModal } from '../../context/Modal';
 import EventShow from '../EventShow';
 import { getSpecificEvents } from '../../store/events';
+import { showSelectedEventDetails } from '../../store/ui';
 
 const MainContent = () => {
     const dispatch = useDispatch();
@@ -48,6 +49,14 @@ const MainContent = () => {
         }
     }
 
+		const leaveEventShowPage = () => {
+			dispatch(receiveEventClicked(selectedEvent._id));
+			dispatch(showSelectedEventDetails(false));
+	
+			const sideModal = document.getElementById('profile-modal-container');
+			if (sideModal) sideModal.style.display = 'flex';
+		}
+
     return (
         <>
             <div id="mainContent">  
@@ -58,7 +67,7 @@ const MainContent = () => {
             </div>
 						
 						{selectedEventModalStatus && (
-							<CenterModal >
+							<CenterModal onClose={leaveEventShowPage}>
 								<EventShow event={selectedEvent} />
 							</CenterModal>
 						)}
