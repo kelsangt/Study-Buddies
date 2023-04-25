@@ -75,7 +75,10 @@ const MyCreatedEvents = ({event}) => {
             
             {(currentTab === "My Events") &&
             <div className='myevent-edit-holder'>
-                <div onClick={showEditForm} id='myevent-edit-button'>Edit Event</div>
+                <div className="myevent-options-holder">
+                    <div onClick={showEditForm} id='myevent-edit-button'>Edit Event</div>
+                    <div onClick={handleLeave} id='myevent-edit-button'>Delete Event</div>
+                </div>
                 {showEventEditModal && (
                     <CenterModal onClose={hideEditForm}>
                         <EventUpdateForm event={event} key={event._id}/>
