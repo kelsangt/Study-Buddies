@@ -68,6 +68,10 @@ const UserSettings = () => {
     const editSettings = () => {
         let get = Array.from(document.getElementsByClassName('edit-profile-input'))
         get.forEach((input) => {
+            if (input.type === 'email') {
+                input.disabled = true; 
+                return
+            }
             input.disabled = false
         })
     }
@@ -145,7 +149,7 @@ const UserSettings = () => {
                             <div className='usersettings-label'>Email</div>
                             <input className='edit-profile-input'
                                     value={email}
-                                    onChange={update('email')}
+                                    // onChange={update('email')}
                                     type='email'
                                     disabled
                                     required
@@ -183,7 +187,6 @@ const UserSettings = () => {
                                     placeholder="https://www.linkedin.com/in/<EXAMPLE>"
                                     pattern="https://www.linkedin.com/in/*"
                                     disabled
-                                    required
                                     />
                         </div>
 
@@ -196,7 +199,6 @@ const UserSettings = () => {
                                     placeholder="123-45-678" 
                                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                     disabled
-                                    required
                                     />
                         </div>
                         
