@@ -34,7 +34,7 @@ function LoginForm () {
 
   const demoLogin = (e) => {
     e.preventDefault();
-    dispatch(login({email: "mongobara@appacademy.edu", password: "password"}));
+    dispatch(login({email: "johndoe@nyu.edu", password: "password"}));
     dispatch(setModalStatus(false))
   }
 
