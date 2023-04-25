@@ -27,13 +27,13 @@ const majors = [
 // demo user
 users.push(
   new User ({
-    username: '1337 C0d3r',
-    email: 'mongobara@appacademy.edu',
+    username: 'JohnDoe',
+    email: 'johndoe@nyu.edu',
     hashedPassword: bcrypt.hashSync('password', 10),
-    firstName: 'Amiter',
-    lastName: 'DiSmietho',
-    school: "App Academy",
-    major: "Kahoot"
+    firstName: 'John',
+    lastName: 'Doe',
+    school: "NYU",
+    major: "Computer Science"
   })
 )
 
