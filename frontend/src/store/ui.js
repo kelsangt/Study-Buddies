@@ -5,6 +5,7 @@ const RECEIVE_EVENT_CLICKED = "ui/RECEIVE_EVENT_CLICKED";
 const RECEIVE_TAB_STATE = "ui/RECEIVE_TAB_STATE";
 const RECEIVE_DATE = "ui/RECEIVE_DATE";
 const RECEIVE_SHOW_EVENT_DETAILS_MODAL = 'ui/RECEIVE_SHOW_EVENT_DETAILS_MODAL'
+const FETCH_NEW_EVENTS = "ui/FETCH_NEW_EVENTS";
 
 export const receiveModalToggle = boolean => ({
     type: RECEIVE_MODAL_TOGGLE,
@@ -31,6 +32,11 @@ export const showSelectedEventDetails = (boolean) => ({
 	showEventDetailsModal: boolean
 })
 
+export const setFetchNewEvents = (toggle) => ({
+    type: FETCH_NEW_EVENTS,
+    toggle
+})
+
 export const setModalStatus = (boolean) => async dispatch => {
     return dispatch(receiveModalToggle(boolean))
 }
@@ -52,6 +58,9 @@ export const selectedTab = (state) => {
 export const selectedDate = (state) => {
     return state.ui.date ? state.ui.date : null;
 }
+export const getFetchEvents = (state) => {
+    return state.ui.fetchEvents ? state.ui.fetchEvents : null;
+}
 
 export const selectedEventDetailsModalStatus = (state) => {
 	return state.ui.showEventDetailsModal ? state.ui.showEventDetailsModal : null; 
@@ -61,7 +70,8 @@ const initialState = {
     modalStatus: false,
     tab: "My Events",
     selectedEventId: null,
-    date: new Date()
+    date: new Date(),
+    fetchEvents: true
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -82,6 +92,9 @@ const uiReducer = (state = initialState, action) => {
 				case RECEIVE_SHOW_EVENT_DETAILS_MODAL:
 						nextState.showEventDetailsModal = action.showEventDetailsModal
 						return nextState;
+        case FETCH_NEW_EVENTS:
+            nextState.fetchEvents = action.toggle;
+            return nextState;
         default:
             return state;
     }

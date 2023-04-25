@@ -8,7 +8,7 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import EventSideBar from '../EventsSidebar';
 import ProfileModal from '../ProfileModal/ProfileModal';
 import Loading from '../GMap/Loading/Loading';
-import { receiveEventClicked, selectedEventId } from '../../store/ui';
+import { getFetchEvents, receiveEventClicked, selectedEventId, setFetchNewEvents } from '../../store/ui';
 import Footer from '../Footer/Footer';
 import { selectedDate, selectedEventDetailsModalStatus } from '../../store/ui';
 import { CenterModal } from '../../context/Modal';
@@ -25,13 +25,20 @@ const MainContent = () => {
     const date = useSelector(selectedDate)
 		const selectedEventModalStatus = useSelector(selectedEventDetailsModalStatus);
 		const selectedEvent = useSelector(getSpecificEvents(selectedId));
+		const fetchEvents = useSelector(getFetchEvents);
     
     useEffect(() => {
         // console.log("date", date.toLocaleDateString("en-us", {dateStyle: "long"}).split("T")[0]);
         dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
         // dispatch(fetchAllLocations());
-
     }, [dispatch, date])
+
+    useEffect(() => {
+        if (fetchEvents) {
+            dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
+            dispatch(setFetchNewEvents(false));
+        }
+    }, [dispatch, fetchEvents])
 
     useEffect(() => {
         const closeButton = document.querySelectorAll('button.gm-ui-hover-effect');

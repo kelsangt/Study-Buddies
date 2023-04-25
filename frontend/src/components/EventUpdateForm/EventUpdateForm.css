@@ -10,7 +10,9 @@
 #all-requesters-container{
     display: flex;
     flex-direction: column;
+    width: 300px;
     gap: 100px;
+    margin-right: 20px;
 }
 
 /* #pending-requesters-container {
@@ -32,6 +34,19 @@
     align-items: center;
     margin-top: 10px;
     border-radius: 10px;
+    width: 300px;
+}
+
+.attendee-username {
+    min-width: 50%;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.attendee-options-container {
+    display: flex;
+    justify-content: space-around;
 }
 
 .attendee-options{
@@ -41,6 +56,7 @@
     cursor: pointer;
     padding-left: 8px;
     padding-right: 8px;
+    margin-right: 5px;
 
 }
 #accept-button{

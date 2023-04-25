@@ -15,6 +15,8 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
 }, async function (email, password, done) {
+  const today = new Date().toLocaleDateString("en-us").split("T")[0];
+  
   const user = await User.findOne({ email })
                           .populate({
                             path: "createdEvents", 
@@ -33,6 +35,9 @@ passport.use(new LocalStrategy({
                                 select: "_id username profileImageUrl"
                               }
                             ],
+                            match: {
+                              "startTime": { $gte: today }
+                            }
                           })
                           .populate({
                             path: "joinedEvents", 
@@ -50,7 +55,10 @@ passport.use(new LocalStrategy({
                                 path: "attendees",
                                 select: "_id username profileImageUrl"
                               }
-                            ]
+                            ],
+                            match: {
+                              "startTime": { $gte: today }
+                            }
                           })
                           .populate({
                             path: "requestedEvents", 
@@ -68,7 +76,10 @@ passport.use(new LocalStrategy({
                                 path: "attendees",
                                 select: "_id username profileImageUrl"
                               }
-                            ]
+                            ],
+                            match: {
+                              "startTime": { $gte: today }
+                            }
                           })
   if (user) {
     bcrypt.compare(password, user.hashedPassword, (err, isMatch) => {

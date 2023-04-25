@@ -71,6 +71,8 @@ function EventCreateForm () {
             endTime: endTime
         };
         dispatch(createEvent(event));
+
+        document.getElementById('modal-center-background').click();
     }
 
     const getMinDate = () => {
@@ -91,6 +93,9 @@ function EventCreateForm () {
                 value={name}
                 onChange={update('Name')}
                 placeholder="Name"
+                minlength="3"
+                maxlength="140"
+                required
               />
             </label>
             {/* <div className="errors">{errors?.username}</div> */}
@@ -107,7 +112,7 @@ function EventCreateForm () {
             <label className="eventCreateLabel">
               <span className="eventCreateFormSpan">Location</span>
              
-              <select className="inputField" id="selectLocation" onChange={update('Location')}>
+              <select className="inputField" id="selectLocation" required onChange={update('Location')}>
                 <option disabled selected value>Select a location</option>
                 {locations.map((location, index)=>{
                     return (
@@ -126,6 +131,7 @@ function EventCreateForm () {
                 onChange={update('Date')}
                 placeholder="Date"
                 min={getMinDate()}
+                required
               />
             </label>
             {/* <div className="errors">{errors?.lastName}</div> */}
@@ -135,6 +141,7 @@ function EventCreateForm () {
                 value={startTimeInitial}
                 onChange={update('Start Time')}
                 placeholder="Start Time"
+                required
               />
             </label>
   
@@ -146,6 +153,7 @@ function EventCreateForm () {
                 value={endTimeInitial}
                 onChange={update('End Time')}
                 placeholder="End Time"
+                required
               />
             </label>
   

@@ -146,7 +146,7 @@ const GMap = () => {
 		// Creating the Geolocation Controls Button and Event Listener
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 		locationButton.addEventListener("click", findGeoLocation, {passive: true});
-		
+
 		setMap(initialMap)
 	}, []);
 
@@ -178,18 +178,24 @@ const GMap = () => {
 			infoTileAttachments.push(renderToString(
 				<div id="InfoBoxInternal_wrapper">
 					<InfoBoxInternal event={events[i]} /> 
-					<div className="info_join_session" id={`info_join_session${i}`}>
-						Join Session
+					<div id="info_links_wrapper">
+						<div className="info_join_session" id={`info_join_session${i}`}>
+							Join Session
+						</div>
+						<div className="info_event_details_link" id={`info_event_details_link${i}`}>
+							Details
+						</div>
+						<div id="info_links_spacer"></div>
 					</div>
-					<div className="info_event_details_link" id={`info_event_details_link${i}`}>Details</div>
 				</div>
 			))
 		}
 
 		// Setting the content of infoTiles.current ref with the content in infoTileAttachments
 		for (let i = 0; i < infoTiles.current.length; i++) {
-			infoTiles.current[i].setContent(infoTileAttachments[i]); 
+			infoTiles.current[i].setContent(infoTileAttachments[i]);
 			const joinSessionTextEle = document.getElementById(`info_join_session${i}`)
+
 
 			if (joinSessionTextEle) {
 				joinSessionTextEle.addEventListener('click', () => {
@@ -204,7 +210,6 @@ const GMap = () => {
 				})
 			}
 		}
-
 
 		// Adding the click listener to the Marker to show the corresponding InfoTile on mouseclick. 
 		for (let i = 0; i < markers.current.length; i++) {

@@ -10,6 +10,9 @@ const { isProduction } = require('../../config/keys');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
 
+const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
+const DEFAULT_PROFILE_IMAGE_URL = '';
+
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
@@ -24,7 +27,7 @@ router.get('/', async (req, res) => {
 });
 
 // POST new account
-router.post('/register', validateRegisterInput, async (req, res, next) => {
+router.post('/register', singleMulterUpload("image"), validateRegisterInput, async (req, res, next) => {
   const user = await User.findOne({
     $or: [{ email: req.body.email }, { username: req.body.username }]
   });
@@ -42,6 +45,10 @@ router.post('/register', validateRegisterInput, async (req, res, next) => {
     err.errors = errors;
     return next(err);
   }
+
+  // const profileImageUrl = req.file ?
+  //     await singleFileUpload({ file: req.file, public: true }) :
+  //     DEFAULT_PROFILE_IMAGE_URL;
 
   const newUser = new User({
     username: req.body.username,
@@ -124,6 +131,8 @@ router.get('/current', restoreUser, async (req, res) => {
   }
   if (!req.user) return res.json(null);
 
+  const today = new Date().toLocaleDateString("en-us").split("T")[0];
+  
   const user = await User.findById(req.user._id)
                           .populate({
                             path: "createdEvents", 
@@ -142,6 +151,9 @@ router.get('/current', restoreUser, async (req, res) => {
                                 select: "_id username profileImageUrl"
                               }
                             ],
+                            match: {
+                              "startTime": { $gte: today }
+                            }
                           })
                           .populate({
                             path: "joinedEvents", 
@@ -159,7 +171,10 @@ router.get('/current', restoreUser, async (req, res) => {
                                 path: "attendees",
                                 select: "_id username profileImageUrl"
                               }
-                            ]
+                            ],
+                            match: {
+                              "startTime": { $gte: today }
+                            }
                           })
                           .populate({
                             path: "requestedEvents", 
@@ -177,7 +192,10 @@ router.get('/current', restoreUser, async (req, res) => {
                                 path: "attendees",
                                 select: "_id username profileImageUrl"
                               }
-                            ]
+                            ],
+                            match: {
+                              "startTime": { $gte: today }
+                            }
                           })
   res.json(user);
 });
