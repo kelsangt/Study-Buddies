@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './NavBar.css';
 import { logout } from '../../store/session';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProfileModal from '../ProfileModal/ProfileModal';
 import { setModalStatus } from '../../store/ui';
 import { useHistory, useLocation, useParams } from 'react-router-dom/cjs/react-router-dom.min';
@@ -14,6 +14,15 @@ function NavBar () {
   
   const modalState = useSelector(state => state.ui.modalStatus);
   
+  useEffect(() => {
+    if (location.pathname === '/settings') {
+      debugger
+      let button = document.getElementsByClassName('profile-button')[0];
+      debugger
+      button.setAttribute('id', 'profile-button')
+      debugger
+    }
+  }, [])
   const handleModalToggle = () => {
     if (location.pathname === '/home') {
       if (modalState) {
@@ -29,6 +38,7 @@ function NavBar () {
     }
   }
 
+
   const getLinks = () => {
     if (loggedIn) {
       return (
@@ -38,7 +48,8 @@ function NavBar () {
           <Link style={{ textDecoration: 'none' }} to={'/profile'}>Profile</Link>
           <Link style={{ textDecoration: 'none' }} to={'/events/new'}>Create an Event</Link>
         <div onClick={logoutUser}>Logout</div> */}
-          <div id='profile-button'>
+
+          <div className='profile-button'>
             <img src={require('./assets/defaultprofile.png')} id='user-profile-img' onClick={handleModalToggle}></img>
           </div>
         </div>

@@ -46,13 +46,17 @@
 }
 
 /* logged in */
-#profile-button{
+.profile-button{
     width: 45px;
     height: 45px;
     border-radius: 40px;
     border: 3px solid rgb(121, 186, 199);
     overflow: hidden;
     cursor: pointer;
+}
+
+#profile-button{
+    cursor: default;
 }
 #user-profile-img{
     height: inherit;
