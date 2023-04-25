@@ -158,13 +158,24 @@ const GMap = () => {
 
 	useEffect(() => {
 		if (reloadMap) {
+			let newMap = new window.google.maps.Map(ref.current, {
+				center: { lat: map.center.lat(), lng: map.center.lng()},
+				zoom: map.zoom,
+				styles: stylesArray
+			}); 
+			setMap(newMap)
 			dispatch(setMapReloadStatus(false));
 		}
 	}, [reloadMap])
 
-	// UseEffect run on every map and event change.
 	useEffect(() => {
 		// Creating all Study Event Markers and placing them on the map. 
+		if (markers.current) {
+			for (let i = 0; i < markers.current.length; i++) {
+				markers.current[i].setMap();
+			}
+			markers.current = [];
+		}
 		let eventMarkers = [];
 		events.forEach(event => {
 			eventMarkers.push(new window.google.maps.Marker({
@@ -187,18 +198,14 @@ const GMap = () => {
 		// Creating The content of the InfoTiles and pushing into infoTileAttachments array (which is the same legnth as markers.current.) This creates new InfoBoxInternal components with the event[i] passed as the event prop. 
 		const infoTileAttachments = [];
 		for (let i = 0; i < markers.current.length; i++) {
-			let display; 
-			if (events[i].attendees.includes(currentUser)) {
-				display = "display: none;"
-			}
 			infoTileAttachments.push(renderToString(
 				<div id="InfoBoxInternal_wrapper">
 					<InfoBoxInternal event={events[i]} /> 
 					<div id="info_links_wrapper">
-						<div style={display} className="info_join_session" id={`info_join_session${i}`}>
+						<div className="info_join_session" id={`info_join_session_${events[i]._id}`}>
 							Join Session
 						</div>
-						<div className="info_event_details_link" id={`info_event_details_link${i}`}>
+						<div className="info_event_details_link" id={`info_event_details_link_${events[i]._id}`}>
 							Details
 						</div>
 						<div id="info_links_spacer"></div>
@@ -210,13 +217,11 @@ const GMap = () => {
 		// Setting the content of infoTiles.current ref with the content in infoTileAttachments
 		for (let i = 0; i < infoTiles.current.length; i++) {
 			infoTiles.current[i].setContent(infoTileAttachments[i]);
-			
-			const joinSessionTextEle = document.getElementById(`info_join_session${i}`)
-			if (joinSessionTextEle && events[i].attendees.includes(currentUser)) {
-				joinSessionTextEle.textContent = "Attending Event"
-			} else if (joinSessionTextEle && events[i].requesters.includes(currentUser)) {
-				joinSessionTextEle.textContent = "Requested"
-			}
+		}
+
+		for (let i = 0; i < infoTiles.current.length; i++) {
+			const joinSessionTextEle = document.getElementById(`info_join_session_${events[i]._id}`)
+			console.log(joinSessionTextEle);
 
 			if (joinSessionTextEle) {
 				joinSessionTextEle.addEventListener('click', () => {
@@ -226,7 +231,7 @@ const GMap = () => {
 				})
 			}
 
-			const sessionDetailsLink = document.getElementById(`info_event_details_link${i}`);
+			const sessionDetailsLink = document.getElementById(`info_event_details_link${events[i]._id}`);
 			if (sessionDetailsLink) {
 				sessionDetailsLink.addEventListener('click', () => {
 					dispatch(showSelectedEventDetails(true));
@@ -239,13 +244,13 @@ const GMap = () => {
 			markers.current[i].addListener("click", () => {
 				let newMap = map;
 				newMap.setCenter(
-					new window.google.maps.LatLng(Number(events[i].location.latitude), 
-					Number(events[i].location.longitude)
+					new window.google.maps.LatLng(
+						Number(events[i].location.latitude), 
+						Number(events[i].location.longitude)
 					)
 				);
-				setMap(newMap)
-
 				dispatch(receiveEventClicked(events[i]._id))
+				setMap(newMap)
 				infoTiles.current[i].open({
 					anchor: markers.current[i],
 					map: map
@@ -301,7 +306,6 @@ const GMap = () => {
 			setRequestedLibraries(true);
 		}
 	}, [map, events])
-
 
 	return (
 		<>
