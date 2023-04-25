@@ -151,7 +151,7 @@ for (let j = 0; j < 10; j++) {
   
     const event = new Event ({
       creator: creator._id,
-      name: faker.git.commitMessage(),
+      name: faker.name.jobArea(),
       description: faker.lorem.sentence(),
       // location: locations[Math.floor(Math.random()*locations.length)]._id,
       location: locations[Math.floor(Math.random()*locations.length)],
