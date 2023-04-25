@@ -63,7 +63,8 @@ const MainContent = () => {
 
     useEffect(() => {
         createNotifications();
-        const notificationInterval = setInterval(createNotifications, 60000) 
+        // updates notifications every half hour
+        const notificationInterval = setInterval(createNotifications, 1800000);
 
         return () => {
             clearInterval(notificationInterval);
