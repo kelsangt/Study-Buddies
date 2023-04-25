@@ -6,6 +6,7 @@ const RECEIVE_TAB_STATE = "ui/RECEIVE_TAB_STATE";
 const RECEIVE_DATE = "ui/RECEIVE_DATE";
 const RECEIVE_SHOW_EVENT_DETAILS_MODAL = 'ui/RECEIVE_SHOW_EVENT_DETAILS_MODAL'
 const FETCH_NEW_EVENTS = "ui/FETCH_NEW_EVENTS";
+const RECEIVE_NEW_MAP = "ui/RECEIVE_NEW_MAP";
 
 export const receiveModalToggle = boolean => ({
     type: RECEIVE_MODAL_TOGGLE,
@@ -37,6 +38,11 @@ export const setFetchNewEvents = (toggle) => ({
     toggle
 })
 
+export const setMapReloadStatus = (boolean) => ({
+	type: RECEIVE_NEW_MAP,
+	modalStatus: boolean
+})
+
 export const setModalStatus = (boolean) => async dispatch => {
     return dispatch(receiveModalToggle(boolean))
 }
@@ -64,6 +70,10 @@ export const getFetchEvents = (state) => {
 
 export const selectedEventDetailsModalStatus = (state) => {
 	return state.ui.showEventDetailsModal ? state.ui.showEventDetailsModal : null; 
+}
+
+export const getReloadMapStatus = (state) => {
+	return state.ui.reloadMapStatus ? state.ui.reloadMapStatus : null; 
 }
 
 const initialState = {
@@ -95,6 +105,9 @@ const uiReducer = (state = initialState, action) => {
         case FETCH_NEW_EVENTS:
             nextState.fetchEvents = action.toggle;
             return nextState;
+				case RECEIVE_NEW_MAP: 
+						nextState.reloadMapStatus = action.modalStatus;
+						return nextState;
         default:
             return state;
     }

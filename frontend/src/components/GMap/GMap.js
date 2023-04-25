@@ -1,15 +1,16 @@
 import {useState, useRef, useEffect} from 'react';
 import './GMap.css';
-import {renderToString} from 'react-dom/server'
+import { renderToString } from 'react-dom/server'
 import InfoBoxInternal from './marker/InfoBoxInternal';
 import NavBar from '../NavBar/NavBar';
 import { getEvents } from '../../store/events';
 import { useDispatch, useSelector } from 'react-redux';
 import EventSideBar from '../EventsSidebar';
-import { receiveEventClicked } from '../../store/ui';
+import { receiveEventClicked, selectedEventId } from '../../store/ui';
 import { receiveAllLocations } from '../../store/locations';
 import { createEventRequest } from '../../store/events';
-import { showSelectedEventDetails, receiveModalToggle, receiveTabState } from '../../store/ui';
+import { showSelectedEventDetails, receiveModalToggle, receiveTabState, getReloadMapStatus, setMapReloadStatus } from '../../store/ui';
+
 
 const GMap = () => {
 	const dispatch = useDispatch();
@@ -17,15 +18,20 @@ const GMap = () => {
 	const centerCoords = { lat: 40.73630, lng: -73.99379 };
   const zoomAmount = 16;
 	const ref = useRef();
+	
 	const markers = useRef([]);
 	const infoTiles = useRef([]);
 	const userLocationCoords = useRef({});
+	
 	const events = useSelector(getEvents);
+	const currentUser = useSelector((state) => state.session.user ? state.session.user._id : null);
+	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
+	const [requestedLibraries, setRequestedLibraries] = useState(false);
+	const reloadMap = useSelector(getReloadMapStatus);
+
 	const image = "../icon.png";
 	const blueIcon = "../bluemarker.png"
 	const libraryIcon = "../library_icon.png"	
-	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
-	const [requestedLibraries, setRequestedLibraries] = useState(false);
 	
 	// Creating Geolocation Button including InfoWindow
 	const infoWindow = new window.google.maps.InfoWindow(); 
@@ -43,17 +49,6 @@ const GMap = () => {
 				]
 		}
 	];
-
-	// If Geolocation is not available. 
-	function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-		infoWindow.setPosition(pos);
-		infoWindow.setContent(
-			browserHasGeolocation 
-				? "Error: The Geolocation service failed."
-				: "Error: Your browser doesn't support geolocation."
-		);
-		infoWindow.open(map);
-	}
 
 	// Function run when someone wants to use their Geolocation. 
 	const findGeoLocation = () => {
@@ -88,6 +83,17 @@ const GMap = () => {
 			}
 		}
 	}
+
+		// If Geolocation is not available. 
+		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+			infoWindow.setPosition(pos);
+			infoWindow.setContent(
+				browserHasGeolocation 
+					? "Error: The Geolocation service failed."
+					: "Error: Your browser doesn't support geolocation."
+			);
+			infoWindow.open(map);
+		}
 
 	function placeLibraries(results, status) {
 		if (status == window.google.maps.places.PlacesServiceStatus.OK) {
@@ -150,6 +156,12 @@ const GMap = () => {
 		setMap(initialMap)
 	}, []);
 
+	useEffect(() => {
+		if (reloadMap) {
+			dispatch(setMapReloadStatus(false));
+		}
+	}, [reloadMap])
+
 	// UseEffect run on every map and event change.
 	useEffect(() => {
 		// Creating all Study Event Markers and placing them on the map. 
@@ -175,11 +187,15 @@ const GMap = () => {
 		// Creating The content of the InfoTiles and pushing into infoTileAttachments array (which is the same legnth as markers.current.) This creates new InfoBoxInternal components with the event[i] passed as the event prop. 
 		const infoTileAttachments = [];
 		for (let i = 0; i < markers.current.length; i++) {
+			let display; 
+			if (events[i].attendees.includes(currentUser)) {
+				display = "display: none;"
+			}
 			infoTileAttachments.push(renderToString(
 				<div id="InfoBoxInternal_wrapper">
 					<InfoBoxInternal event={events[i]} /> 
 					<div id="info_links_wrapper">
-						<div className="info_join_session" id={`info_join_session${i}`}>
+						<div style={display} className="info_join_session" id={`info_join_session${i}`}>
 							Join Session
 						</div>
 						<div className="info_event_details_link" id={`info_event_details_link${i}`}>
@@ -196,6 +212,12 @@ const GMap = () => {
 			infoTiles.current[i].setContent(infoTileAttachments[i]);
 			
 			const joinSessionTextEle = document.getElementById(`info_join_session${i}`)
+			if (joinSessionTextEle && events[i].attendees.includes(currentUser)) {
+				joinSessionTextEle.textContent = "Attending Event"
+			} else if (joinSessionTextEle && events[i].requesters.includes(currentUser)) {
+				joinSessionTextEle.textContent = "Requested"
+			}
+
 			if (joinSessionTextEle) {
 				joinSessionTextEle.addEventListener('click', () => {
 					dispatch(createEventRequest(events[i]._id))
