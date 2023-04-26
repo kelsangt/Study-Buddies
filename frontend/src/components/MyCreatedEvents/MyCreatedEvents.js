@@ -10,8 +10,9 @@ import { deleteEvent } from '../../store/events';
 import { deleteRequest } from '../../store/events';
 import { showSelectedEventDetails } from '../../store/ui';
 import { receiveEventClicked } from '../../store/ui';
+import { hideNotification } from '../../store/notifications';
 
-const MyCreatedEvents = ({event}) => {
+const MyCreatedEvents = ({event, notificationType}) => {
     const [showModal, setShowModal] = useState(false);
     const [top, setTop] = useState(0);
     const [left, setLeft] = useState(0);
@@ -49,6 +50,14 @@ const MyCreatedEvents = ({event}) => {
         e.preventDefault();
         dispatch(receiveEventClicked(event._id));
         dispatch(showSelectedEventDetails(true));
+    }
+
+    const handleDeleteNotification = (e) => {
+        e.preventDefault();
+        dispatch(hideNotification({
+            notificationType,
+            eventId: event._id
+        }))
     }
 
     return (
@@ -108,7 +117,10 @@ const MyCreatedEvents = ({event}) => {
 
             {(currentTab === "Notifications") &&
             <div className='myevent-edit-holder'>
+            <div className="myevent-options-holder">
                 <div onClick={handleShow} id='myevent-edit-button'>Show Details</div>
+                <div onClick={handleDeleteNotification} id='myevent-edit-button'>Mark as Read</div>
+            </div>
             </div>
             }
 
