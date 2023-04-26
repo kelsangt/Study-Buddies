@@ -18,11 +18,16 @@ function EventUpdateForm ({event}) {
     const [name, setName] = useState(event.name);
     const [description, setDescription] = useState(event.description);
     const [locationIndex, setLocationIndex] = useState(selectedIndex);
-    const [startTimeInitial, setStartTimeInitial] = useState(event.startTime.split('T')[1].slice(0, 5));
-    const [endTimeInitial, setEndTimeInitial] = useState(event.endTime.split('T')[1].slice(0, 5));
-    const [date, setDate] = useState(event.endTime.split('T')[0]);
 
-  // debugger
+    const formattedStartTime = new Date(event.startTime).toLocaleTimeString('en-us', {hour12: false}).slice(0, 5);
+    const [startTimeInitial, setStartTimeInitial] = useState(formattedStartTime);
+    
+    const formattedEndTime = new Date(event.endTime).toLocaleTimeString('en-us', {hour12: false}).slice(0, 5);
+    const [endTimeInitial, setEndTimeInitial] = useState(formattedEndTime);
+    
+    const formattedDate = new Date(event.startTime).toLocaleDateString('en-us', {month: "2-digit", year: "numeric", day: "2-digit"}).split('/')
+    const [date, setDate] = useState(`${formattedDate[2]}-${formattedDate[0]}-${formattedDate[1]}`);
+
     // const errors = useSelector(state => state.errors.session);
     const dispatch = useDispatch();
   
