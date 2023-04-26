@@ -16,67 +16,70 @@ import EventShow from '../EventShow';
 import { getSpecificEvents } from '../../store/events';
 import { showSelectedEventDetails } from '../../store/ui';
 import { getNotifications, receiveNotifications } from '../../store/notifications';
+import NavBar from '../NavBar/NavBar';
 
 const MainContent = () => {
     const dispatch = useDispatch();
+    // const currentDate = useSelector(selectedDate);
+    // const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
     const modalToggle = useSelector(state => state.ui.modalStatus)
     const selectedId = useSelector(selectedEventId);
-    const date = useSelector(selectedDate)
+    // const date = useSelector(selectedDate)
     const selectedEventModalStatus = useSelector(selectedEventDetailsModalStatus);
     const selectedEvent = useSelector(getSpecificEvents(selectedId));
-    const fetchEvents = useSelector(getFetchEvents);
+    // const fetchEvents = useSelector(getFetchEvents);
     
-    const notifications = useSelector(getNotifications);
-    const createdEvents = useSelector(getMyCreatedEvents);
-    const joinedEvents = useSelector(getMyJoinedEvents);
+    // const notifications = useSelector(getNotifications);
+    // const createdEvents = useSelector(getMyCreatedEvents);
+    // const joinedEvents = useSelector(getMyJoinedEvents);
     
-    const createNotifications = () => {
-        const allMyEvents = createdEvents.concat(joinedEvents);
+    // const createNotifications = () => {
+    //     const allMyEvents = createdEvents.concat(joinedEvents);
 
-        const today = new Date();
-        allMyEvents.forEach(event => {
-            const startTime = new Date(event.startTime);
-            const minDiff = Math.floor((startTime - today) / 1000 / 60)
+    //     const today = new Date();
+    //     allMyEvents.forEach(event => {
+    //         const startTime = new Date(event.startTime);
+    //         const minDiff = Math.floor((startTime - today) / 1000 / 60)
             
-            if (minDiff < 0) return;
-            if (minDiff <= 60 && notifications["<1 hour"][event._id] !== null) { // 1 hour
-                // console.log(event)
-                notifications["<1 hour"][event._id] = event;
-            } else if (minDiff <= 360 && notifications["6 hours"][event._id] !== null) { // 6 hours
-                // console.log(event)
-                notifications["6 hours"][event._id] = event;
-            } else if (minDiff <= 720 && notifications["12 hours"][event._id] !== null) { // 12 hours
-                // console.log(event)
-                notifications["12 hours"][event._id] = event;
-            }
-        })
+    //         if (minDiff < 0) return;
+    //         if (minDiff <= 60 && notifications["<1 hour"][event._id] !== null) { // 1 hour
+    //             // console.log(event)
+    //             notifications["<1 hour"][event._id] = event;
+    //         } else if (minDiff <= 360 && notifications["6 hours"][event._id] !== null) { // 6 hours
+    //             // console.log(event)
+    //             notifications["6 hours"][event._id] = event;
+    //         } else if (minDiff <= 720 && notifications["12 hours"][event._id] !== null) { // 12 hours
+    //             // console.log(event)
+    //             notifications["12 hours"][event._id] = event;
+    //         }
+    //     })
 
-        dispatch(receiveNotifications(notifications));
-    }
+    //     dispatch(receiveNotifications(notifications));
+    // }
 
-    useEffect(() => {
-        createNotifications();
-        // updates notifications every half hour
-        const notificationInterval = setInterval(createNotifications, 1800000);
+    // useEffect(() => {
+    //     createNotifications();
+    //     // updates notifications every half hour
+    //     const notificationInterval = setInterval(createNotifications, 1800000);
 
-        return () => {
-            clearInterval(notificationInterval);
-        }
-    }, [])
+    //     return () => {
+    //         clearInterval(notificationInterval);
+    //     }
+    // }, [])
     
-    useEffect(() => {
-        // console.log("date", date.toLocaleDateString("en-us", {dateStyle: "long"}).split("T")[0]);
-        dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
-        // dispatch(fetchAllLocations());
-    }, [dispatch, date])
+    // useEffect(() => {
+    //     // console.log("date", date.toLocaleDateString("en-us", {dateStyle: "long"}).split("T")[0]);
+    //     dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
+    //     // dispatch(fetchAllLocations());
+    // }, [dispatch, date])
 
-    useEffect(() => {
-        if (fetchEvents) {
-            dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
-            dispatch(setFetchNewEvents(false));
-            createNotifications();
-        }
-    }, [dispatch, fetchEvents])
+    // useEffect(() => {
+    //     if (fetchEvents) {
+    //         dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
+    //         dispatch(setFetchNewEvents(false));
+    //         createNotifications();
+    //     }
+    // }, [dispatch, fetchEvents])
 
     useEffect(() => {
         const closeButton = document.querySelectorAll('button.gm-ui-hover-effect');
@@ -105,9 +108,13 @@ const MainContent = () => {
     return (
         <>
             <div id="mainContent">  
-                <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places"]}>
-                </Wrapper>
-                {modalToggle && <ProfileModal/>}
+                <NavBar />
+                <div className="content-wrapper">
+                    <EventSideBar />
+                    <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places", "geocoder"]}>
+                    </Wrapper>
+                    {modalToggle && <ProfileModal/>}
+                </div>
                 <Footer />
             </div>
 						

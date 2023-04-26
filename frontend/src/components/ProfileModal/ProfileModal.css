@@ -39,6 +39,7 @@
     /* border: 4px solid orange; */
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 #myevents-create-container {
@@ -53,8 +54,9 @@
     flex-direction: row;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 27vw;
+    max-width: 100%;
     justify-content: center;
+    overflow: auto;
 }
 #close-caret{
     font-size: 23px;
