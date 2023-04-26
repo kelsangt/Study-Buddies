@@ -285,7 +285,6 @@ const GMap = () => {
 		<>
 			<NavBar />
 			<div id="map_container">
-				<EventSideBar />
 				<div id="map_wrapper">
 					<div ref={ref} id="map" />
 				</div>

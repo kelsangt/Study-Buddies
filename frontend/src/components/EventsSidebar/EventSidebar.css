@@ -12,6 +12,7 @@
   /* background-color:  rgb(30, 100, 214); */
   background-color: rgb(254, 251, 244);
   border-radius: 12px;
+  width: 25%;
 }
 
 .event-sidebar::-webkit-scrollbar {
