@@ -9,7 +9,7 @@ import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked, selectedEventId } from '../../store/ui';
 import { receiveAllLocations } from '../../store/locations';
 import { createEventRequest } from '../../store/events';
-import { showSelectedEventDetails, receiveModalToggle, receiveTabState, getReloadMapStatus, setMapReloadStatus, getFetchEvents } from '../../store/ui';
+import { showSelectedEventDetails, receiveModalToggle, receiveTabState, getReloadMapStatus, setMapReloadStatus } from '../../store/ui';
 
 
 const GMap = () => {
@@ -25,7 +25,10 @@ const GMap = () => {
 	
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
+
+	const reloadMap = useSelector(getReloadMapStatus);
 	const events = useSelector(getEvents);
+	const currentUser = useSelector((state) => state.session.user ? state.session.user._id : null);
 
 	const image = "../icon.png";
 	const blueIcon = "../bluemarker.png"
@@ -126,7 +129,7 @@ const GMap = () => {
 						scaledSize: new window.google.maps.Size(54, 54)
 					},
 					title: result.name,
-					animation: window.google.maps.Animation.DROP, 
+					animation: window.google.maps.Animation.DROP
 				});
 				let eventInfoWindow = new window.google.maps.InfoWindow({
 					content: result.name
@@ -165,7 +168,6 @@ const GMap = () => {
 				}
 			}));
 		});
-		console.log(markers.current)
 	}
 
 	const fillInfoTilesRefWithContent = () => {
@@ -225,9 +227,6 @@ const GMap = () => {
 				})
 			}, {passive: true})
 		}
-	}
-
-	const addInternalEventListenersToInfoContent = () => {
 	}
 
 	const resetLocationBasedOnGeolocation = () => {
@@ -302,7 +301,6 @@ const GMap = () => {
 		infoTiles.current = markers.current.map(() => new window.google.maps.InfoWindow({ content: ""}));
 		fillInfoTilesRefWithContent();
 		addMouseClickToMapMarkers(); 
-		addInternalEventListenersToInfoContent();
 		resetLocationBasedOnGeolocation();
 		requestNearbyLibraries();
 	}, [gMap, events])
