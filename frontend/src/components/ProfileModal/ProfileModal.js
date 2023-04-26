@@ -9,7 +9,7 @@ import { selectedTab, setModalStatus, setTabStatus } from '../../store/ui';
 import { CenterModal } from '../../context/Modal';
 import EventCreateForm from '../EventCreateForm/EventCreateForm';
 import { Link } from 'react-router-dom';
-import { getNotifications } from '../../store/notifications';
+import { getNotifications, hideAllNotifications } from '../../store/notifications';
 
 const ProfileModal = () => {
     const dispatch = useDispatch();
@@ -18,6 +18,7 @@ const ProfileModal = () => {
     const requestedEvents = useSelector(getMyRequestedEvents);
     const notifications = useSelector(getNotifications);
     const [showEventCreateModal, setShowEventCreateModal] = useState(false);
+    const tab = useSelector(selectedTab)
 
     const currentTab = useSelector(selectedTab);
     let myEventTab;
@@ -76,6 +77,11 @@ const ProfileModal = () => {
       }, 500)
     }
 
+    const hideAll = (e) => {
+        e.preventDefault();
+        dispatch(hideAllNotifications());
+    }
+
     return (
         <div id='profile-modal-container'> 
             <div id='big-event-container'>
@@ -87,13 +93,28 @@ const ProfileModal = () => {
                         <div className={`myevents-header ${currentTab === "Requested Events" ? 'selected' : ''}`} onClick={selectRequestEvents}>Requested Events</div>
                         <div className={`myevents-header ${currentTab === "Notifications" ? 'selected' : ''}`} onClick={selectNotifications}>Notifications</div>
                     </div>
-                    <div 
-                        id='create-event-button'
-                        onClick={showCreateForm}
-                    >
-                        <i className="fa-solid fa-plus" id='plus-icon'></i>
-                        Create Event
-                    </div>
+                    
+                    {
+                        tab === "My Events" &&
+                        <div 
+                            id='create-event-button'
+                            onClick={showCreateForm}
+                        >
+                            <i className="fa-solid fa-plus" id='plus-icon'></i>
+                            Create Event
+                        </div>
+                    }
+
+                    {
+                        tab === "Notifications" &&
+                        <div 
+                            id='create-event-button'
+                            onClick={hideAll}
+                        >
+                            Mark All as Read
+                        </div>
+                    }
+
                     {showEventCreateModal && (
                         <CenterModal onClose={hideCreateForm}>
                             <EventCreateForm />
