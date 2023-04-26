@@ -21,6 +21,7 @@
 
 #photoDiv {
   width: 60%;
+  overflow: hidden;
 }
 
 .event-show .event-photo {
