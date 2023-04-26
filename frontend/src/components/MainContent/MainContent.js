@@ -16,6 +16,7 @@ import EventShow from '../EventShow';
 import { getSpecificEvents } from '../../store/events';
 import { showSelectedEventDetails } from '../../store/ui';
 import { getNotifications, receiveNotifications } from '../../store/notifications';
+import NavBar from '../NavBar/NavBar';
 
 const MainContent = () => {
     const dispatch = useDispatch();
@@ -107,10 +108,13 @@ const MainContent = () => {
     return (
         <>
             <div id="mainContent">  
-                <EventSideBar />
-                <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places", "geocoder"]}>
-                </Wrapper>
-                {modalToggle && <ProfileModal/>}
+                <NavBar />
+                <div className="content-wrapper">
+                    <EventSideBar />
+                    <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places", "geocoder"]}>
+                    </Wrapper>
+                    {modalToggle && <ProfileModal/>}
+                </div>
                 <Footer />
             </div>
 						

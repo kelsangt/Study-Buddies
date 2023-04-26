@@ -283,7 +283,6 @@ const GMap = () => {
 
 	return (
 		<>
-			<NavBar />
 			<div id="map_container">
 				<div id="map_wrapper">
 					<div ref={ref} id="map" />
