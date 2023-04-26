@@ -15,7 +15,7 @@ import { CenterModal } from '../../context/Modal';
 import EventShow from '../EventShow';
 import { getSpecificEvents } from '../../store/events';
 import { showSelectedEventDetails } from '../../store/ui';
-import { receiveNotifications } from '../../store/notifications';
+import { getNotifications, receiveNotifications } from '../../store/notifications';
 
 const MainContent = () => {
     const dispatch = useDispatch();
@@ -27,17 +27,12 @@ const MainContent = () => {
     const selectedEventModalStatus = useSelector(selectedEventDetailsModalStatus);
     const selectedEvent = useSelector(getSpecificEvents(selectedId));
     const fetchEvents = useSelector(getFetchEvents);
-
+    
+    const notifications = useSelector(getNotifications);
     const createdEvents = useSelector(getMyCreatedEvents);
     const joinedEvents = useSelector(getMyJoinedEvents);
     
     const createNotifications = () => {
-        const notifications = {
-            "<1 hour": [],
-            "6 hours": [],
-            "12 hours": []
-        }
-
         const allMyEvents = createdEvents.concat(joinedEvents);
 
         const today = new Date();
@@ -46,15 +41,15 @@ const MainContent = () => {
             const minDiff = Math.floor((startTime - today) / 1000 / 60)
             
             if (minDiff < 0) return;
-            if (minDiff <= 60) { // 1 hour
-                console.log(event)
-                notifications["<1 hour"].push(event)
-            } else if (minDiff <= 360) { // 6 hours
-                console.log(event)
-                notifications["6 hours"].push(event)
-            } else if (minDiff <= 720) { // 12 hours
-                console.log(event)
-                notifications["12 hours"].push(event)
+            if (minDiff <= 60 && notifications["<1 hour"][event._id] !== null) { // 1 hour
+                // console.log(event)
+                notifications["<1 hour"][event._id] = event;
+            } else if (minDiff <= 360 && notifications["6 hours"][event._id] !== null) { // 6 hours
+                // console.log(event)
+                notifications["6 hours"][event._id] = event;
+            } else if (minDiff <= 720 && notifications["12 hours"][event._id] !== null) { // 12 hours
+                // console.log(event)
+                notifications["12 hours"][event._id] = event;
             }
         })
 
@@ -63,7 +58,8 @@ const MainContent = () => {
 
     useEffect(() => {
         createNotifications();
-        const notificationInterval = setInterval(createNotifications, 60000) 
+        // updates notifications every half hour
+        const notificationInterval = setInterval(createNotifications, 1800000);
 
         return () => {
             clearInterval(notificationInterval);

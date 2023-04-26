@@ -11,7 +11,13 @@ export const getNotifications = (state) => {
   return state.notifications ? state.notifications : {}
 }
 
-const notificationsReducer = (state={}, action) => {
+const initialState = {
+  "<1 hour": {},
+  "6 hours": {},
+  "12 hours": {}
+}
+
+const notificationsReducer = (state=initialState, action) => {
   let nextState = {...state}
   switch (action.type) {
     case RECEIVE_NOTIFICATIONS:

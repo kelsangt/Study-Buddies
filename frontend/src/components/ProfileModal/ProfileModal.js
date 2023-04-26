@@ -126,14 +126,14 @@ const ProfileModal = () => {
                         notificationTab &&
                         Object.keys(notifications).map(timeNotification => {
                             return (
-                                <>
+                                <div key={timeNotification}>
                                     <span className="notificationTime">{timeNotification}</span>
                                     {
-                                        notifications[timeNotification].map(event => {
+                                        Object.keys(notifications[timeNotification]).map(event => {
                                             return <MyCreatedEvents event={event} key={event._id}/>
                                         })
                                     }
-                                </>
+                                </div>
                             )
                         })
                     }
