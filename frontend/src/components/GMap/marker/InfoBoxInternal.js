@@ -14,7 +14,7 @@ const InfoBoxInternal = ({event}) => {
 	const capitalizedTitle = (title) => {
 		if (title) {
 			return title.split(" ").map((ele) => {
-				return ele[0].toUpperCase() + ele.slice(1);
+				return ele[0]?.toUpperCase() + ele.slice(1);
 			}).join(" ");
 		}
 	}
