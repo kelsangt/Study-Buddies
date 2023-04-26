@@ -8,6 +8,7 @@
 }
 
 .content-wrapper {
+    height: 82%;
     display: flex;
     justify-content: start;
 }

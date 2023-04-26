@@ -14,6 +14,7 @@ import EventShow from '../EventShow';
 const EventSideBar = () => {
   const events = useSelector(getEvents);
   const selectedEvent = useSelector(selectedEventId);
+  const modalToggle = useSelector(state => state.ui.modalStatus)
   const dispatch = useDispatch();
     // const currentDate = useSelector(selectedDate);
     // const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
@@ -102,11 +103,11 @@ const EventSideBar = () => {
         })
       }
 
-{/* {selectedEventModalStatus && (
+{selectedEventModalStatus && (
 							<CenterModal onClose={leaveEventShowPage}>
 								<EventShow event={selectedEvent} />
 							</CenterModal>
-						)} */}
+						)}
     </div>
   )
 }
