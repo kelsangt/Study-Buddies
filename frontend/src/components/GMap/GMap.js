@@ -9,7 +9,7 @@ import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked, selectedEventId } from '../../store/ui';
 import { receiveAllLocations } from '../../store/locations';
 import { createEventRequest } from '../../store/events';
-import { showSelectedEventDetails, receiveModalToggle, receiveTabState, getReloadMapStatus, setMapReloadStatus } from '../../store/ui';
+import { showSelectedEventDetails, receiveModalToggle, receiveTabState, getReloadMapStatus, setMapReloadStatus, getFetchEvents } from '../../store/ui';
 
 
 const GMap = () => {
@@ -17,18 +17,15 @@ const GMap = () => {
 	const [gMap, setGMap] = useState();
 	const centerCoords = { lat: 40.73630, lng: -73.99379 };
   const zoomAmount = 16;
-	const ref = useRef();
 	
+	const ref = useRef();
 	const markers = useRef([]);
 	const infoTiles = useRef([]);
 	const userLocationCoords = useRef({});
 	
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
-
-	const reloadMap = useSelector(getReloadMapStatus);
 	const events = useSelector(getEvents);
-	const currentUser = useSelector((state) => state.session.user ? state.session.user._id : null);
 
 	const image = "../icon.png";
 	const blueIcon = "../bluemarker.png"
@@ -93,7 +90,9 @@ const GMap = () => {
 					? "Error: The Geolocation service failed."
 					: "Error: Your browser doesn't support geolocation."
 			);
-			infoWindow.open(gMap);
+			infoWindow.open({
+				map: gMap
+			});
 		}
 
 // Helper Function for Placing the Local Libraries 
@@ -127,7 +126,7 @@ const GMap = () => {
 						scaledSize: new window.google.maps.Size(54, 54)
 					},
 					title: result.name,
-					animation: window.google.maps.Animation.DROP
+					animation: window.google.maps.Animation.DROP, 
 				});
 				let eventInfoWindow = new window.google.maps.InfoWindow({
 					content: result.name
@@ -137,14 +136,14 @@ const GMap = () => {
 						anchor: eventMarker, 
 						map: gMap
 					})
-				})
+				}, {passive: true})
 			})
 			dispatch(receiveAllLocations(googleFetchedLibraries));
 		}
 	}
 
 	// Helper Function to reset all markers 
-	const nullMarkers = () => {
+	const nullAllMarkers = () => {
 		if (markers.current) {
 			for (let i = 0; i < markers.current.length; i++) {
 				markers.current[i].setMap(null);
@@ -154,7 +153,7 @@ const GMap = () => {
 	}
 
 	// Helper Function to fill markers Ref. 
-	const fillMarkersRefWithEvents = () => {	
+	const fillMarkersRefWithTodaysEvents = () => {	
 		events.forEach(event => {
 			markers.current.push(new window.google.maps.Marker({
 				position: {lat: event.location.latitude, lng: event.location.longitude},
@@ -166,6 +165,7 @@ const GMap = () => {
 				}
 			}));
 		});
+		console.log(markers.current)
 	}
 
 	const fillInfoTilesRefWithContent = () => {
@@ -198,12 +198,12 @@ const GMap = () => {
 					dispatch(createEventRequest(events[i]._id))
 					dispatch(receiveTabState("Requested Events"))
 					dispatch(receiveModalToggle(true));
-				})
+				}, {passive: true})
 
 				document.getElementById(`info_event_details_link_${events[i]._id}`).addEventListener('click', () => {
 					dispatch(showSelectedEventDetails(true));
-				 }) 	
-			})
+				}, {passive: true}) 	
+			}, {passive: true})
 		}
 	}
 
@@ -266,38 +266,7 @@ const GMap = () => {
 		}
 	}
 
-// Initialize The Map
-	useEffect(() => {
-		const initialMap = new window.google.maps.Map(ref.current, {
-			center: { lat: centerCoords.lat, lng: centerCoords.lng},
-			zoom: zoomAmount,
-			styles: stylesArray
-		})
-	// Creating the Geolocation Controls Button and Event Listener
-		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-		locationButton.addEventListener("click", findGeoLocation, {passive: true});
-
-		setGMap(initialMap)
-	}, []);
-
-// On Change of gMap and Events
-	useEffect(() => {
-		// Sets all markers on map to null
-		nullMarkers();
-		// Fills Markers Ref with current events
-		fillMarkersRefWithEvents();
-		// Setting the InfoTiles Ref to an array of empty InfoWindows the same length as markers.current. (So we can fill them).
-		infoTiles.current = markers.current.map(() => new window.google.maps.InfoWindow({ content: ""}));
-		// Creating The content of the InfoTiles and pushing into infoTileAttachments array. 
-		fillInfoTilesRefWithContent();
-		// Adding the click listener to Markers to show appropriate InfoTile on mouseclick. 
-		addMouseClickToMapMarkers(); 
-		// Adding event listeners to the InfoTiles. 
-		addInternalEventListenersToInfoContent();
-	
-		resetLocationBasedOnGeolocation();
-
-
+	const requestNearbyLibraries = () => {
 		if (gMap && !requestedLibraries) {
 			let locationLng = gMap.center.lng();
 			let locationLat = gMap.center.lat();
@@ -311,21 +280,33 @@ const GMap = () => {
 			service.nearbySearch(request, placeLibraries);
 			setRequestedLibraries(true);
 		}
-	}, [gMap, events])
+	}
 
-	// On Map Reload prompt, recenter on current location with same Zoom amount. 
+// Initialize The Map
 	useEffect(() => {
-		if (reloadMap) {
-			let newMap = new window.google.maps.Map(ref.current, {
-				center: { lat: gMap.center.lat(), lng: gMap.center.lng()},
-				zoom: gMap.zoom,
-				styles: stylesArray
-			}); 
-			setGMap(newMap)
-			dispatch(setMapReloadStatus(false));
-		}
-	}, [reloadMap])
+		const initialMap = new window.google.maps.Map(ref.current, {
+			center: { lat: centerCoords.lat, lng: centerCoords.lng},
+			zoom: zoomAmount,
+			styles: stylesArray
+		})
+		// Creating the Geolocation Controls Button and Event Listener
+		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+		locationButton.addEventListener("click", findGeoLocation, {passive: true});
+		setGMap(initialMap)
+	}, []);
 
+	useEffect(() => {
+		nullAllMarkers();
+		fillMarkersRefWithTodaysEvents();
+		// Set InfoTiles Ref to array of empty InfoWindows the same length as markers.current. 
+		infoTiles.current = markers.current.map(() => new window.google.maps.InfoWindow({ content: ""}));
+		fillInfoTilesRefWithContent();
+		addMouseClickToMapMarkers(); 
+		addInternalEventListenersToInfoContent();
+		resetLocationBasedOnGeolocation();
+		requestNearbyLibraries();
+	}, [gMap, events])
+ 
 	return (
 		<>
 			<NavBar />
