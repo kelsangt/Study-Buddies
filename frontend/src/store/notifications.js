@@ -1,9 +1,15 @@
 export const RECEIVE_NOTIFICATIONS = "events/RECEIVE_NOTIFICATIONS";
+export const HIDE_NOTIFICATION = "events/HIDE_NOTIFICATION";
 
 // Actions
 export const receiveNotifications = notifications => ({
   type: RECEIVE_NOTIFICATIONS,
   notifications
+})
+
+export const hideNotification = payload => ({
+  type: HIDE_NOTIFICATION,
+  payload
 })
 
 // Selectors 
@@ -22,6 +28,9 @@ const notificationsReducer = (state=initialState, action) => {
   switch (action.type) {
     case RECEIVE_NOTIFICATIONS:
         return {...action.notifications}
+    case HIDE_NOTIFICATION:
+        nextState[action.payload.notificationType][action.payload.eventId] = null;
+        return nextState;
     default:
         return state;
   }

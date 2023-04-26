@@ -138,6 +138,8 @@
     min-height: fit-content;
     border-radius:6px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 #profile-modal-footer{

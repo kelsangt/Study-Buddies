@@ -129,8 +129,9 @@ const ProfileModal = () => {
                                 <div key={timeNotification}>
                                     <span className="notificationTime">{timeNotification}</span>
                                     {
-                                        Object.keys(notifications[timeNotification]).map(event => {
-                                            return <MyCreatedEvents event={event} key={event._id}/>
+                                        Object.values(notifications[timeNotification]).map(event => {
+                                            if (!event) return null;
+                                            return <MyCreatedEvents event={event} notificationType={timeNotification} key={event._id}/>
                                         })
                                     }
                                 </div>
