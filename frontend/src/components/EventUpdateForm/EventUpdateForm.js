@@ -12,6 +12,10 @@ function EventUpdateForm ({event}) {
     locations.forEach((loc, idx) => {
       if (loc.name === event.location.name) selectedIndex = idx
     })
+    if (selectedIndex === null) {
+      locations.push(event.location);
+      selectedIndex = locations.length - 1;
+    }
 
     const currentAttendees = event.attendees
     const requestedAttendees = event.requesters
