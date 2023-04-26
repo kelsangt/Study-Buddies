@@ -19,8 +19,6 @@ import { getNotifications, receiveNotifications } from '../../store/notification
 
 const MainContent = () => {
     const dispatch = useDispatch();
-    const currentDate = useSelector(selectedDate);
-    const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
     const modalToggle = useSelector(state => state.ui.modalStatus)
     const selectedId = useSelector(selectedEventId);
     const date = useSelector(selectedDate)
@@ -107,7 +105,7 @@ const MainContent = () => {
     return (
         <>
             <div id="mainContent">  
-                <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places", "geocoder"]}>
+                <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places"]}>
                 </Wrapper>
                 {modalToggle && <ProfileModal/>}
                 <Footer />
