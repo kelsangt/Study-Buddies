@@ -70,6 +70,7 @@
   display: flex;
   align-items: center;
   margin: 2px 0;
+  font-family: var(--font);
 }
 
 .event-show .attendee-photos::-webkit-scrollbar {
