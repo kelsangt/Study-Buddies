@@ -5,8 +5,10 @@ const validateRegisterInput = [
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
-    .matches(/(.edu)$/)
     .withMessage('Email is invalid'),
+  check('email')
+    .matches(/(.edu)$/)
+    .withMessage("Email must be a school email (ending with '.edu')"),
   check('username')
     .exists({ checkFalsy: true })
     .isLength({ min: 2, max: 30 })

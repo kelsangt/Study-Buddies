@@ -21,9 +21,18 @@
 .myevent-edit-holder{
     padding-bottom: 10px;
     margin-right: 10px;
+    margin-left: 10px;
     display: flex;
     justify-content: end;
 }
+
+.myevent-options-holder {
+    display: flex;
+    justify-content: space-between;
+    /* margin: 0 10px; */
+    width: 100%;
+}
+
 #myevent-edit-button {
     border: 1px solid orange;
     border-radius: 5px;

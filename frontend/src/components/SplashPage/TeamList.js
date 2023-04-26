@@ -17,10 +17,10 @@ const TeamList = () => {
             </div>
             <div id='team-member-name'>Kelsang Tsering</div>
             <div id="kelsang-links">
-              <a href="https://github.com/kelsangt/Study-Buddies">
+              <a href="https://github.com/kelsangt" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-github" id="githubLink"></i>
               </a>
-              <a href="https://www.linkedin.com/in/kelsang-tsering/">
+              <a href="https://www.linkedin.com/in/kelsang-tsering/" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-linkedin" id="linkedInLink"></i>
               </a>
             </div>
@@ -38,10 +38,10 @@ const TeamList = () => {
             </div>
             <div id='team-member-name'>Yinglin Zhou</div>
             <div id="ying-links">
-              <a href="https://github.com/yinglzhou">
-                  <i className="fa fa-github" id="githubLink"></i>
+              <a href="https://github.com/yinglzhou" target="_blank" rel="noopener noreferrer">
+                  <i className="fa fa-github" id="githubLink" ></i>
               </a>
-              <a href="https://www.linkedin.com/in/yinglzhou/">
+              <a href="https://www.linkedin.com/in/yinglzhou/" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-linkedin" id="linkedInLink"></i>
               </a>
             </div>
@@ -59,10 +59,10 @@ const TeamList = () => {
             </div>
             <div id='team-member-name'>Fahim Khan</div>
             <div id="fahim-links">
-              <a href="https://github.com/fk652">
+              <a href="https://github.com/fk652" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-github" id="githubLink"></i>
               </a>
-              <a href="https://www.linkedin.com/in/fk652/">
+              <a href="https://www.linkedin.com/in/fk652/" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-linkedin" id="linkedInLink"></i>
               </a>
             </div>
@@ -79,10 +79,10 @@ const TeamList = () => {
             </div>
             <div id='team-member-name'>Justin Diner</div>
             <div id="justin-links">
-              <a href="https://github.com/Justin-Diner">
+              <a href="https://github.com/Justin-Diner" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-github" id="githubLink"></i>
               </a>
-              <a href="https://www.linkedin.com/in/justin-diner/">
+              <a href="https://www.linkedin.com/in/justin-diner/" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-linkedin" id="linkedInLink"></i>
               </a>
             </div>

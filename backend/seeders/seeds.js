@@ -60,75 +60,85 @@ const locations = [
   {
     name: "Seward Park Library",
     imageUrl: "https://lh5.googleusercontent.com/p/AF1QipMO5emKizopnNp2N_KGQlCqvuYwjgEVi4XsBmQ3=w408-h544-k-no",
-    address: "10 West Street",
-    latitude: 40.71465519155157, 
-    longitude: -73.98834015261731
+    address: "192 East Broadway",
+    latitude: 40.714429418660835, 
+    longitude: -73.9884788731511
   },
   {
     name: "Chatham Square Library",
     imageUrl: "https://lh5.googleusercontent.com/p/AF1QipMtiTtlG0b2jG7MIvkeO24jx7Q3zMRrFxQkLJKe=w408-h481-k-no",
-    address: "23 State Street",
-    latitude: 40.71413473453696, 
-    longitude: -73.99666572894645
+    address: "33 East Broadway",
+    latitude: 40.71344784932242, 
+    longitude: -73.99651757627701 
   },
   {
     name: "Kips Bay Library",
-    address: "140 Peach Road",
-    latitude: 40.745042011615695,
-    longitude: -73.97992193841986
+    imageUrl: "https://www.literarymanhattan.org/wp-content/uploads/2013/01/kips-bay-flickr-edenpictures.jpg",
+    address: "446 3rd Avenue",
+    latitude: 40.74382954284475, 
+    longitude: -73.97990997386722
   },
   {
     name: "Battery Park City Library",
-    address: "15 Union Square",
-    latitude: 40.7165388289107,
-    longitude: -74.01559101609772
+    imageUrl: "https://images.squarespace-cdn.com/content/v1/6138c9ff84957c54db15deef/1633985467260-2F6JM60HXX1NTKMUT1XZ/nypl-battery-park-city-03-e.jpg",
+    address: "175 North End Avenue",
+    latitude: 40.71577439929037, 
+    longitude: -74.0157083161958
   },
   {
     name: "Tompkins Square Library",
-    address: "35 8th Street",
-    latitude: 40.72734177701872,
-    longitude: -73.98039817443512
+    imageUrl: "https://hdc.org/wp-content/uploads/2013/07/facade-crop.jpg",
+    address: "331 East 10th Street",
+    latitude: 40.727299110264305, 
+    longitude: -73.98039453154054
   },
   {
     name: "Hamilton Fish Park Library",
-    address: "230 34th Street",
-    latitude: 40.72045921941025,
-    longitude: -73.9794761693269
+    imageUrl: "https://1.bp.blogspot.com/-i6gZWTlhGSI/XM7oFFo_JtI/AAAAAAADIOU/MQ0C4i6mG90KY8q3hQT4HjChMKlvqeUHACLcBGAs/s1600/IMG_0506.jpeg",
+    address: "415 East Houston Street",
+    latitude: 40.72003612652137,
+    longitude: -73.97932635852297
   }, 
   {
     name: "Andrew Heiskell Braille and Talking Book Library",
-    address: "300 Broadway Street",
-    latitude: 40.74099110899836,
-    longitude: -73.99043085753692
+    imageUrl: "https://fastly.4sqi.net/img/general/600x600/16683804_TMBecKXNxrIkdCijwYYjFRE9uurxPinJPAC75qzeQxA.jpg",
+    address: "40 West 20th Street #1",
+    latitude: 40.740487087209516, 
+    longitude: -73.99336014503105
   },
   {
     name: "Epiphany Library",
-    address: "420 8th Avenue Street",
-    latitude: 40.73882452808173,
-    longitude: -73.98195297003078
+    imageUrl: "https://s3.amazonaws.com/4urspace_location_images/location_28406/images/4761457b4a43465176835c33ef7809a0_small.JPG",
+    address: "228 East 23rd Street",
+    latitude: 40.7381253883641, 
+    longitude: -73.98204953154007
   },
   {
     name: "Mulberry Street Library",
-    address: "120 3rd Avenue Road",
-    latitude: 40.724684064312044,
-    longitude: -73.99396141770526
+    imageUrl: "https://www.rogersmarvel.com/projects/NYPL/Rogers-Marvel-NYPL-3.jpg",
+    address: "10 Jersey Street",
+    latitude: 40.72413926424788, 
+    longitude: -73.99559220270434
   },
   {
     name: "Jefferson Market Library",
-    address: "Houston Texas",
-    latitude: 40.73545263981523,
-    longitude: -73.99895900866127
+    imageUrl: "https://www.amny.com/wp-content/uploads/2022/11/TQ-jeffmarket-3329-1200x856.jpg",
+    address: "425 6th Avenue",
+    latitude: 40.73457461204109, 
+    longitude: -73.99908775666819
   },
   {
     name: "Hudson Park Library",
-    address: "Mongoose Avenue",
-    latitude: 40.7307185544648,
-    longitude: -74.00531001605788
+    imageUrl: "https://www.nypl.org/sites-drupal/default/files/styles/max_width_480/public/2020-06/interiorhp_0.jpg?itok=JXp7dJw1",
+    address: "66 Leroy Street",
+    latitude: 40.730116892279796, 
+    longitude: -74.00525637386774
   }, {
     name: "Ottendorfer Library",
-    address: "Rainbow Road",
-    latitude: 40.729649750454314,
-    longitude: -73.98764198537313
+    imageUrl: "https://6tocelebrate.org/wp-content/uploads/2015/05/1-Ottendorfer-Library-and-former-German-Dispensary-135-137-Second-Ave-1.jpg",
+    address: "135 2nd Avenue",
+    latitude: 40.728917992865746, 
+    longitude: -73.98768490270409
   }
 ]
 
@@ -148,10 +158,12 @@ for (let j = 0; j < 10; j++) {
     const endTime = new Date(startTime.getTime() + (timeSlotMinutes[Math.floor(Math.random() * timeSlotMinutes.length)])*60000)
     const usersCopy = [...users];
     const creator = usersCopy.splice(Math.floor(Math.random()*usersCopy.length), 1)[0];
+    let fakerName = faker.name.jobArea();
+    let studySessionText = " Study Session";
   
     const event = new Event ({
       creator: creator._id,
-      name: faker.git.commitMessage(),
+      name: fakerName + studySessionText,
       description: faker.lorem.sentence(),
       // location: locations[Math.floor(Math.random()*locations.length)]._id,
       location: locations[Math.floor(Math.random()*locations.length)],

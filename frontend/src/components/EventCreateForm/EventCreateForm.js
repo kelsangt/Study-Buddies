@@ -113,7 +113,7 @@ function EventCreateForm () {
               <span className="eventCreateFormSpan">Location</span>
              
               <select className="inputField" id="selectLocation" required onChange={update('Location')}>
-                <option disabled selected value>Select a location</option>
+                <option disabled selected value="">Select a location</option>
                 {locations.map((location, index)=>{
                     return (
                         <option key={index} value={index}>
@@ -141,6 +141,7 @@ function EventCreateForm () {
                 value={startTimeInitial}
                 onChange={update('Start Time')}
                 placeholder="Start Time"
+                max={endTimeInitial}
                 required
               />
             </label>
@@ -153,6 +154,7 @@ function EventCreateForm () {
                 value={endTimeInitial}
                 onChange={update('End Time')}
                 placeholder="End Time"
+                min={startTimeInitial} 
                 required
               />
             </label>
