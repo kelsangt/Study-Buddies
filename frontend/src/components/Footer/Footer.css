@@ -9,3 +9,8 @@
     font-family: var(--font);
     font-weight: var(--font-regular);
 }
+
+#footerLink {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}

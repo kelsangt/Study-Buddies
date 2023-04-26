@@ -17,7 +17,7 @@ const TeamList = () => {
             </div>
             <div id='team-member-name'>Kelsang Tsering</div>
             <div id="kelsang-links">
-              <a href="https://github.com/kelsangt/Study-Buddies" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/kelsangt" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-github" id="githubLink"></i>
               </a>
               <a href="https://www.linkedin.com/in/kelsang-tsering/" target="_blank" rel="noopener noreferrer">
