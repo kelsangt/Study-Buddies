@@ -129,7 +129,7 @@ function EventUpdateForm ({event}) {
               <span id="firstNameSpan">Location</span>
              
               <select className="inputField" id="selectLocation" onChange={update('Location')} value={locationIndex}>
-                <option disabled selected value>Select a Location</option>
+                <option disabled selected value="">Select a Location</option>
                 {locations.map((location, index)=>{
                     return (
                         <option 
