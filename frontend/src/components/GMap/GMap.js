@@ -165,7 +165,6 @@ const GMap = () => {
 				}
 			}));
 		});
-		console.log(markers.current)
 	}
 
 	const fillInfoTilesRefWithContent = () => {
@@ -201,7 +200,10 @@ const GMap = () => {
 				}, {passive: true})
 
 				document.getElementById(`info_event_details_link_${events[i]._id}`).addEventListener('click', () => {
+					console.log(events[i]._id)
+					dispatch(receiveEventClicked(events[i]._id))
 					dispatch(showSelectedEventDetails(true));
+	
 				}, {passive: true}) 	
 			}, {passive: true})
 		}
@@ -217,7 +219,6 @@ const GMap = () => {
 						Number(events[i].location.longitude)
 					)
 				);
-				dispatch(receiveEventClicked(events[i]._id))
 				setGMap(newMap)
 				infoTiles.current[i].open({
 					anchor: markers.current[i],
@@ -226,6 +227,14 @@ const GMap = () => {
 			}, {passive: true})
 		}
 	}
+
+	//const addHoverToMapMarkers = () => {
+	//	for (let i = 0; i < markers.current.length; i++) {
+	//		markers.current[i].addListener("mousedown", () => {
+	//			dispatch(receiveEventClicked(events[i]))
+	//		})
+	//	}
+	//}
 
 	const addInternalEventListenersToInfoContent = () => {
 	}
@@ -298,6 +307,7 @@ const GMap = () => {
 	useEffect(() => {
 		nullAllMarkers();
 		fillMarkersRefWithTodaysEvents();
+		//addHoverToMapMarkers(); 
 		// Set InfoTiles Ref to array of empty InfoWindows the same length as markers.current. 
 		infoTiles.current = markers.current.map(() => new window.google.maps.InfoWindow({ content: ""}));
 		fillInfoTilesRefWithContent();

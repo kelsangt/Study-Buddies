@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import './InfoBoxInternal.css'
-import { useDispatch } from 'react-redux';
 
 const InfoBoxInternal = ({event}) => {
 	const subject = event?.name; 

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './EventSidebar.css';
-import { fetchAllEventsForDay, getEvents, getMyCreatedEvents, getMyJoinedEvents } from '../../store/events';
+import { fetchAllEventsForDay, getEvents, getMyCreatedEvents, getMyJoinedEvents, getSpecificEvents } from '../../store/events';
 import EventSidebarItem from './EventSidebarItem';
 import { getFetchEvents, receiveEventClicked, selectedDate, selectedEventDetailsModalStatus, selectedEventId, setFetchNewEvents, showSelectedEventDetails } from '../../store/ui';
 import DateSelector from '../DateSelector/DateSelector';
@@ -13,14 +13,14 @@ import EventShow from '../EventShow';
 
 const EventSideBar = () => {
   const events = useSelector(getEvents);
-  const selectedEvent = useSelector(selectedEventId);
   const modalToggle = useSelector(state => state.ui.modalStatus)
   const dispatch = useDispatch();
-    // const currentDate = useSelector(selectedDate);
-    // const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
-    // const modalToggle = useSelector(state => state.ui.modalStatus)
-    const selectedId = useSelector(selectedEventId);
-    const date = useSelector(selectedDate)
+	// const currentDate = useSelector(selectedDate);
+	// const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
+	// const modalToggle = useSelector(state => state.ui.modalStatus)
+	const selectedId = useSelector(selectedEventId);
+  const selectedEvent = useSelector(getSpecificEvents(selectedId));
+	const date = useSelector(selectedDate)
     const selectedEventModalStatus = useSelector(selectedEventDetailsModalStatus);
     const fetchEvents = useSelector(getFetchEvents);
     
