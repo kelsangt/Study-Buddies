@@ -22,7 +22,8 @@ export const getNotifications = (state) => {
   return state.notifications ? state.notifications : {}
 }
 
-const initialState = {
+console.log(localStorage.getItem("notifications"))
+const initialState = JSON.parse(localStorage.getItem("notifications")) || {
   "<1 hour": {},
   "6 hours": {},
   "12 hours": {}
@@ -32,9 +33,11 @@ const notificationsReducer = (state=initialState, action) => {
   let nextState = {...state}
   switch (action.type) {
     case RECEIVE_NOTIFICATIONS:
+        localStorage.setItem("notifications", JSON.stringify({...action.notifications}))
         return {...action.notifications}
     case HIDE_NOTIFICATION:
         nextState[action.payload.notificationType][action.payload.eventId] = null;
+        localStorage.setItem("notifications", JSON.stringify(nextState));
         return nextState;
       case HIDE_ALL_NOTIFICATIONS:
         Object.keys(nextState).forEach(notificationType => {
@@ -42,6 +45,7 @@ const notificationsReducer = (state=initialState, action) => {
             nextState[notificationType][eventId] = null;
           })
         })
+        localStorage.setItem("notifications", JSON.stringify(nextState));
         return nextState;
     default:
         return state;
