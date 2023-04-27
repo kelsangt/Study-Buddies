@@ -204,8 +204,6 @@ Users can create, read, update, and destroy study sessions.
 
 ```javascript
     export const createEvent = (eventInfo) => async dispatch => {
-        console.log("create");
-
         const res = await jwtFetch('/api/events', {
             method: 'POST',
             body: JSON.stringify(eventInfo),

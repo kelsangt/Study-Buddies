@@ -12,7 +12,6 @@ const EventShow = ({event}) => {
     dispatch(createEventRequest(event._id))
   }
 
-   console.log(event)
 	if (!event) {
 		return null;
 	}

@@ -73,7 +73,6 @@ function SignupForm () {
       major,
       password
     };
-    console.log(user)
     dispatch(signup(user)); 
   }
 

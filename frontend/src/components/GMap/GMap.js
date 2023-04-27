@@ -201,7 +201,6 @@ const GMap = () => {
 				}, {passive: true})
 
 				document.getElementById(`info_event_details_link_${events[i]._id}`).addEventListener('click', () => {
-					console.log(events[i]._id)
 									dispatch(receiveEventClicked(events[i]._id))
 					dispatch(showSelectedEventDetails(true));
 	

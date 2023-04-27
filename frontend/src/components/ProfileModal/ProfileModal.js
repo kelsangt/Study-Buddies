@@ -71,7 +71,6 @@ const ProfileModal = () => {
     const closeModal = () => {
         const modal = document.getElementById('profile-modal-container')
         modal.classList.add('slideout')
-        console.log(modal)
         setTimeout(()=>{
         dispatch(setModalStatus(false))
       }, 500)

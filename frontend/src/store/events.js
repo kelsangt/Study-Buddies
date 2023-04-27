@@ -55,13 +55,10 @@ export const fetchAllEventsForDay = (date) => async dispatch => {
 export const fetchSpecificEvent = (eventId) => async dispatch => {
     const res = await jwtFetch(`api/events/${eventId}`);
     const data = await res.json();
-    console.log(data)
     return dispatch(receiveSpecificEvent(data))
 }
 
 export const createEvent = (eventInfo) => async dispatch => {
-    console.log("create");
-
     const res = await jwtFetch('/api/events', {
         method: 'POST',
         body: JSON.stringify(eventInfo),

@@ -28,7 +28,6 @@ function NavBar () {
       if (modalState) {
         const modal = document.getElementById('profile-modal-container')
         modal.classList.add('slideout')
-        console.log(modal)
         setTimeout(()=>{
           dispatch(setModalStatus(!modalState))
         }, 500)
