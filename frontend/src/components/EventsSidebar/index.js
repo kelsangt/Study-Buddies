@@ -77,7 +77,8 @@ const EventSideBar = () => {
     }, [])
     
     useEffect(() => {
-        dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
+        // dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
+        dispatch(setFetchNewEvents(true));
     }, [dispatch, date])
 
     useEffect(() => {
