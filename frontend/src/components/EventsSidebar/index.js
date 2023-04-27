@@ -77,9 +77,7 @@ const EventSideBar = () => {
     }, [])
     
     useEffect(() => {
-        // console.log("date", date.toLocaleDateString("en-us", {dateStyle: "long"}).split("T")[0]);
         dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
-        // dispatch(fetchAllLocations());
     }, [dispatch, date])
 
     useEffect(() => {
@@ -117,11 +115,11 @@ const EventSideBar = () => {
         })
       }
 
-{selectedEventModalStatus && (
-							<CenterModal onClose={leaveEventShowPage}>
-								<EventShow event={selectedEvent} />
-							</CenterModal>
-						)}
+      {selectedEventModalStatus && (
+        <CenterModal onClose={leaveEventShowPage}>
+          <EventShow event={selectedEvent} />
+        </CenterModal>
+      )}
     </div>
   )
 }
