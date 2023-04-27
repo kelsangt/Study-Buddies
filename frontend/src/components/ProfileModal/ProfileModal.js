@@ -90,7 +90,7 @@ const ProfileModal = () => {
                         <div className={`myevents-header ${currentTab === "My Events" ? 'selected' : ''}`} onClick={selectMyEvents}>My Events</div>
                         <div className={`myevents-header ${currentTab === "Joined Events" ? 'selected' : ''}`} onClick={selectJoinedEvents}>Joined Events</div>
                         <div className={`myevents-header ${currentTab === "Requested Events" ? 'selected' : ''}`} onClick={selectRequestEvents}>Requested Events</div>
-                        <div className={`myevents-header ${currentTab === "Notifications" ? 'selected' : ''}`} onClick={selectNotifications}>Notifications</div>
+                        <div className={`myevents-header ${currentTab === "Notifications" ? 'selected' : ''}`} onClick={selectNotifications}>Upcoming Events</div>
                     </div>
                     
                     {

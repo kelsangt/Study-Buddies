@@ -22,7 +22,6 @@ export const getNotifications = (state) => {
   return state.notifications ? state.notifications : {}
 }
 
-console.log(localStorage.getItem("notifications"))
 const initialState = JSON.parse(localStorage.getItem("notifications")) || {
   "<1 hour": {},
   "6 hours": {},

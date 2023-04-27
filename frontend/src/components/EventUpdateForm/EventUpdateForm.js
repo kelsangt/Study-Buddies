@@ -85,6 +85,7 @@ function EventUpdateForm ({event}) {
         };
 
         dispatch(updateEvent(updatedEvent));
+        document.getElementById('modal-center-background').click();
     }
   
     // accept deny
