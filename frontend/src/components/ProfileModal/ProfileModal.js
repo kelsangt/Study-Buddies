@@ -172,7 +172,7 @@ const ProfileModal = () => {
             </div>
 
             <div id='profile-modal-footer'>
-                <div id='divider'></div>
+                {/* <div id='divider'></div> */}
                 
                 <Link style={{ textDecoration: 'none' }} to={'/settings'}>
                     <div id='settings-button'>Profile Settings</div>

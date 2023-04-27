@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './EventSidebar.css';
-import { fetchAllEventsForDay, getEvents, getMyCreatedEvents, getMyJoinedEvents } from '../../store/events';
+import { fetchAllEventsForDay, getEvents, getMyCreatedEvents, getMyJoinedEvents, getSpecificEvents } from '../../store/events';
 import EventSidebarItem from './EventSidebarItem';
 import { getFetchEvents, receiveEventClicked, selectedDate, selectedEventDetailsModalStatus, selectedEventId, setFetchNewEvents, showSelectedEventDetails } from '../../store/ui';
 import DateSelector from '../DateSelector/DateSelector';
@@ -13,13 +13,14 @@ import EventShow from '../EventShow';
 
 const EventSideBar = () => {
   const events = useSelector(getEvents);
-  const selectedEvent = useSelector(selectedEventId);
+  const modalToggle = useSelector(state => state.ui.modalStatus)
   const dispatch = useDispatch();
-    // const currentDate = useSelector(selectedDate);
-    // const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
-    // const modalToggle = useSelector(state => state.ui.modalStatus)
-    const selectedId = useSelector(selectedEventId);
-    const date = useSelector(selectedDate)
+	// const currentDate = useSelector(selectedDate);
+	// const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
+	// const modalToggle = useSelector(state => state.ui.modalStatus)
+	const selectedId = useSelector(selectedEventId);
+  const selectedEvent = useSelector(getSpecificEvents(selectedId));
+	const date = useSelector(selectedDate)
     const selectedEventModalStatus = useSelector(selectedEventDetailsModalStatus);
     const fetchEvents = useSelector(getFetchEvents);
     
@@ -29,26 +30,40 @@ const EventSideBar = () => {
     
     const createNotifications = () => {
         const allMyEvents = createdEvents.concat(joinedEvents);
-
+        const newNotifications = {
+          "<1 hour": {},
+          "6 hours": {},
+          "12 hours": {}
+        }
+        
         const today = new Date();
         allMyEvents.forEach(event => {
             const startTime = new Date(event.startTime);
             const minDiff = Math.floor((startTime - today) / 1000 / 60)
             
             if (minDiff < 0) return;
-            if (minDiff <= 60 && notifications["<1 hour"][event._id] !== null) { // 1 hour
-                // console.log(event)
-                notifications["<1 hour"][event._id] = event;
-            } else if (minDiff <= 360 && notifications["6 hours"][event._id] !== null) { // 6 hours
-                // console.log(event)
-                notifications["6 hours"][event._id] = event;
-            } else if (minDiff <= 720 && notifications["12 hours"][event._id] !== null) { // 12 hours
-                // console.log(event)
-                notifications["12 hours"][event._id] = event;
+            if (minDiff <= 60) { // 1 hour
+              if (notifications["<1 hour"][event._id] !== null) {
+                newNotifications["<1 hour"][event._id] = event;
+              } else {
+                newNotifications["<1 hour"][event._id] = null;
+              }
+            } else if (minDiff <= 360) { // 6 hours
+              if (notifications["6 hours"][event._id] !== null) {
+                newNotifications["6 hours"][event._id] = event;
+              } else {
+                newNotifications["6 hours"][event._id] = null;
+              }
+            } else if (minDiff <= 720) { // 12 hours
+              if (notifications["12 hours"][event._id] !== null) {
+                newNotifications["12 hours"][event._id] = event;
+              } else {
+                newNotifications["12 hours"][event._id] = null;
+              }
             }
         })
 
-        dispatch(receiveNotifications(notifications));
+        dispatch(receiveNotifications(newNotifications));
     }
 
     useEffect(() => {
@@ -62,9 +77,7 @@ const EventSideBar = () => {
     }, [])
     
     useEffect(() => {
-        // console.log("date", date.toLocaleDateString("en-us", {dateStyle: "long"}).split("T")[0]);
         dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
-        // dispatch(fetchAllLocations());
     }, [dispatch, date])
 
     useEffect(() => {
@@ -102,11 +115,11 @@ const EventSideBar = () => {
         })
       }
 
-{/* {selectedEventModalStatus && (
-							<CenterModal onClose={leaveEventShowPage}>
-								<EventShow event={selectedEvent} />
-							</CenterModal>
-						)} */}
+      {selectedEventModalStatus && (
+        <CenterModal onClose={leaveEventShowPage}>
+          <EventShow event={selectedEvent} />
+        </CenterModal>
+      )}
     </div>
   )
 }
