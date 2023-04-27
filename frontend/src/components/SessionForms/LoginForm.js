@@ -28,7 +28,7 @@ function LoginForm () {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login({ email, password })); 
+    dispatch(login({ email: email.toLowerCase(), password })); 
     dispatch(setModalStatus(false))
   }
 
