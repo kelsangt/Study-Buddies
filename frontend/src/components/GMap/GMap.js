@@ -201,7 +201,7 @@ const GMap = () => {
 
 				document.getElementById(`info_event_details_link_${events[i]._id}`).addEventListener('click', () => {
 					console.log(events[i]._id)
-					dispatch(receiveEventClicked(events[i]._id))
+									dispatch(receiveEventClicked(events[i]._id))
 					dispatch(showSelectedEventDetails(true));
 	
 				}, {passive: true}) 	
@@ -227,14 +227,6 @@ const GMap = () => {
 			}, {passive: true})
 		}
 	}
-
-	//const addHoverToMapMarkers = () => {
-	//	for (let i = 0; i < markers.current.length; i++) {
-	//		markers.current[i].addListener("mousedown", () => {
-	//			dispatch(receiveEventClicked(events[i]))
-	//		})
-	//	}
-	//}
 
 	const addInternalEventListenersToInfoContent = () => {
 	}
@@ -302,12 +294,8 @@ const GMap = () => {
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 		locationButton.addEventListener("click", findGeoLocation, {passive: true});
 		setGMap(initialMap)
-	}, []);
-
-	useEffect(() => {
 		nullAllMarkers();
 		fillMarkersRefWithTodaysEvents();
-		//addHoverToMapMarkers(); 
 		// Set InfoTiles Ref to array of empty InfoWindows the same length as markers.current. 
 		infoTiles.current = markers.current.map(() => new window.google.maps.InfoWindow({ content: ""}));
 		fillInfoTilesRefWithContent();
@@ -315,6 +303,20 @@ const GMap = () => {
 		addInternalEventListenersToInfoContent();
 		resetLocationBasedOnGeolocation();
 		requestNearbyLibraries();
+	}, []);
+
+	useEffect(() => {
+		if (events.length != markers.current.length) {
+			nullAllMarkers();
+			fillMarkersRefWithTodaysEvents();
+			// Set InfoTiles Ref to array of empty InfoWindows the same length as markers.current. 
+			infoTiles.current = markers.current.map(() => new window.google.maps.InfoWindow({ content: ""}));
+			fillInfoTilesRefWithContent();
+			addMouseClickToMapMarkers(); 
+			addInternalEventListenersToInfoContent();
+			resetLocationBasedOnGeolocation();
+			requestNearbyLibraries();
+		}
 	}, [gMap, events])
  
 	return (
