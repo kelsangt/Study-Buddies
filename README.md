@@ -312,9 +312,9 @@ A user can only edit events that they've created. The edit form is prefilled wit
 For "Joined Events" and "Requested Events", the current user can leave the event or rescind their request.
 
 
-## Feature 5 - Notifications 
+## Feature 5 - Upcoming Events 
 
-Users will be notified when someone has requested to join their study session (if the user is the creator of the session). Users who requested to join a session will be notified if their request was accepted by the session creator. 
+Users will be able to see upcoming events they have created or joined. They can also also mark each or all upcoming events as read, and will persist on refresh.
 
 ## Backend
 
@@ -508,13 +508,13 @@ Tuesday (4/17):
 
 Wednesday (4/16):
 - Kelsang: 
-    - Work on frontend logic and styling for Notifications 
+    - Work on frontend logic and styling for Upcoming Events 
 - Ying: 
-    - Work on frontend logic and styling for Notifications 
+    - Work on frontend logic and styling for Upcoming Events 
 - Fahim
-    - Work on backend logic for Notifications
+    - Work on backend logic for Upcoming Events
 - Justin
-    - Work on frontend logic and styling for Notifications + backend 
+    - Work on frontend logic and styling for Upcoming Events + backend 
 
 Thursday (4/16):
 - Kelsang: 
