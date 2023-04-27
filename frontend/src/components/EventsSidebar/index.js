@@ -30,26 +30,40 @@ const EventSideBar = () => {
     
     const createNotifications = () => {
         const allMyEvents = createdEvents.concat(joinedEvents);
-
+        const newNotifications = {
+          "<1 hour": {},
+          "6 hours": {},
+          "12 hours": {}
+        }
+        
         const today = new Date();
         allMyEvents.forEach(event => {
             const startTime = new Date(event.startTime);
             const minDiff = Math.floor((startTime - today) / 1000 / 60)
             
             if (minDiff < 0) return;
-            if (minDiff <= 60 && notifications["<1 hour"][event._id] !== null) { // 1 hour
-                // console.log(event)
-                notifications["<1 hour"][event._id] = event;
-            } else if (minDiff <= 360 && notifications["6 hours"][event._id] !== null) { // 6 hours
-                // console.log(event)
-                notifications["6 hours"][event._id] = event;
-            } else if (minDiff <= 720 && notifications["12 hours"][event._id] !== null) { // 12 hours
-                // console.log(event)
-                notifications["12 hours"][event._id] = event;
+            if (minDiff <= 60) { // 1 hour
+              if (notifications["<1 hour"][event._id] !== null) {
+                newNotifications["<1 hour"][event._id] = event;
+              } else {
+                newNotifications["<1 hour"][event._id] = null;
+              }
+            } else if (minDiff <= 360) { // 6 hours
+              if (notifications["6 hours"][event._id] !== null) {
+                newNotifications["6 hours"][event._id] = event;
+              } else {
+                newNotifications["6 hours"][event._id] = null;
+              }
+            } else if (minDiff <= 720) { // 12 hours
+              if (notifications["12 hours"][event._id] !== null) {
+                newNotifications["12 hours"][event._id] = event;
+              } else {
+                newNotifications["12 hours"][event._id] = null;
+              }
             }
         })
 
-        dispatch(receiveNotifications(notifications));
+        dispatch(receiveNotifications(newNotifications));
     }
 
     useEffect(() => {
