@@ -138,8 +138,6 @@ const sessionReducer = (state = initialState, action) => {
     case RECEIVE_USER_LOGOUT:
       return initialState;
     case PATCH_USER:
-      console.log("current", newState);
-      console.log("new", action.user);
       return { user: {...newState.user, ...action.user} }
     case RECEIVE_REQUESTED_EVENT:
       newState.user.requestedEvents[action.event._id] = action.event;

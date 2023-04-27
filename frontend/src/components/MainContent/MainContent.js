@@ -28,7 +28,7 @@ const MainContent = () => {
                 <NavBar />
                 <div className="content-wrapper">
                     <EventSideBar />
-                    <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places", "geocoder"]}>
+                    <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render} libraries={["places"]}>
                     </Wrapper>
                     {modalToggle && <ProfileModal/>}
                 </div>

@@ -73,10 +73,6 @@ function EventUpdateForm ({event}) {
         const startTime = new Date(year, parseInt(month) - 1, day, startHour, startMin);
         const endTime = new Date(year, parseInt(month) - 1, day, endHour, endMin);
 
-        if (startTime > endTime) {
-          console.log("time error")
-        }
-
         const location = locations[locationIndex];
 
         const updatedEvent = {

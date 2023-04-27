@@ -76,7 +76,8 @@ const UserSettings = () => {
     }
     
 
-    const handleUpdate = () => {
+    const handleUpdate = (e) => {
+        e.preventDefault();
         dispatch(updateUser({firstName, lastName, username, email, school, major, linkedInUrl, phone}))
         
         let get = Array.from(document.getElementsByClassName('edit-profile-input'))
