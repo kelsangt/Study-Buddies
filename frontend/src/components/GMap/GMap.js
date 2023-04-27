@@ -26,7 +26,7 @@ const GMap = () => {
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
 	const events = useSelector(getEvents);
-
+	const [initialLoad, setInitialLoad] = useState(true);
 	const image = "../icon.png";
 	const blueIcon = "../bluemarker.png"
 	const libraryIcon = "../library_icon.png"	
@@ -228,9 +228,6 @@ const GMap = () => {
 		}
 	}
 
-	const addInternalEventListenersToInfoContent = () => {
-	}
-
 	const resetLocationBasedOnGeolocation = () => {
 		if (!geoLocationClicked) {
 			if (userLocationCoords.current) {
@@ -262,6 +259,7 @@ const GMap = () => {
 					fillColor: '#4a80f5'
 				})
 				circle.bindTo('center', locationMarker, 'position');
+				resetMarkersAndInfoTiles();
 				setGeoLocationClicked(true);
 			}
 		}
@@ -283,6 +281,14 @@ const GMap = () => {
 		}
 	}
 
+	const resetMarkersAndInfoTiles = () => {
+		nullAllMarkers();
+		fillMarkersRefWithTodaysEvents();
+		// Set InfoTiles Ref to array of empty InfoWindows the same length as markers.current. 
+		infoTiles.current = markers.current.map(() => new window.google.maps.InfoWindow({ content: ""}));
+		fillInfoTilesRefWithContent();
+		addMouseClickToMapMarkers(); 
+	}
 // Initialize The Map
 	useEffect(() => {
 		const initialMap = new window.google.maps.Map(ref.current, {
@@ -294,30 +300,23 @@ const GMap = () => {
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 		locationButton.addEventListener("click", findGeoLocation, {passive: true});
 		setGMap(initialMap)
-		nullAllMarkers();
-		fillMarkersRefWithTodaysEvents();
-		// Set InfoTiles Ref to array of empty InfoWindows the same length as markers.current. 
-		infoTiles.current = markers.current.map(() => new window.google.maps.InfoWindow({ content: ""}));
-		fillInfoTilesRefWithContent();
-		addMouseClickToMapMarkers(); 
-		addInternalEventListenersToInfoContent();
-		resetLocationBasedOnGeolocation();
-		requestNearbyLibraries();
 	}, []);
 
 	useEffect(() => {
 		if (events.length != markers.current.length) {
-			nullAllMarkers();
-			fillMarkersRefWithTodaysEvents();
-			// Set InfoTiles Ref to array of empty InfoWindows the same length as markers.current. 
-			infoTiles.current = markers.current.map(() => new window.google.maps.InfoWindow({ content: ""}));
-			fillInfoTilesRefWithContent();
-			addMouseClickToMapMarkers(); 
-			addInternalEventListenersToInfoContent();
-			resetLocationBasedOnGeolocation();
-			requestNearbyLibraries();
+			resetMarkersAndInfoTiles();
 		}
+		resetLocationBasedOnGeolocation();
+		requestNearbyLibraries();
 	}, [gMap, events])
+
+	useEffect(() => {
+		if (initialLoad && gMap) {
+			resetMarkersAndInfoTiles();
+			requestNearbyLibraries();
+			setInitialLoad(false);
+		}
+	}, [events])
  
 	return (
 		<>
