@@ -26,6 +26,7 @@ const GMap = () => {
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
 	const events = useSelector(getEvents);
+	const fetched = useSelector(getFetchEvents);
 	const [initialLoad, setInitialLoad] = useState(true);
 	const image = "../icon.png";
 	const blueIcon = "../bluemarker.png"
@@ -303,7 +304,7 @@ const GMap = () => {
 	}, []);
 
 	useEffect(() => {
-		if (events.length != markers.current.length) {
+		if (!fetched) {
 			resetMarkersAndInfoTiles();
 		}
 		resetLocationBasedOnGeolocation();
