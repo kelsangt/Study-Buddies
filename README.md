@@ -4,9 +4,9 @@
 
 # Background and Overview 
 
-<img width=600 alt="overview" src="./frontend/src/images/overview.png">
+<img width=600 alt="overview3" src="./frontend/src/images/overview3.png">
 
-<img width=600 alt="overview2" src="./frontend/src/images/overview2.png">
+<img width=600 alt="overview4" src="./frontend/src/images/overview4.png">
 
 Study Buddies is an app that allows students to be able to create and attend study sessions. These study sessions will be held in libraries across America and can be easily organized by the study session creator. Utilizing the Google Maps API, students will be able to browse available study sessions in their area, create study sessions, and request to join existing study sessions. Study Buddies fosters learning by allowing students to build their network and find peers to study with. 
 
@@ -18,7 +18,7 @@ Users must be able to sign up to create an account. Users must also be able to s
 
 ## Feature 2 - User Profile
 
-<img width=600 alt="profilesettings" src="./frontend/src/images/profilesettings.png">
+<img width=600 alt="profilesettings" src="./frontend/src/images/profilesettings2.png">
 
 Users will have their own profiles where they can add more information about themselves. Users can update their information on their profile. 
 
@@ -55,7 +55,7 @@ Users will have their own profiles where they can add more information about the
 
 In the user's settings page, the user's information is displayed in input fields that are disabled by default. When the user clicks the Edit button, the input fields are then enabled, allowing them to make changes.
 
-<img width=600 alt="eventstabs" src="./frontend/src/images/eventstabs.png">
+<img width=600 alt="eventstabs" src="./frontend/src/images/eventstabs2.png">
 
 ```javascript 
     <div id='events-holder'>
@@ -84,7 +84,7 @@ When a user clicks on their profile icon in the upper right corner, a slideout c
 
 ## Feature 3 - Google Maps
 
-<img width=600 alt="googlemaps" src="./frontend/src/images/googlemaps.png">
+<img width=600 alt="googlemaps" src="./frontend/src/images/googlemaps2.png">
 
 The Google Maps API will allow the user to browse study sessions around them on the map. 
 
@@ -192,7 +192,7 @@ Geolocation functionality - When user requests to use their Geolocation.
 
 ## Feature 4 - Study Sessions (CRUD)
 
-<img width=600 alt="eventshow" src="./frontend/src/images/eventshow.png">
+<img width=600 alt="eventshow" src="./frontend/src/images/eventshow2.png">
 
 Users can create, read, update, and destroy study sessions. 
 - Create - A user will be able to be the creator of a study session, allowing other users to request to join their session. 
@@ -200,7 +200,7 @@ Users can create, read, update, and destroy study sessions.
 - Update - A study session creator will be able to change the details of their study session (date and time, number of people attending, etc). 
 - Destroy - A study creator will be able to delete their study session. 
 
-<img width=600 alt="eventcreate" src="./frontend/src/images/eventcreate.png">
+<img width=600 alt="eventcreate" src="./frontend/src/images/eventcreate2.png">
 
 ```javascript
     export const createEvent = (eventInfo) => async dispatch => {
@@ -222,7 +222,7 @@ Users can create, read, update, and destroy study sessions.
 
 A user can create a new event.
 
-<img width=600 alt="dateselector" src="./frontend/src/images/dateselector.png">
+<img width=600 alt="dateselector" src="./frontend/src/images/dateselector2.png">
 
 ```javascript
     const EventSideBar = () => {
@@ -248,7 +248,7 @@ A user can create a new event.
 
 A user can browse through events for today or upcoming events using a date selector. When a date is selected, it will be saved in the store and the component that renders all the events will dispatch a thunk function to retrieve the events for the selected date.
 
-<img width=600 alt="eventedit" src="./frontend/src/images/eventedit.png">
+<img width=600 alt="eventedit" src="./frontend/src/images/eventedit2.png">
 
 ```javascript
     {
@@ -271,7 +271,7 @@ A user can browse through events for today or upcoming events using a date selec
 
 A user can only edit events that they've created. The edit form is prefilled with the current details of the event. The creator is allowed to kick attendees and accept/deny pending requests.
 
-<img width=600 alt="eventcancelrequest" src="./frontend/src/images/eventcancelrequest.png">
+<img width=600 alt="eventcancelrequest" src="./frontend/src/images/eventcancelrequest2.png">
 
 ```javascript
     const handleLeave = (e) => {
@@ -314,7 +314,125 @@ For "Joined Events" and "Requested Events", the current user can leave the event
 
 ## Feature 5 - Upcoming Events 
 
+<img width=600 alt="upcomingevents" src="./frontend/src/images/upcomingevents.png">
+
 Users will be able to see upcoming events they have created or joined. They can also also mark each or all upcoming events as read, and will persist on refresh.
+
+``` javascript
+const createNotifications = () => {
+  const allMyEvents = createdEvents.concat(joinedEvents);
+  const newNotifications = {
+    "<1 hour": {},
+    "6 hours": {},
+    "12 hours": {}
+  }
+  
+  const today = new Date();
+  allMyEvents.forEach(event => {
+      const startTime = new Date(event.startTime);
+      const minDiff = Math.floor((startTime - today) / 1000 / 60)
+      
+      if (minDiff < 0) return;
+      if (minDiff <= 60) { // 1 hour
+        if (notifications["<1 hour"][event._id] !== null) {
+          newNotifications["<1 hour"][event._id] = event;
+        } else {
+          newNotifications["<1 hour"][event._id] = null;
+        }
+      } else if (minDiff <= 360) { // 6 hours
+        if (notifications["6 hours"][event._id] !== null) {
+          newNotifications["6 hours"][event._id] = event;
+        } else {
+          newNotifications["6 hours"][event._id] = null;
+        }
+      } else if (minDiff <= 720) { // 12 hours
+        if (notifications["12 hours"][event._id] !== null) {
+          newNotifications["12 hours"][event._id] = event;
+        } else {
+          newNotifications["12 hours"][event._id] = null;
+        }
+      }
+  })
+
+  dispatch(receiveNotifications(newNotifications));
+}
+
+useEffect(() => {
+  createNotifications();
+  // updates notifications every half hour
+  const notificationInterval = setInterval(createNotifications, 1800000);
+
+  return () => {
+      clearInterval(notificationInterval);
+  }
+}, [])
+```
+
+Upcoming events are determined on the frontend through the createNotifications functions. A useEffect calls it on initial load of the home page, and then sets up an interval to periodically update it every half hour.
+
+
+``` javascript
+const initialState = JSON.parse(localStorage.getItem("notifications")) || {
+  "<1 hour": {},
+  "6 hours": {},
+  "12 hours": {}
+}
+
+const notificationsReducer = (state=initialState, action) => {
+  let nextState = {...state}
+  switch (action.type) {
+    case RECEIVE_NOTIFICATIONS:
+        localStorage.setItem("notifications", JSON.stringify({...action.notifications}))
+        return {...action.notifications}
+    case HIDE_NOTIFICATION:
+        nextState[action.payload.notificationType][action.payload.eventId] = null;
+        localStorage.setItem("notifications", JSON.stringify(nextState));
+        return nextState;
+      case HIDE_ALL_NOTIFICATIONS:
+        Object.keys(nextState).forEach(notificationType => {
+          Object.keys(nextState[notificationType]).forEach(eventId => {
+            nextState[notificationType][eventId] = null;
+          })
+        })
+        localStorage.setItem("notifications", JSON.stringify(nextState));
+        return nextState;
+    default:
+        return state;
+  }
+}
+```
+
+The notifications reducer will save and retrieve notifications in local storage and the redux state.
+
+```javascript
+{
+    notificationTab &&
+    Object.keys(notifications).map(timeNotification => {
+
+        return (
+            <div key={timeNotification}>
+                <span className="notification-time">
+                    {
+                        timeNotification === "<1 hour"
+                            ? "About an hour until session starts"
+                            : timeNotification === "6 hours"
+                                ? "About 6 hours until session starts"
+                                : "About 12 hours until session starts"
+                    }
+                </span>
+                {
+                    Object.values(notifications[timeNotification]).map(event => {
+                        if (!event) return null;
+                        return <MyCreatedEvents event={event} notificationType={timeNotification} key={event._id}/>
+                    })
+                }
+            </div>
+        )
+    })
+}
+```
+
+In the ProfileModal component, upcoming event notifications are displayed in 3 different groups (Less than an hour, about 6 hours, about 12 hours). Upcoming events marked as read become null, and no longer get displayed.
 
 ## Backend
 
