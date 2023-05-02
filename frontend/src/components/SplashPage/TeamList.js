@@ -11,7 +11,7 @@ const TeamList = () => {
             <div className='team-pics-holder'>
               <img 
                 className='team-pics' 
-                src={require('./assets/kelsang.jpeg')}
+                src={require('./assets/kelsang2.jpg')}
                 alt=''
               />
             </div>
