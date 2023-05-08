@@ -142,7 +142,7 @@ const EventSideBar = () => {
 
           <div id='create-event-button' onClick={showCreateForm}>
             <i className="fa-solid fa-plus" id='plus-icon'></i>
-            Create Event
+            Create Session
           </div>
 
           <DateSelector id='dateselector'/>

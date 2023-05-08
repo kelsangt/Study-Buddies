@@ -4,15 +4,23 @@ import { createEvent } from '../../store/events';
 import { getLocations } from '../../store/locations';
 import './EventCreateForm.css'
 
-function EventCreateForm () {
+function EventCreateForm ({locationName}) {
+    const locations = useSelector(getLocations);
+
+    let selectedIndex = '';
+    if (locationName) {
+      locations.forEach((loc, idx) => {
+        if (loc.name === locationName) selectedIndex = idx
+      })
+    }
+
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [locationIndex, setLocationIndex] = useState('');
+    const [locationIndex, setLocationIndex] = useState(selectedIndex);
     const [startTimeInitial, setStartTimeInitial] = useState('');
     const [endTimeInitial, setEndTimeInitial] = useState('');
     const [date, setDate] = useState('');
 
-    const locations = useSelector(getLocations);
   
     // const errors = useSelector(state => state.errors.session);
     const dispatch = useDispatch();
@@ -106,7 +114,7 @@ function EventCreateForm () {
             <label className="eventCreateLabel">
               <span className="eventCreateFormSpan">Location</span>
              
-              <select defaultValue="" className="inputField" id="selectLocation" required onChange={update('Location')}>
+              <select defaultValue={locationIndex} className="inputField" id="selectLocation" required onChange={update('Location')}>
                 <option disabled value="">Select a location</option>
                 {locations.map((location, index)=>{
                     return (
