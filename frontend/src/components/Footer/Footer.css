@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100vw;
     height: 10vh;
     background-color: rgb(30, 84, 171);
@@ -13,4 +14,28 @@
 #footerLink {
     margin-left: 10px;
     margin-bottom: 10px;
+}
+
+.about-page {
+    margin-top: 10px;
+}
+
+#about-us-h1 {
+    color: white;
+}
+
+#about-us-h1:hover {
+    color: rgb(255, 145, 0);
+}
+
+#githubLinkFooter {
+    color: white;
+    font-size: 28px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+#githubLinkFooter:hover {
+    color: rgb(255, 145, 0);
 }

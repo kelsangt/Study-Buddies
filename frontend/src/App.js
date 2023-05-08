@@ -15,6 +15,8 @@ import { getCurrentUser } from './store/session';
 import MainContent from './components/MainContent/MainContent';
 import EventCreateForm from './components/EventCreateForm/EventCreateForm';
 import UserSettings from './components/UserSettings/UserSettings';
+import AboutPage from './components/AboutPage/AboutPage';
+import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -32,7 +34,7 @@ function App() {
         <ProtectedRoute exact path='/settings' component={UserSettings}/>
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
-
+        <Route exact path="/about" component={AboutPage} />
       </Switch>
     </>
   );

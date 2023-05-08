@@ -30,6 +30,7 @@ const GMap = () => {
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
 	const [showEventCreateModal, setShowEventCreateModal] = useState(false);
+	const [locationName, setLocationName] = useState('');
 
 	const events = useSelector(getEvents);
 	const fetched = useSelector(getFetchEvents);
@@ -204,6 +205,7 @@ const hideCreateForm = () => {
 					const clickedLibraryCreateLink = document.getElementsByClassName(`local_lib_create_event_link`);
 					for (let i = 0; i < clickedLibraryCreateLink.length; i++) {
 						clickedLibraryCreateLink[i].addEventListener('click', (e) => {
+							setLocationName(e.target.parentNode.parentNode.firstChild.innerText);
 							showCreateForm(e);
 						})
 					}
@@ -415,7 +417,7 @@ const hideCreateForm = () => {
 			</div>
 			{showEventCreateModal && (
 				<CenterModal onClose={hideCreateForm}>
-						<EventCreateForm />
+						<EventCreateForm locationName={locationName} />
 				</CenterModal>
       )}
 			

@@ -80,7 +80,7 @@ In the user's settings page, the user's information is displayed in input fields
                         }
     </div>
 ```
-When a user clicks on their profile icon in the upper right corner, a slideout component will render with tabs for "My Events", "Joined Events", and "Requested Events". These events are all stored in the store under the user.
+When a user clicks on their profile icon in the upper right corner, a slideout component will render with tabs for "My Sessions", "Joined Sessions", and "Requested Sessions". These sessions are all stored in the store under the user.
 
 ## Feature 3 - Google Maps
 

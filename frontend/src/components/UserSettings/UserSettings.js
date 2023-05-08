@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { clearSessionErrors } from '../../store/session';
 import { useState } from 'react';
 import NavBar from '../NavBar/NavBar';
+import Footer from '../Footer/Footer';
 import './UserSettings.css'
 import { updateUser } from '../../store/session';
 
@@ -215,6 +216,7 @@ const UserSettings = () => {
                 </div>
             </div>
         </div>
+        <Footer/>
         </>
     )
 }

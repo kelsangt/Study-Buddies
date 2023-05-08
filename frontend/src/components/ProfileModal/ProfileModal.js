@@ -25,11 +25,11 @@ const ProfileModal = () => {
     let joinedEventTab;
     let requestedEventTab;
     let notificationTab;
-    if (currentTab === 'My Events') {
+    if (currentTab === 'My Sessions') {
         myEventTab = true
-    } else if (currentTab === 'Joined Events') {
+    } else if (currentTab === 'Joined Sessions') {
         joinedEventTab = true
-    } else if (currentTab === 'Requested Events') {
+    } else if (currentTab === 'Requested Sessions') {
         requestedEventTab = true
     } else {
         notificationTab = true
@@ -40,14 +40,14 @@ const ProfileModal = () => {
         dispatch(logout());
     }
     const selectMyEvents = () => {
-        dispatch(setTabStatus("My Events"))
+        dispatch(setTabStatus("My Sessions"))
     }
 
     const selectJoinedEvents = () => {
-        dispatch(setTabStatus("Joined Events"))
+        dispatch(setTabStatus("Joined Sessions"))
     }
     const selectRequestEvents = () => {
-        dispatch(setTabStatus("Requested Events"))
+        dispatch(setTabStatus("Requested Sessions"))
     }
     const selectNotifications = () => {
         dispatch(setTabStatus("Notifications"))
@@ -87,20 +87,20 @@ const ProfileModal = () => {
                 <div id='myevents-create-container'>
                     <div id='events-tab'>
                         <div id='close-caret' onClick={closeModal}><i className="fa-solid fa-caret-right"></i></div>
-                        <div className={`myevents-header ${currentTab === "My Events" ? 'selected' : ''}`} onClick={selectMyEvents}>My Events</div>
-                        <div className={`myevents-header ${currentTab === "Joined Events" ? 'selected' : ''}`} onClick={selectJoinedEvents}>Joined Events</div>
-                        <div className={`myevents-header ${currentTab === "Requested Events" ? 'selected' : ''}`} onClick={selectRequestEvents}>Requested Events</div>
-                        <div className={`myevents-header ${currentTab === "Notifications" ? 'selected' : ''}`} onClick={selectNotifications}>Upcoming Events</div>
+                        <div className={`myevents-header ${currentTab === "My Sessions" ? 'selected' : ''}`} onClick={selectMyEvents}>My Sessions</div>
+                        <div className={`myevents-header ${currentTab === "Joined Sessions" ? 'selected' : ''}`} onClick={selectJoinedEvents}>Joined Sessions</div>
+                        <div className={`myevents-header ${currentTab === "Requested Sessions" ? 'selected' : ''}`} onClick={selectRequestEvents}>Requested Sessions</div>
+                        <div className={`myevents-header ${currentTab === "Notifications" ? 'selected' : ''}`} onClick={selectNotifications}>Upcoming Sessions</div>
                     </div>
                     
                     {
-                        tab === "My Events" &&
+                        tab === "My Sessions" &&
                         <div 
                             id='create-event-button'
                             onClick={showCreateForm}
                         >
                             <i className="fa-solid fa-plus" id='plus-icon'></i>
-                            Create Event
+                            Create Session
                         </div>
                     }
 

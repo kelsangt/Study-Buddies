@@ -10,3 +10,11 @@
     font-size: 28px;
     margin-top: 10px;
 }
+
+#githubLink:hover {
+    color: #c744f3;
+}
+
+#linkedInLink:hover {
+    color: #c744f3;
+}
