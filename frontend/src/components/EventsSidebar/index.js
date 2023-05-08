@@ -10,6 +10,10 @@ import Loading from '../GMap/Loading/Loading';
 import GMap from '../GMap/GMap';
 import { CenterModal } from '../../context/Modal';
 import EventShow from '../EventShow';
+import { useState } from 'react';
+import { setModalStatus } from '../../store/ui';
+import EventCreateForm from '../EventCreateForm/EventCreateForm';
+
 
 const EventSideBar = () => {
   const events = useSelector(getEvents);
@@ -18,6 +22,7 @@ const EventSideBar = () => {
 	// const currentDate = useSelector(selectedDate);
 	// const todayEvents = useSelector(state => state.events ? Object.values(state.events) : []);
 	// const modalToggle = useSelector(state => state.ui.modalStatus)
+  const [showEventCreateModal, setShowEventCreateModal] = useState(false);
 	const selectedId = useSelector(selectedEventId);
   const selectedEvent = useSelector(getSpecificEvents(selectedId));
 	const date = useSelector(selectedDate)
@@ -102,10 +107,43 @@ const EventSideBar = () => {
 			const sideModal = document.getElementById('profile-modal-container');
 			if (sideModal) sideModal.style.display = 'flex';
 		}
+// ===================================
+    const showCreateForm = (e) => {
+      e.preventDefault();
+      setShowEventCreateModal(true);
+      const sideModal = document.getElementById('profile-modal-container');
+      if (sideModal) {
+        sideModal.style.display = 'none';
+      }
+    }
+    const hideCreateForm = (e) => {
+      e.preventDefault();
+      setShowEventCreateModal(false);
+      const sideModal = document.getElementById('profile-modal-container');
+      if (sideModal) {
+        sideModal.style.display = 'none';
+      }
+    }
 
   return (
     <div className="event-sidebar">
-      <DateSelector id='dateselector'/>
+      <div id='createbutton-dateselector'>
+
+          <div id='create-event-button' onClick={showCreateForm}>
+            <i className="fa-solid fa-plus" id='plus-icon'></i>
+            Create Event
+          </div>
+
+          <DateSelector id='dateselector'/>
+        </div>
+
+        {showEventCreateModal && 
+          <CenterModal onClose={hideCreateForm}>
+            <EventCreateForm/>
+          </CenterModal>
+        }
+
+
       {
         events.map(event => {
           return <EventSidebarItem 
