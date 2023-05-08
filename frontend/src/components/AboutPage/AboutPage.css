@@ -1,0 +1,60 @@
+#about-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(37, 8, 105);
+}
+
+#about-h1 {
+    font-family: var(--font);
+    font-size: 28px;
+    color: white;
+}
+
+#about-info {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(57, 27, 127);
+    color: white;
+    font-family: var(--font);
+    align-items: center;
+}
+
+#about-image {
+    width: 50vw;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 50px;
+    margin-left: 20px;
+}
+
+#about-description {
+    font-size: 24px;
+    line-height: normal;
+    margin-right: 20px;
+}
+
+#about-description-2 {
+    margin-top: 30px;
+    font-size: 24px;
+    line-height: normal;
+    margin-right: 20px;
+}
+
+#about-info-2 {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(72, 33, 163);
+    color: white;
+    font-family: var(--font);
+    align-items: center;
+}
+
+#about-image-2 {
+    width: 50vw;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 50px;
+    margin-left: 20px;
+}
