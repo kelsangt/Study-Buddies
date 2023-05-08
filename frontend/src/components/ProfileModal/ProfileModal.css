@@ -31,8 +31,9 @@
     animation-duration: 0.5s;
 }
 #profile-modal-container.slideout{
-    animation-name: reversemodal;
-    animation-duration: 0.5s;
+    /* animation-name: reversemodal;
+    animation-duration: 0.5s; */
+    animation: reversemodal 0.5s both;
 }
 
 #big-event-container{
