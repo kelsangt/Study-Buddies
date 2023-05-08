@@ -106,8 +106,8 @@ function EventCreateForm () {
             <label className="eventCreateLabel">
               <span className="eventCreateFormSpan">Location</span>
              
-              <select className="inputField" id="selectLocation" required onChange={update('Location')}>
-                <option disabled selected value="">Select a location</option>
+              <select defaultValue="" className="inputField" id="selectLocation" required onChange={update('Location')}>
+                <option disabled value="">Select a location</option>
                 {locations.map((location, index)=>{
                     return (
                         <option key={index} value={index}>
