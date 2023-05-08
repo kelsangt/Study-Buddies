@@ -97,6 +97,8 @@
     color: white;
 }
 #create-event-button {
+    align-self: center;
+    width: fit-content;
     border: 1px solid gray;
     background-color: rgb(31 84 171);
     border-radius: 5px;
