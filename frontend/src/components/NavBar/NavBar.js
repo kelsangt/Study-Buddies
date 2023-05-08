@@ -15,7 +15,7 @@ function NavBar () {
   const modalState = useSelector(state => state.ui.modalStatus);
   
   useEffect(() => {
-    if (location.pathname === '/settings') {
+    if (location.pathname === '/settings' || (loggedIn && location.pathname === '/about')) {
       
       let button = document.getElementsByClassName('profile-button')[0];
       
