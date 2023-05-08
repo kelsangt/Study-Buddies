@@ -90,11 +90,11 @@ const MyCreatedEvents = ({event, notificationType}) => {
                 {new Date(event.endTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ')[1]}
             </div>
             
-            {(currentTab === "My Events") &&
+            {(currentTab === "My Sessions") &&
             <div className='myevent-edit-holder'>
                 <div className="myevent-options-holder">
-                    <div onClick={showEditForm} id='myevent-edit-button'>Edit Event</div>
-                    <div onClick={handleLeave} id='myevent-edit-button'>Delete Event</div>
+                    <div onClick={showEditForm} id='myevent-edit-button'>Edit Session</div>
+                    <div onClick={handleLeave} id='myevent-edit-button'>Delete Session</div>
                 </div>
                 {showEventEditModal && (
                     <CenterModal onClose={hideEditForm}>
@@ -103,13 +103,13 @@ const MyCreatedEvents = ({event, notificationType}) => {
                 )}
             </div>
             }
-            {(currentTab === "Joined Events") &&
+            {(currentTab === "Joined Sessions") &&
             <div className='myevent-edit-holder'>
-                <div onClick={handleLeave} id='myevent-edit-button'>Leave Event</div>
+                <div onClick={handleLeave} id='myevent-edit-button'>Leave Session</div>
             </div>
             }
 
-            {(currentTab === "Requested Events") &&
+            {(currentTab === "Requested Sessions") &&
             <div className='myevent-edit-holder'>
                 <div onClick={handleRequest} id='myevent-edit-button'>Cancel Request</div>
             </div>

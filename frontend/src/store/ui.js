@@ -87,7 +87,7 @@ export const getReloadMapStatus = (state) => {
 
 const initialState = {
     modalStatus: false,
-    tab: "My Events",
+    tab: "My Sessions",
     selectedEventId: null,
     date: new Date(),
     endDate: null,
