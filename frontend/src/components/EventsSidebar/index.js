@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './EventSidebar.css';
 import { fetchAllEventsForDay, getEvents, getMyCreatedEvents, getMyJoinedEvents, getSpecificEvents } from '../../store/events';
 import EventSidebarItem from './EventSidebarItem';
-import { getFetchEvents, receiveEventClicked, selectedDate, selectedEventDetailsModalStatus, selectedEventId, setFetchNewEvents, showSelectedEventDetails } from '../../store/ui';
+import { getFetchEvents, receiveEventClicked, selectedDate, selectedEndDate, selectedEventDetailsModalStatus, selectedEventId, setFetchNewEvents, showSelectedEventDetails } from '../../store/ui';
 import DateSelector from '../DateSelector/DateSelector';
 import { getNotifications, receiveNotifications } from '../../store/notifications';
 import { useEffect } from 'react';
@@ -21,6 +21,7 @@ const EventSideBar = () => {
 	const selectedId = useSelector(selectedEventId);
   const selectedEvent = useSelector(getSpecificEvents(selectedId));
 	const date = useSelector(selectedDate)
+  const endDate = useSelector(selectedEndDate)
     const selectedEventModalStatus = useSelector(selectedEventDetailsModalStatus);
     const fetchEvents = useSelector(getFetchEvents);
     
@@ -79,11 +80,19 @@ const EventSideBar = () => {
     useEffect(() => {
         // dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
         dispatch(setFetchNewEvents(true));
-    }, [dispatch, date])
+    }, [dispatch, date, endDate])
 
     useEffect(() => {
         if (fetchEvents) {
-            dispatch(fetchAllEventsForDay(date.toLocaleDateString("en-us").split("T")[0]));
+            const start = date.toLocaleDateString("en-us").split("T")[0]
+            let end = endDate
+            if (end) {
+              end = end.toLocaleDateString("en-us").split("T")[0]
+              dispatch(fetchAllEventsForDay(start, end));
+            } else {
+              dispatch(fetchAllEventsForDay(start));
+            }
+
             dispatch(setFetchNewEvents(false));
             createNotifications();
         }

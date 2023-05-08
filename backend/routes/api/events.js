@@ -12,11 +12,14 @@ const validateEventInput = require('../../validations/eventInput');
 // GET all events within a date range
 router.get('/', async (req, res) => {
   try {
-    const startDay = new Date(req.query.startDate);
+    let startDay 
+    if (req.query.startDate) startDay = new Date(req.query.startDate);
+    else startDay = new Date();
 
     let endDay;
     if (req.query.endDate) {
       endDay = new Date(req.query.endDate);
+      endDay.setDate(endDay.getDate() + 1);
     } else {
       endDay = new Date(req.query.startDate);
       endDay.setDate(endDay.getDate() + 1);
@@ -25,7 +28,7 @@ router.get('/', async (req, res) => {
     const events = await Event.find({
       startTime: {
         $gte: startDay,
-        $lt: endDay
+        $lte: endDay
       }
     })
     .populate("creator", "_id username profileImageUrl")
