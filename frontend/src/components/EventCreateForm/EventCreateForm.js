@@ -87,8 +87,8 @@ function EventCreateForm () {
                 value={name}
                 onChange={update('Name')}
                 placeholder="Name"
-                minlength="3"
-                maxlength="140"
+                minLength="3"
+                maxLength="140"
                 required
               />
             </label>

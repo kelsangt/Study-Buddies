@@ -9,8 +9,10 @@ import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked, selectedEventId } from '../../store/ui';
 import { receiveAllLocations } from '../../store/locations';
 import { createEventRequest } from '../../store/events';
-import { showSelectedEventDetails, receiveModalToggle, receiveTabState, getReloadMapStatus, setMapReloadStatus, getFetchEvents } from '../../store/ui';
-
+import { showSelectedEventDetails, receiveModalToggle, receiveTabState, getReloadMapStatus, setMapReloadStatus, getFetchEvents, setModalStatus } from '../../store/ui';
+import LibraryWindow from './LibraryWindow/LibraryWindow';
+import { CenterModal } from '../../context/Modal';
+import EventCreateForm from '../EventCreateForm/EventCreateForm';
 
 const GMap = () => {
 	const dispatch = useDispatch();
@@ -25,6 +27,7 @@ const GMap = () => {
 	
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
+	const [showEventCreateModal, setShowEventCreateModal] = useState(false);
 	const events = useSelector(getEvents);
 	const fetched = useSelector(getFetchEvents);
 	const [initialLoad, setInitialLoad] = useState(true);
@@ -48,6 +51,15 @@ const GMap = () => {
 				]
 		}
 	];
+
+	const showCreateForm = (e) => {
+		e.preventDefault();
+		setShowEventCreateModal(true);
+}
+
+const hideCreateForm = () => {
+		setShowEventCreateModal(false);
+}
 
 // Helper Function for Geolocation. 
 	const findGeoLocation = () => {
@@ -99,11 +111,18 @@ const GMap = () => {
 // Helper Function for Placing the Local Libraries 
 	function placeLibraries(results, status) {
 		if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+			let windowContent;
 			let googleFetchedLibraries = [];
 
 			results.forEach(result => {
 				let photoUrl = "https://upload.wikimedia.org/wikipedia/commons/6/60/Statsbiblioteket_l%C3%A6sesalen-2.jpg";
-				
+		
+				if (result) {
+					windowContent = renderToString(
+					<LibraryWindow library={result.name} />
+					)
+				}
+
 				if (result.photos) {
 					photoUrl = result.photos[0].getUrl()
 				}
@@ -130,13 +149,28 @@ const GMap = () => {
 					animation: window.google.maps.Animation.DROP, 
 				});
 				let eventInfoWindow = new window.google.maps.InfoWindow({
-					content: result.name
+					content: windowContent
 				})
+	
 				eventMarker.addListener("click", () => {
 					eventInfoWindow.open({
 						anchor: eventMarker, 
 						map: gMap
 					})
+				}, {passive: true})
+
+				window.google.maps.event.addListener(eventInfoWindow, 'domready', () => {
+					const clickedLibraryCreateLink = document.getElementsByClassName(`local_lib_create_event_link`);
+					for (let i = 0; i < clickedLibraryCreateLink.length; i++) {
+						clickedLibraryCreateLink[i].addEventListener('click', (e) => {
+							showCreateForm(e);
+						})
+					}
+
+					window.google.maps.event.addListener(gMap, "click", (e) => {
+						eventInfoWindow.close();
+						hideCreateForm(e);
+					}, {passive: true})
 				}, {passive: true})
 			})
 			dispatch(receiveAllLocations(googleFetchedLibraries));
@@ -271,7 +305,7 @@ const GMap = () => {
 			let locationLat = gMap.center.lat();
 			let request = {
 				location: new window.google.maps.LatLng({lat: locationLat, lng: locationLng}), 
-				radius: '400',
+				radius: '600',
 				type: ['library']
 			};
 	
@@ -325,6 +359,11 @@ const GMap = () => {
 					<div ref={ref} id="map" />
 				</div>
 			</div>
+			{showEventCreateModal && (
+				<CenterModal onClose={hideCreateForm}>
+						<EventCreateForm />
+				</CenterModal>
+      )}
 			
 		</>
 	)

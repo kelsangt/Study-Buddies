@@ -1,0 +1,19 @@
+.local_lib_create_event_link {
+	color: blue;
+	position: relative;
+	left: 6px;
+}
+
+#local_lib_create_event_wrapper {
+	color: blue;
+	font-weight: bold;
+}
+
+#local_lib_create_event_wrapper:hover {
+	cursor: pointer;
+}
+
+#local_lib_create_event_wrapper {
+	display: flex;
+	justify-content: center;
+}
