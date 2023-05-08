@@ -2,10 +2,8 @@ import {useState, useRef, useEffect} from 'react';
 import './GMap.css';
 import { renderToString } from 'react-dom/server'
 import InfoBoxInternal from './marker/InfoBoxInternal';
-import NavBar from '../NavBar/NavBar';
 import { getEvents } from '../../store/events';
 import { useDispatch, useSelector } from 'react-redux';
-import EventSideBar from '../EventsSidebar';
 import { receiveEventClicked, selectedEventId } from '../../store/ui';
 import { receiveAllLocations } from '../../store/locations';
 import { createEventRequest } from '../../store/events';
@@ -17,21 +15,25 @@ import EventCreateForm from '../EventCreateForm/EventCreateForm';
 const GMap = () => {
 	const dispatch = useDispatch();
 	const [gMap, setGMap] = useState();
-	const centerCoords = { lat: 40.73630, lng: -73.99379 };
+	const initialCenterCoords = { lat: 40.73630, lng: -73.99379 };
   const zoomAmount = 16;
 	
 	const ref = useRef();
 	const markers = useRef([]);
 	const infoTiles = useRef([]);
 	const userLocationCoords = useRef({});
+	const centerLat = useRef(40.73630);
+	const centerLng = useRef(-73.99379);
 	
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
 	const [showEventCreateModal, setShowEventCreateModal] = useState(false);
 	const [locationName, setLocationName] = useState('');
+	const [initialLoad, setInitialLoad] = useState(true);
+
 	const events = useSelector(getEvents);
 	const fetched = useSelector(getFetchEvents);
-	const [initialLoad, setInitialLoad] = useState(true);
+
 	const image = "../icon.png";
 	const blueIcon = "../bluemarker.png"
 	const libraryIcon = "../library_icon.png"	
@@ -39,8 +41,12 @@ const GMap = () => {
 	// Creating Geolocation Button including InfoWindow
 	const infoWindow = new window.google.maps.InfoWindow(); 
 	const locationButton = document.createElement("button");
-	locationButton.textContent = "Click to View Study Sessions In Your Area"
-	locationButton.classList.add("custom-map-control-button")
+	locationButton.textContent = "Find Study Sessions Near You"
+	locationButton.classList.add("custom-map-control-button");
+
+	const currentLibrariesOnMapCenter = document.createElement("button");
+	currentLibrariesOnMapCenter.textContent = "Locate Libraries For Your Next Session";
+	currentLibrariesOnMapCenter.classList.add("custom-map-control-button");
 
 	// Map Initial Styles 
 	const stylesArray = [
@@ -53,14 +59,29 @@ const GMap = () => {
 		}
 	];
 
-	const showCreateForm = (e) => {
-		e.preventDefault();
-		setShowEventCreateModal(true);
-}
+	
+	const createTheMap = (latitude, longitude) => {
+		const initialMap = new window.google.maps.Map(ref.current, {
+			center: { lat: latitude, lng: longitude},
+			zoom: zoomAmount,
+			styles: stylesArray
+		})
 
-const hideCreateForm = () => {
-		setShowEventCreateModal(false);
-}
+		window.google.maps.event.addListener(initialMap, "dragend", function() {
+			const center = initialMap.getCenter();
+			const lat = center.lat();
+			const lng = center.lng();
+			centerLat.current = lat;
+			centerLng.current = lng;
+		});
+
+		// Creating the Geolocation Controls Button and Event Listener
+		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+		initialMap.controls[window.google.maps.ControlPosition.TOP_RIGHT].push(currentLibrariesOnMapCenter);
+		locationButton.addEventListener("click", findGeoLocation, {passive: true});
+		currentLibrariesOnMapCenter.addEventListener("click", findMapCenterLibraries);
+		return initialMap;
+	}
 
 // Helper Function for Geolocation. 
 	const findGeoLocation = () => {
@@ -75,14 +96,11 @@ const hideCreateForm = () => {
 							lat: position.coords.latitude, 
 							lng: position.coords.longitude
 						};
+						centerLat.current = userLocation.lat;
+						centerLng.current = userLocation.lng;
 						userLocationCoords.current = userLocation; 
 						// Setting the map to the new location. 
-						const newMap = new window.google.maps.Map(ref.current, {
-							center: { lat: userLocation.lat, lng: userLocation.lng},
-							zoom: zoomAmount,
-							styles: stylesArray
-						})
-						newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+						const newMap = createTheMap(userLocation.lat, userLocation.lng);
 						setGMap(newMap);
 					},
 					() => {
@@ -96,32 +114,37 @@ const hideCreateForm = () => {
 		}
 	}
 
-// Helper Function if Geolocation is not available. 
-		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-			infoWindow.setPosition(pos);
-			infoWindow.setContent(
-				browserHasGeolocation 
-					? "Error: The Geolocation service failed."
-					: "Error: Your browser doesn't support geolocation."
-			);
-			infoWindow.open({
-				map: gMap
-			});
-		}
+	const findMapCenterLibraries = () => {
+		const currentMap = createTheMap(centerLat.current, centerLng.current);
+		setGMap(currentMap);
+		setRequestedLibraries(false);
+		requestNearbyLibraries();
+	}
 
-// Helper Function for Placing the Local Libraries 
+// Helper Function for if Geolocation is not available. 
+	function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+		infoWindow.setPosition(pos);
+		infoWindow.setContent(
+			browserHasGeolocation 
+				? "Error: The Geolocation service failed."
+				: "Error: Your browser doesn't support geolocation."
+		);
+		infoWindow.open({
+			map: gMap
+		});
+	}
+
+// Helper Function for Placing Local Libraries 
 	function placeLibraries(results, status) {
 		if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+			const googleFetchedLibraries = [];
 			let windowContent;
-			let googleFetchedLibraries = [];
 
 			results.forEach(result => {
 				let photoUrl = "https://upload.wikimedia.org/wikipedia/commons/6/60/Statsbiblioteket_l%C3%A6sesalen-2.jpg";
 		
 				if (result) {
-					windowContent = renderToString(
-					<LibraryWindow library={result.name} />
-					)
+					windowContent = renderToString(<LibraryWindow library={result.name} />)
 				}
 
 				if (result.photos) {
@@ -136,10 +159,10 @@ const hideCreateForm = () => {
 					address: result.vicinity
 				})
 
-				let resultLat = result.geometry.location.lat();
-				let resultLng = result.geometry.location.lng();
+				const resultLat = result.geometry.location.lat();
+				const resultLng = result.geometry.location.lng();
 				
-				let eventMarker = new window.google.maps.Marker({
+				const eventMarker = new window.google.maps.Marker({
 					position: {lat: resultLat, lng: resultLng},
 					map: gMap, 
 					icon: {
@@ -149,16 +172,17 @@ const hideCreateForm = () => {
 					title: result.name,
 					animation: window.google.maps.Animation.DROP, 
 				});
-				let eventInfoWindow = new window.google.maps.InfoWindow({
+
+				const eventInfoWindow = new window.google.maps.InfoWindow({
 					content: windowContent
-				})
+				});
 	
 				eventMarker.addListener("click", () => {
 					eventInfoWindow.open({
 						anchor: eventMarker, 
 						map: gMap
 					})
-				}, {passive: true})
+				}, {passive: true});
 
 				window.google.maps.event.addListener(eventInfoWindow, 'domready', () => {
 					const clickedLibraryCreateLink = document.getElementsByClassName(`local_lib_create_event_link`);
@@ -167,14 +191,15 @@ const hideCreateForm = () => {
 							setLocationName(e.target.parentNode.parentNode.firstChild.innerText);
 							showCreateForm(e);
 						})
-					}
+					};
 
 					window.google.maps.event.addListener(gMap, "click", (e) => {
 						eventInfoWindow.close();
 						hideCreateForm(e);
 					}, {passive: true})
-				}, {passive: true})
-			})
+				})
+			});
+
 			dispatch(receiveAllLocations(googleFetchedLibraries));
 		}
 	}
@@ -307,7 +332,7 @@ const hideCreateForm = () => {
 			let locationLat = gMap.center.lat();
 			let request = {
 				location: new window.google.maps.LatLng({lat: locationLat, lng: locationLng}), 
-				radius: '600',
+				radius: '500',
 				type: ['library']
 			};
 	
@@ -325,16 +350,20 @@ const hideCreateForm = () => {
 		fillInfoTilesRefWithContent();
 		addMouseClickToMapMarkers(); 
 	}
+
+	
+	const showCreateForm = (e) => {
+		e.preventDefault();
+		setShowEventCreateModal(true);
+	}
+
+	const hideCreateForm = () => {
+		setShowEventCreateModal(false);
+	}
+
 // Initialize The Map
 	useEffect(() => {
-		const initialMap = new window.google.maps.Map(ref.current, {
-			center: { lat: centerCoords.lat, lng: centerCoords.lng},
-			zoom: zoomAmount,
-			styles: stylesArray
-		})
-		// Creating the Geolocation Controls Button and Event Listener
-		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-		locationButton.addEventListener("click", findGeoLocation, {passive: true});
+		const initialMap = createTheMap(initialCenterCoords.lat, initialCenterCoords.lng);
 		setGMap(initialMap)
 	}, []);
 
@@ -344,6 +373,7 @@ const hideCreateForm = () => {
 		}
 		resetLocationBasedOnGeolocation();
 		requestNearbyLibraries();
+
 	}, [gMap, events])
 
 	useEffect(() => {
