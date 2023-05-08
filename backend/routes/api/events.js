@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     let endDay;
     if (req.query.endDate) {
       endDay = new Date(req.query.endDate);
-      endDay.setDate(endDay.getDate() + 1);
+      // endDay.setDate(endDay.getDate() + 1);
     } else {
       endDay = new Date(req.query.startDate);
       endDay.setDate(endDay.getDate() + 1);

@@ -39,7 +39,6 @@ const DateSelector = () => {
         startDate={startDate}
         endDate={endDate}
         selectsRange
-        inline
       />
     )
 }
