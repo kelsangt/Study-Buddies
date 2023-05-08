@@ -92,8 +92,10 @@ const EventSideBar = () => {
             const start = date.toLocaleDateString("en-us").split("T")[0]
             let end = endDate
             if (end) {
-              end = end.toLocaleDateString("en-us").split("T")[0]
-              dispatch(fetchAllEventsForDay(start, end));
+              let formattedEnd = new Date(end);
+              formattedEnd.setDate(formattedEnd.getDate() + 1);
+              formattedEnd = formattedEnd.toLocaleDateString("en-us").split("T")[0];
+              dispatch(fetchAllEventsForDay(start, formattedEnd));
             } else {
               dispatch(fetchAllEventsForDay(start));
             }
