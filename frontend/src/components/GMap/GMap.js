@@ -24,10 +24,13 @@ const GMap = () => {
 	const markers = useRef([]);
 	const infoTiles = useRef([]);
 	const userLocationCoords = useRef({});
+	const centerLat = useRef(40.73630);
+	const centerLng = useRef(-73.99379);
 	
 	const [geoLocationClicked, setGeoLocationClicked] = useState(false);
 	const [requestedLibraries, setRequestedLibraries] = useState(false);
 	const [showEventCreateModal, setShowEventCreateModal] = useState(false);
+
 	const events = useSelector(getEvents);
 	const fetched = useSelector(getFetchEvents);
 	const [initialLoad, setInitialLoad] = useState(true);
@@ -39,7 +42,11 @@ const GMap = () => {
 	const infoWindow = new window.google.maps.InfoWindow(); 
 	const locationButton = document.createElement("button");
 	locationButton.textContent = "Click to View Study Sessions In Your Area"
-	locationButton.classList.add("custom-map-control-button")
+	locationButton.classList.add("custom-map-control-button");
+
+	const currentLibrariesOnMapCenter = document.createElement("button");
+	currentLibrariesOnMapCenter.textContent = "Locate Nearby Session Venues";
+	currentLibrariesOnMapCenter.classList.add("custom-map-control-button");
 
 	// Map Initial Styles 
 	const stylesArray = [
@@ -74,6 +81,8 @@ const hideCreateForm = () => {
 							lat: position.coords.latitude, 
 							lng: position.coords.longitude
 						};
+						centerLat.current = userLocation.lat;
+						centerLng.current = userLocation.lng;
 						userLocationCoords.current = userLocation; 
 						// Setting the map to the new location. 
 						const newMap = new window.google.maps.Map(ref.current, {
@@ -81,7 +90,17 @@ const hideCreateForm = () => {
 							zoom: zoomAmount,
 							styles: stylesArray
 						})
+
+						window.google.maps.event.addListener(newMap, "dragend", function() {
+							let center = newMap.getCenter();
+							let latitude = center.lat();
+							let longitude = center.lng();
+							centerLat.current = latitude;
+							centerLng.current = longitude;
+							console.log(centerLat.current)
+						});
 						newMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+						newMap.controls[window.google.maps.ControlPosition.TOP_RIGHT].push(currentLibrariesOnMapCenter);
 						setGMap(newMap);
 					},
 					() => {
@@ -93,6 +112,28 @@ const hideCreateForm = () => {
 				handleLocationError(false, infoWindow, gMap.getCenter());
 			}
 		}
+	}
+
+	const findMapCenterLibraries = () => {
+		const currentMap = new window.google.maps.Map(ref.current, {
+			center: { lat: centerLat.current, lng: centerLng.current},
+			zoom: zoomAmount,
+			styles: stylesArray
+		})
+
+		window.google.maps.event.addListener(currentMap, "dragend", function() {
+			let center = currentMap.getCenter();
+			let latitude = center.lat();
+			let longitude = center.lng();
+			centerLat.current = latitude;
+			centerLng.current = longitude;
+		});
+
+		currentMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+		currentMap.controls[window.google.maps.ControlPosition.TOP_RIGHT].push(currentLibrariesOnMapCenter);
+		setGMap(currentMap);
+		setRequestedLibraries(false);
+		requestNearbyLibraries();
 	}
 
 // Helper Function if Geolocation is not available. 
@@ -305,7 +346,7 @@ const hideCreateForm = () => {
 			let locationLat = gMap.center.lat();
 			let request = {
 				location: new window.google.maps.LatLng({lat: locationLat, lng: locationLng}), 
-				radius: '600',
+				radius: '500',
 				type: ['library']
 			};
 	
@@ -323,6 +364,7 @@ const hideCreateForm = () => {
 		fillInfoTilesRefWithContent();
 		addMouseClickToMapMarkers(); 
 	}
+
 // Initialize The Map
 	useEffect(() => {
 		const initialMap = new window.google.maps.Map(ref.current, {
@@ -330,9 +372,20 @@ const hideCreateForm = () => {
 			zoom: zoomAmount,
 			styles: stylesArray
 		})
+		window.google.maps.event.addListener(initialMap, "dragend", function() {
+			let center = initialMap.getCenter();
+			let latitude = center.lat();
+			let longitude = center.lng();
+			centerLat.current = latitude;
+			centerLng.current = longitude;
+			console.log(centerLat.current, centerLng.current)
+		});
+		
 		// Creating the Geolocation Controls Button and Event Listener
 		initialMap.controls[window.google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+		initialMap.controls[window.google.maps.ControlPosition.TOP_RIGHT].push(currentLibrariesOnMapCenter);
 		locationButton.addEventListener("click", findGeoLocation, {passive: true});
+		currentLibrariesOnMapCenter.addEventListener("click", findMapCenterLibraries);
 		setGMap(initialMap)
 	}, []);
 
@@ -342,6 +395,7 @@ const hideCreateForm = () => {
 		}
 		resetLocationBasedOnGeolocation();
 		requestNearbyLibraries();
+
 	}, [gMap, events])
 
 	useEffect(() => {
