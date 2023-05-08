@@ -108,7 +108,7 @@ const EventSidebarItem = ({event, selected}) => {
         </div>
 
         <div className="time">
-          {new Date(event.startTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ')[1]} 
+          {new Date(event.startTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ').join(' ')} 
           {` - `}  
           {new Date(event.endTime).toLocaleDateString('en-us', {hour: "numeric", minute: "numeric", hour12: true}).split(', ')[1]}
         </div>

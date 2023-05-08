@@ -4,6 +4,7 @@ const RECEIVE_MODAL_TOGGLE = "ui/RECEIVE_MODAL_TOGGLE";
 const RECEIVE_EVENT_CLICKED = "ui/RECEIVE_EVENT_CLICKED";
 const RECEIVE_TAB_STATE = "ui/RECEIVE_TAB_STATE";
 const RECEIVE_DATE = "ui/RECEIVE_DATE";
+const RECEIVE_END_DATE = "ui/RECEIVE_END_DATE";
 const RECEIVE_SHOW_EVENT_DETAILS_MODAL = 'ui/RECEIVE_SHOW_EVENT_DETAILS_MODAL'
 const FETCH_NEW_EVENTS = "ui/FETCH_NEW_EVENTS";
 const RECEIVE_NEW_MAP = "ui/RECEIVE_NEW_MAP";
@@ -25,6 +26,11 @@ export const receiveTabState = (tab) => ({
 
 export const receiveDate = (date) => ({
     type: RECEIVE_DATE,
+    date
+})
+
+export const receiveEndDate = (date) => ({
+    type: RECEIVE_END_DATE,
     date
 })
 
@@ -64,6 +70,9 @@ export const selectedTab = (state) => {
 export const selectedDate = (state) => {
     return state.ui.date ? state.ui.date : null;
 }
+export const selectedEndDate = (state) => {
+    return state.ui.endDate ? state.ui.endDate : null;
+}
 export const getFetchEvents = (state) => {
     return state.ui.fetchEvents ? state.ui.fetchEvents : null;
 }
@@ -81,6 +90,7 @@ const initialState = {
     tab: "My Events",
     selectedEventId: null,
     date: new Date(),
+    endDate: null,
     fetchEvents: true
 }
 
@@ -99,15 +109,18 @@ const uiReducer = (state = initialState, action) => {
         case RECEIVE_DATE:
             nextState.date = action.date;
             return nextState
-				case RECEIVE_SHOW_EVENT_DETAILS_MODAL:
-						nextState.showEventDetailsModal = action.showEventDetailsModal
-						return nextState;
+        case RECEIVE_END_DATE:
+            nextState.endDate = action.date;
+            return nextState
+        case RECEIVE_SHOW_EVENT_DETAILS_MODAL:
+            nextState.showEventDetailsModal = action.showEventDetailsModal
+            return nextState;
         case FETCH_NEW_EVENTS:
             nextState.fetchEvents = action.toggle;
             return nextState;
-				case RECEIVE_NEW_MAP: 
-						nextState.reloadMapStatus = action.modalStatus;
-						return nextState;
+        case RECEIVE_NEW_MAP: 
+            nextState.reloadMapStatus = action.modalStatus;
+            return nextState;
         default:
             return state;
     }

@@ -46,8 +46,12 @@ export const getMyRequestedEvents = (state) => {
 // Thunk Action Creators 
 // year-month-day
 // date format: "2023-04-17"
-export const fetchAllEventsForDay = (date) => async dispatch => {
-    const res = await jwtFetch(`/api/events/?startDate=${date}`);
+export const fetchAllEventsForDay = (date, endDate) => async dispatch => {
+    let apiRoute;
+    if (endDate) apiRoute = `/api/events/?startDate=${date}&endDate=${endDate}`
+    else apiRoute = `/api/events/?startDate=${date}`
+
+    const res = await jwtFetch(apiRoute);
     const data = await res.json();
     return dispatch(receiveAllEventsForDay(data));
 }
