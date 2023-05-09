@@ -408,9 +408,11 @@ The notifications reducer will save and retrieve notifications in local storage 
 {
     notificationTab &&
     Object.keys(notifications).map(timeNotification => {
+        const notificationItems = Object.values(notifications[timeNotification]).filter(el => el);
 
         return (
-            <div key={timeNotification}>
+            notificationItems.length
+            ? <div key={timeNotification}>
                 <span className="notification-time">
                     {
                         timeNotification === "<1 hour"
@@ -421,12 +423,12 @@ The notifications reducer will save and retrieve notifications in local storage 
                     }
                 </span>
                 {
-                    Object.values(notifications[timeNotification]).map(event => {
-                        if (!event) return null;
+                    notificationItems.map(event => {
                         return <MyCreatedEvents event={event} notificationType={timeNotification} key={event._id}/>
                     })
                 }
             </div>
+            : null
         )
     })
 }
@@ -440,7 +442,9 @@ In the ProfileModal component, upcoming event notifications are displayed in 3 d
     // GET all events within a date range
     router.get('/', async (req, res) => {
     try {
-        const startDay = new Date(req.query.startDate);
+        let startDay 
+        if (req.query.startDate) startDay = new Date(req.query.startDate);
+        else startDay = new Date();
 
         let endDay;
         if (req.query.endDate) {
@@ -453,7 +457,7 @@ In the ProfileModal component, upcoming event notifications are displayed in 3 d
         const events = await Event.find({
         startTime: {
             $gte: startDay,
-            $lt: endDay
+            $lte: endDay
         }
         })
         .populate("creator", "_id username profileImageUrl")
