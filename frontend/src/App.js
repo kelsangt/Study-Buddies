@@ -16,7 +16,7 @@ import MainContent from './components/MainContent/MainContent';
 import EventCreateForm from './components/EventCreateForm/EventCreateForm';
 import UserSettings from './components/UserSettings/UserSettings';
 import AboutPage from './components/AboutPage/AboutPage';
-import { Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { Redirect, Route } from 'react-router-dom/cjs/react-router-dom.min';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -35,6 +35,7 @@ function App() {
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
         <Route exact path="/about" component={AboutPage} />
+        <Route path=""><Redirect to="/" /></Route>
       </Switch>
     </>
   );
