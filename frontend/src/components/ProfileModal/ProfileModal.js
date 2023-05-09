@@ -145,9 +145,11 @@ const ProfileModal = () => {
                     {
                         notificationTab &&
                         Object.keys(notifications).map(timeNotification => {
+                            const notificationItems = Object.values(notifications[timeNotification]).filter(el => el);
 
                             return (
-                                <div key={timeNotification}>
+                                notificationItems.length
+                                ? <div key={timeNotification}>
                                     <span className="notification-time">
                                         {
                                             timeNotification === "<1 hour"
@@ -158,12 +160,12 @@ const ProfileModal = () => {
                                         }
                                     </span>
                                     {
-                                        Object.values(notifications[timeNotification]).map(event => {
-                                            if (!event) return null;
+                                        notificationItems.map(event => {
                                             return <MyCreatedEvents event={event} notificationType={timeNotification} key={event._id}/>
                                         })
                                     }
                                 </div>
+                                : null
                             )
                         })
                     }
