@@ -146,7 +146,7 @@ const locations = [
 const events = [];
 const timeSlotMinutes = [30, 45, 60, 90, 120];
 
-for (let j = 0; j < 10; j++) {
+for (let j = 0; j < 180; j++) {
   const today = new Date();
   today.setDate(today.getDate() + j - 2);
 
