@@ -12,6 +12,8 @@ import { setModalStatus } from '../../store/ui';
 function LoginForm () {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState(false);
   const errors = useSelector(state => state.errors.session);
   const dispatch = useDispatch();
 
@@ -26,16 +28,34 @@ function LoginForm () {
     return e => setState(e.currentTarget.value);
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login({ email: email.toLowerCase(), password })); 
-    dispatch(setModalStatus(false))
+
+    setLoading(true);
+    document.getElementById("submitInput2").disabled = true;
+    document.getElementById("demoButton").disabled = true;
+    dispatch(setModalStatus(false));
+
+    await dispatch(login({ email: email.toLowerCase(), password }));
+
+    setLoading(false);
+    document.getElementById("submitInput2").disabled = false;
+    document.getElementById("demoButton").disabled = false;
   }
 
-  const demoLogin = (e) => {
+  const demoLogin = async (e) => {
     e.preventDefault();
-    dispatch(login({email: "johndoe@nyu.edu", password: "password"}));
-    dispatch(setModalStatus(false))
+
+    setDemoLoading(true);
+    document.getElementById("submitInput2").disabled = true;
+    document.getElementById("demoButton").disabled = true;
+    dispatch(setModalStatus(false));
+
+    await dispatch(login({email: "johndoe@nyu.edu", password: "password"}));
+
+    setDemoLoading(false);
+    document.getElementById("submitInput2").disabled = false;
+    document.getElementById("demoButton").disabled = false;
   }
 
   return (
@@ -66,15 +86,29 @@ function LoginForm () {
             />
           </label>
           <label className="submitButton2">
-            <input className="submitInput2"
+            <button className={`submitInput2 ${loading ? 'loading' : ''}`}
+              id="submitInput2"
               type="submit"
-              value="Log In"
               disabled={!email || !password}
-            />
+            >
+              Log In
+              <div className="loading-dots-container">
+                <div className="loading-dot" />
+                <div className="loading-dot" />
+                <div className="loading-dot" />
+              </div>
+            </button>
           </label>
         </form>
         <label className="submitButton2">
-            <button id="demoButton" onClick={demoLogin}>Demo Login</button>
+            <button id="demoButton" className={`${demoLoading ? 'loading' : ''}`} onClick={demoLogin}>
+              Demo Login
+              <div className="loading-dots-container">
+                <div className="loading-dot" />
+                <div className="loading-dot" />
+                <div className="loading-dot" />
+              </div>
+            </button>
         </label>
         <a id="signupAnchor" href="/signup">
             New to Study Buddies? Sign up here

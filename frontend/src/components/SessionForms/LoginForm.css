@@ -62,20 +62,45 @@
     background-color: rgb(52, 118, 249);
     border: none;
     cursor: pointer;
+    position: relative;
 }
 
-.submitInput2:disabled {
+#demoButton {
+    width: 200px;
+    height: 40px;
+    background-color: rgb(52, 118, 249);
+    border: none;
+    font-family: var(--font);
+    font-weight: var(--font-bold);
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    position: relative;
+}
+
+.submitInput2:hover,
+#demoButton:hover {
+    background-color: rgb(48, 107, 225);
+}
+
+.submitInput2:disabled,
+#demoButton:disabled {
     background-color: rgb(35, 75, 154);
     color: rgb(182, 182, 182);
     cursor: default;
 }
 
-.submitInput2:hover {
-    background-color: rgb(48, 107, 225);;
+.submitInput2:disabled:hover,
+#demoButton:disabled:hover {
+    background-color: rgb(35, 75, 154);
 }
 
-.submitInput2:disabled:hover {
-    background-color: rgb(35, 75, 154);;
+.submitInput2.loading,
+.submitInput2.loading:hover,
+#demoButton.loading,
+#demoButton.loading:hover {
+    background-color: rgb(48, 107, 225);
+    color: white;
 }
 
 #signupAnchor {
@@ -90,18 +115,50 @@
     color: orange;
 }
 
-#demoButton {
-    width: 200px;
-    height: 40px;
-    background-color: rgb(52, 118, 249);
-    border: none;
-    font-family: var(--font);
-    font-weight: var(--font-bold);
-    font-size: 20px;
-    color: white;
-    cursor: pointer;
+.loading-dots-container {
+    visibility: hidden;
+    display: flex;
+    column-gap: 4px;
+    position: absolute;
+    bottom: calc(50% - 6px);
 }
 
-#demoButton:hover {
-    background-color: rgb(48, 107, 225);
+#demoButton .loading-dots-container {
+    left: 80%;
+}
+
+.submitInput2 .loading-dots-container {
+    left: 68%;
+}
+
+#demoButton.loading .loading-dots-container,
+.submitInput2.loading .loading-dots-container {
+    visibility: unset;
+}
+
+.loading-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 100%;
+    animation: loading-animation 1s infinite alternate;
+    background-color: rgba(255, 166, 0, 0.5);
+}
+
+.loading-dot:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.loading-dot:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes loading-animation {
+    0%, 50% {
+        background-color: rgba(255, 166, 0, 0.5);
+        scale: 1;
+    }
+    100% {
+        background-color: orange;
+        scale: 1.5;
+    }
 }
