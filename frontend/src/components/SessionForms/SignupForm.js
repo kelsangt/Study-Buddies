@@ -9,6 +9,7 @@ import image4 from '../../images/image4.png';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 function SignupForm () {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -62,7 +63,7 @@ function SignupForm () {
     return e => setState(e.currentTarget.value);
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const user = {
       email: email.toLowerCase(),
@@ -73,7 +74,14 @@ function SignupForm () {
       major,
       password
     };
-    dispatch(signup(user)); 
+
+    setLoading(true);
+    document.getElementById("submitInput").disabled = true;
+
+    await dispatch(signup(user)); 
+
+    setLoading(false);
+    document.getElementById("submitInput").disabled = false;
   }
 
   return (
@@ -166,11 +174,19 @@ function SignupForm () {
             />
           </label>
           <label class="submitButton">
-            <input className="submitInput"
+            <button 
+              id="submitInput"
+              className={`submitInput ${loading ? 'loading' : ''}`}
               type="submit"
-              value="Sign Up"
               disabled={!email || !username || !password || password !== password2 || !major}
-            />
+            >
+              Sign Up
+              <div className="loading-dots-container">
+                <div className="loading-dot" />
+                <div className="loading-dot" />
+                <div className="loading-dot" />
+              </div>
+            </button>
           </label>
         </form>
           

@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
 const { mongoURI: db } = require('../config/keys.js');
 const User = require('../models/User');
-const Location = require('../models/Location');
 const Event = require('../models/Event');
 const bcrypt = require('bcryptjs');
 const { faker } = require('@faker-js/faker');
 
 const NUM_SEED_USERS = 10;
-const NUM_SEED_EVENTS = 30;
 
 // Create users
 const users = [];
@@ -55,7 +53,7 @@ for (let i = 1; i < NUM_SEED_USERS; i++) {
   )
 }
 
-// Create locations
+// Manhattan libraries
 const locations = [
   {
     name: "Seward Park Library",
@@ -146,13 +144,15 @@ const locations = [
 const events = [];
 const timeSlotMinutes = [30, 45, 60, 90, 120];
 
-for (let j = 0; j < 180; j++) {
+// 100 days of events
+for (let j = 0; j < 100; j++) {
   const today = new Date();
   today.setDate(today.getDate() + j - 2);
 
   const endDay = new Date();
   endDay.setDate(endDay.getDate() + j - 1);
   
+  // 3 - 10 events per day
   for (let i = 0; i < Math.floor(Math.random() * (10 - 3) + 3); i++) {
     const startTime = faker.date.between(today, endDay);
     const endTime = new Date(startTime.getTime() + (timeSlotMinutes[Math.floor(Math.random() * timeSlotMinutes.length)])*60000)
@@ -165,7 +165,6 @@ for (let j = 0; j < 180; j++) {
       creator: creator._id,
       name: fakerName + studySessionText,
       description: faker.lorem.sentence(),
-      // location: locations[Math.floor(Math.random()*locations.length)]._id,
       location: locations[Math.floor(Math.random()*locations.length)],
       startTime: startTime,
       endTime: endTime
