@@ -1,20 +1,18 @@
-#githubLink {
+#githubLink,
+#linkedInLink,
+#portfolioLink {
     color: white;
     font-size: 28px;
     margin-top: 10px;
+}
+
+#githubLink,
+#linkedInLink {
     margin-right: 10px;
 }
 
-#linkedInLink {
-    color: white;
-    font-size: 28px;
-    margin-top: 10px;
-}
-
-#githubLink:hover {
-    color: #c744f3;
-}
-
-#linkedInLink:hover {
+#githubLink:hover, 
+#linkedInLink:hover, 
+#portfolioLink:hover {
     color: #c744f3;
 }
