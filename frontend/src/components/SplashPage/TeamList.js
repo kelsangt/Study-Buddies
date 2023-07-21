@@ -23,6 +23,9 @@ const TeamList = () => {
               <a href="https://www.linkedin.com/in/kelsang-tsering/" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-linkedin" id="linkedInLink"></i>
               </a>
+              <a href="https://kelsangtsering.com/" target="_blank" rel="noopener noreferrer">
+                  <i className="fa fa-globe" id="portfolioLink"></i>
+              </a>
             </div>
 
         </div>
@@ -43,6 +46,9 @@ const TeamList = () => {
               </a>
               <a href="https://www.linkedin.com/in/yinglzhou/" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-linkedin" id="linkedInLink"></i>
+              </a>
+              <a href="https://yinglinzhou.netlify.app/" target="_blank" rel="noopener noreferrer">
+                  <i className="fa fa-globe" id="portfolioLink"></i>
               </a>
             </div>
 
@@ -65,6 +71,9 @@ const TeamList = () => {
               <a href="https://www.linkedin.com/in/fk652/" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-linkedin" id="linkedInLink"></i>
               </a>
+              <a href="https://fahim-khan.com/" target="_blank" rel="noopener noreferrer">
+                  <i className="fa fa-globe" id="portfolioLink"></i>
+              </a>
             </div>
         </div>
       
@@ -84,6 +93,9 @@ const TeamList = () => {
               </a>
               <a href="https://www.linkedin.com/in/justin-diner/" target="_blank" rel="noopener noreferrer">
                   <i className="fa fa-linkedin" id="linkedInLink"></i>
+              </a>
+              <a href="https://www.justindiner.com/" target="_blank" rel="noopener noreferrer">
+                  <i className="fa fa-globe" id="portfolioLink"></i>
               </a>
             </div>
         </div>
